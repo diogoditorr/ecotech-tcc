@@ -37,6 +37,8 @@
     width: 39vw;
 
     padding-bottom: 9rem;
+
+    animation-delay: 0.5s;
 }
 
 #page-home .quote h1 {
@@ -57,6 +59,8 @@
 #page-home .buttons {
     display: flex;
     align-items: center;
+
+    animation-delay: 0.5s;
 }
 
 #page-home .buttons a {

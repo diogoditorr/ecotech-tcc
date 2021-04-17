@@ -1,7 +1,8 @@
 <?php
     $title = 'Ecotech | Cadastro de Usuário';
     $css['locations'] = [
-        '../../public/styles/sign-up.css',
+        '../../public/styles/page-sign-up.css',
+        '../../public/styles/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -16,7 +17,7 @@
     </header>
 
     <main>
-        <form action="./index.php" method="post">
+        <form class="animate-up" action="./explore.php" method="post">
             <div class="form-data">
                 <div class="header">
                     <h1>Cadastro</h1>

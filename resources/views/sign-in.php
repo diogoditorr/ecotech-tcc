@@ -1,7 +1,8 @@
 <?php
     $title = 'Ecotech | Login';
     $css['locations'] = [
-        '../../public/styles/sign-in.css',
+        '../../public/styles/page-sign-in.css',
+        '../../public/styles/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -16,7 +17,7 @@
     </header>
 
     <main>
-        <form action="./index.php" method="post">
+        <form class="animate-up" action="./explore.php" method="post">
             <div class="header">
                 <h1>Sign In</h1>
             </div>

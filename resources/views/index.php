@@ -1,7 +1,7 @@
 <?php
     $title = 'Ecotech';
     $css['locations'] = [
-        '../../public/styles/home.css',
+        '../../public/styles/page-home.css',
         '../../public/styles/animations.css',
     ];
 

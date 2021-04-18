@@ -1,5 +1,15 @@
 @keyframes up {
     from {
+        transform: translateY(-16px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes up-op {
+    from {
         opacity: 0;
         transform: translateY(-16px);
     }
@@ -10,8 +20,30 @@
     }
 }
 
+@keyframes modal {
+    from {
+        transform: translateY(1000px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
 .animate-up {
     animation-name: up;
+    animation-duration: 1s;
+    animation-fill-mode: backwards; 
+}
+
+.animate-up-op {
+    animation-name: up-op;
+    animation-duration: 1s;
+    animation-fill-mode: backwards;
+}
+
+.animate-modal {
+    animation-name: modal;
     animation-duration: 1s;
     animation-fill-mode: backwards; 
 }

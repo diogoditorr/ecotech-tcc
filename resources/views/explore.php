@@ -2,7 +2,7 @@
     $title = 'Ecotech | Explorar';
     $css['locations'] = [
         '../../public/styles/page-explore.css',
-        '../../public/styles/navegation-bar.css',
+        '../../public/styles/navigation-bar.css',
         '../../public/styles/modal.css',
         '../../public/styles/animations.css',
     ];
@@ -30,7 +30,7 @@
         </div>
     </nav>
 
-    <div class="search-bar">
+    <div class="search-bar animate-up-op">
         <input type="text" placeholder="Pesquise por uma peça">
         <button>
             <img src="../../public/assets/search.svg" alt="">
@@ -39,7 +39,7 @@
 
     <h2>Resultados:</h2>
 
-    <div class="cards">
+    <div class="cards animate-up-op">
         <div class="part">
             <div class="image">
                 <img src="../../storage/parts/image_1.png" alt="">
@@ -98,7 +98,7 @@
 </div>
 
 <div id="modal" class="hide">
-    <div class="container">
+    <div class="container animate-modal">
         <header>
             <h1>
                 Detalhes da Peça

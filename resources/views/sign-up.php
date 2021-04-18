@@ -17,7 +17,7 @@
     </header>
 
     <main>
-        <form class="animate-up" action="./explore.php" method="post">
+        <form class="animate-up-op" action="./explore.php" method="post">
             <div class="form-data">
                 <div class="header">
                     <h1>Cadastro</h1>

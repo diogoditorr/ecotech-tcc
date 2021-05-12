@@ -36,6 +36,11 @@
     --background: #F0F0F0;
     --details-button: #5E26A1;
     
+    /* Status */
+    --pending: #ffa800;
+    --delivered: #4aba41;
+    --cancelled: #ff3b3b;
+
     font-size: 62.5%;
 }
 

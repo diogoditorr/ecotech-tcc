@@ -1,0 +1,149 @@
+#page-orders {
+    min-height: 100vh;
+
+    padding: 2.4rem 3.6rem;
+
+    background-color: var(--background);
+}
+
+#page-orders main {
+    display: flex;
+    align-items: flex-start;
+
+    margin-top: 4.8rem;
+}
+
+#page-orders main .content {
+    display: flex;
+    flex-direction: column;
+
+    width: 70vw;
+    margin: 0 auto;
+
+    border-radius: 8px;
+
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    color: var(--black-text);
+}
+
+#page-orders main .content header {
+    padding: 2.2rem 3rem;
+
+    font-size: 24px;
+}
+
+#page-orders main .content table {
+    width: 100%;
+    margin-bottom: 0.8rem;
+    border-spacing: 0;
+}
+
+#page-orders main .content table thead {
+    width: 100%;
+    background-color: var(--primary-4);
+}
+
+
+#page-orders main .content table thead th {
+    padding: 2rem 0;
+    
+    font-size: 24px;
+    font-weight: 400;
+    color: white;
+    text-align: left;
+}
+
+#page-orders main .content table thead th:nth-child(1) {
+    width: calc(78px + 3rem + 3.6rem); /* image size + margin-left + margin-right */
+}
+
+#page-orders main .content table thead th:nth-child(2) {
+    width: 14%;
+}
+#page-orders main .content table thead th:nth-child(3) {
+    display: flex;
+    width: auto;
+}
+
+#page-orders main .content table thead th:nth-child(4) {
+    width: 15%;
+}
+
+#page-orders main .content table thead th:nth-child(5) {
+    width: 15%;
+}
+
+#page-orders main .content table tbody td {
+    padding: 2rem 0;
+    border-bottom: 1px solid #C6C6C6;
+    background-color: #FCFCFC;
+}
+
+#page-orders main .content table tbody td:first-child {
+    padding-left: 3rem;
+}
+
+#page-orders main .content table tbody td:last-child {
+    padding-right: 3rem;
+}
+
+#page-orders main .content table tbody .image img {
+    width: 78px;
+    height: 78px;
+    
+    border-radius: 8px;
+    border: 1px solid var(--border);
+
+    object-fit: contain;
+}
+
+#page-orders main .content table tbody .order-id {
+    font-size: 16px;
+    color: #686868;
+}
+
+#page-orders main .content table tbody .name {
+    font-size: 24px;
+}
+
+#page-orders main .content table tbody .status {
+    font-size: 24px;
+}
+
+#page-orders main .content table tbody .status.pending {
+    color: var(--pending)
+}
+
+#page-orders main .content table tbody .status.delivered {
+    color: var(--delivered)
+}
+
+#page-orders main .content table tbody .status.cancelled {
+    color: var(--cancelled)
+}
+
+#page-orders main .content table tbody .see-details a {
+    display: flex;
+    align-items: center;
+
+    width: fit-content;
+
+    margin-left: auto;
+    padding: 1.3rem 1.4rem;
+
+    border-radius: 8px;
+    background-color: var(--details-button);
+
+    text-decoration: none;
+}
+
+#page-orders main .content table tbody .see-details a img {
+    margin-right: 1.4rem;
+    height: 29px;
+}
+
+#page-orders main .content table tbody .see-details a span {
+    font-size: 20px;
+    color: white;
+}

@@ -36,11 +36,11 @@
                 <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
                 <span>Interessados</span>
             </a>
-            <a href="">
+            <a href="./orders.php">
                 <?php echo file_get_contents("../../public/assets/order.svg"); ?>
                 <span>Pedidos</span>
             </a>
-            <a href="">
+            <a href="./donations.php">
                 <?php echo file_get_contents("../../public/assets/donation.svg"); ?>
                 <span>Doações</span>
             </a>

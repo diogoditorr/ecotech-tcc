@@ -32,7 +32,7 @@
 
     <main>
         <section class="navigation-profile">
-            <a href="" class="active">
+            <a href="./interested.php" class="active">
                 <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
                 <span>Interessados</span>
             </a>
@@ -64,7 +64,7 @@
                         <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
                         <td class="name">Semicondutores e transístores</td>
                         <td class="see-details">
-                            <a href="">
+                            <a href="./interested-details.php">
                                 <img src="../../public/assets/info.svg" alt="">
                                 <span>Detalhes</span>
                             </a>
@@ -74,7 +74,7 @@
                         <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
                         <td class="name">Semicondutores e transístores e transístores e transístores e transístores</td>
                         <td class="see-details">
-                            <a href="">
+                            <a href="./interested-details.php">
                                 <img src="../../public/assets/info.svg" alt="">
                                 <span>Detalhes</span>
                             </a>

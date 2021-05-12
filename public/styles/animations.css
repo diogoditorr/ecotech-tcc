@@ -44,6 +44,6 @@
 
 .animate-modal {
     animation-name: modal;
-    animation-duration: 1s;
+    animation-duration: 1.4s;
     animation-fill-mode: backwards; 
 }

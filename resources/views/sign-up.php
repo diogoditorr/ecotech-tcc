@@ -11,7 +11,7 @@
 <div id="page-sign-up">
     <header>
         <a href="./index.php">
-            <img src="../../public/assets/comeback.svg" alt="Voltar">
+            <img src="../../public/assets/arrow-left-large.svg" alt="Voltar">
         </a>
         <img src="../../public/assets/logo-yellow.svg" alt="">
     </header>

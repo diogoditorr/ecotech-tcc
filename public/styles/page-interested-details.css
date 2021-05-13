@@ -39,7 +39,7 @@
     font-size: 24px;
 }
 
-#page-interested-details main .content header a {
+#page-interested-details main .content header .back {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -146,7 +146,7 @@
 
     color: white;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 400;
 
     cursor: pointer;
 
@@ -249,7 +249,7 @@
 #page-interested-details main .content table tbody tr:last-child td:last-child {
     border-radius: 0 0 8px 0;
 }
-/*  */
+/* ------------ */
 
 
 #page-interested-details main .content table tbody td {

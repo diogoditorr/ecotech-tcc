@@ -93,7 +93,8 @@
 }
 
 #page-interested main .content table tbody .name {
-    font-size: 24px;
+    word-break: break-word;
+    font-size: 22px;
 }
 
 #page-interested main .content table tbody .see-details a {

@@ -68,7 +68,7 @@
                         <td class="name">Semicondutores e transístores</td>
                         <td class="status pending">Pendente</td>
                         <td class="see-details">
-                            <a href="./interested-details.php">
+                            <a href="./orders-details.php">
                                 <img src="../../public/assets/info.svg" alt="">
                                 <span>Detalhes</span>
                             </a>
@@ -80,7 +80,7 @@
                         <td class="name">Semicondutores e transístores e transístores e transístores e transístores</td>
                         <td class="status delivered">Entregue</td>
                         <td class="see-details">
-                            <a href="./interested-details.php">
+                            <a href="./orders-details.php">
                                 <img src="../../public/assets/info.svg" alt="">
                                 <span>Detalhes</span>
                             </a>
@@ -92,7 +92,7 @@
                         <td class="name">Semicondutores e transístores e transístores e transístores e transístores</td>
                         <td class="status cancelled">Entregue</td>
                         <td class="see-details">
-                            <a href="./interested-details.php">
+                            <a href="./orders-details.php">
                                 <img src="../../public/assets/info.svg" alt="">
                                 <span>Detalhes</span>
                             </a>

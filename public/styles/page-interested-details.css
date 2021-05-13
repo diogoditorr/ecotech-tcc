@@ -60,7 +60,11 @@
 }
 
 #page-interested-details main .content .image {
-    width: 412px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 40%;
     height: 412px;
 
     border: 1px solid #757575;
@@ -68,9 +72,8 @@
 }
 
 #page-interested-details main .content .image img {
-    width: 412px;
-    height: 412px;
-    
+    width: 100%;
+
     padding: 0.8rem;
 
     object-fit: contain;
@@ -85,7 +88,7 @@
     align-items: center;
     justify-content: space-between;
 
-    width: 100%;
+    flex: 1;
     height: 100%;
     margin-left: 5.6rem;
 }

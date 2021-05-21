@@ -1,5 +1,5 @@
 <?php
-    $title = 'Ecotech | Interessados';
+    $title = 'Ecotech | Pedidos';
     $css['locations'] = [
         '../../public/styles/page-orders.css',
         '../../public/styles/navigation-bar.css',
@@ -90,7 +90,7 @@
                         <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
                         <td class="order-id">#WWJ9K10L</td>
                         <td class="name">Semicondutores e transístores e transístores e transístores e transístores</td>
-                        <td class="status cancelled">Entregue</td>
+                        <td class="status cancelled">Cancelado</td>
                         <td class="see-details">
                             <a href="./orders-details.php">
                                 <img src="../../public/assets/info.svg" alt="">

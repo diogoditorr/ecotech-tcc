@@ -123,8 +123,14 @@ table:is(.table-registers, .table-donations) tbody tr {
 
     border-radius: 8px;
 
-    background-color: #38DA65;
+    background-color: hsl(137deg, 69%, 54%);
     text-decoration: none;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table-registers tbody .buttons .edit:hover {
+    background-color: hsl(137deg, 90%, 58%);
 }
 
 .table-registers tbody .buttons .edit span {
@@ -146,11 +152,16 @@ table:is(.table-registers, .table-donations) tbody tr {
     border: none;
     border-radius: 8px;
 
-    background-color: #DA0000;
+    background-color: hsl(0, 100%, 43%);
 
     cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
 }
 
+.table-registers tbody .buttons .delete:hover {
+    background-color: hsl(0, 100%, 60%);
+}
 
 /* Table table-donations */
 

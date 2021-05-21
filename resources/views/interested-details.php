@@ -1,5 +1,5 @@
 <?php
-    $title = 'Ecotech | Interessados';
+    $title = 'Ecotech | Detalhes da peça';
     $css['locations'] = [
         '../../public/styles/page-interested-details.css',
         '../../public/styles/navigation-bar.css',

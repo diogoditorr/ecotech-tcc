@@ -52,7 +52,7 @@
                 <header>
                     <p>Registrados</p>
                     
-                    <a class="create-new" href="">
+                    <a class="create-new" href="./donations-new.php">
                         <?php echo file_get_contents("../../public/assets/plus.svg"); ?>
                         <span>Novo</span>
                     </a>

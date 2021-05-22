@@ -25,7 +25,7 @@ table:is(.table-registers, .table-donations) thead th {
 }
 
 table:is(.table-registers, .table-donations) tbody {
-    height: 400px;
+    height: 424px;
     overflow-y: scroll;
 }
 

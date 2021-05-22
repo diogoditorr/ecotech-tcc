@@ -206,7 +206,7 @@
 }
 
 #page-donations-details main .content .menu .buttons button.save:hover {
-    background-color: rgb(207, 219, 248);
+    background-color: hsl(222, 75%, 89%);
 }
 
 #page-donations-details main .content .menu .buttons button.cancel-order {

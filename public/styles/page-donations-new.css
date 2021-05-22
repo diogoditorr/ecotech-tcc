@@ -1,0 +1,220 @@
+#page-donations-new {
+    min-height: 100vh;
+
+    padding: 2.4rem 3.6rem;
+
+    background-color: var(--background);
+}
+
+#page-donations-new main {
+    display: flex;
+    align-items: flex-start;
+
+    margin-top: 4.8rem;
+}
+
+#page-donations-new main .content {
+    display: flex;
+    flex-direction: column;
+
+    width: 70vw;
+    margin: 0 auto;
+    padding: 6.4rem 8.6rem;
+
+    border-radius: 8px;
+
+    background-color: var(--primary-mono-b);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+    color: var(--black-text);
+}
+
+
+/* Form */
+#page-donations-new form {
+    width: 100%;
+    
+    border-radius: 8px;
+
+    background-color: #fff;
+    box-shadow: 0px 0px 100px 60px rgba(0, 0, 0, 0.25);
+
+    animation-delay: 0.2s;
+}
+
+#page-donations-new form {
+    padding: 3.6rem;   
+}
+
+#page-donations-new form .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 6.4rem;
+}
+
+#page-donations-new form .header span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#page-donations-new form .header span h1 {
+    margin-bottom: .8rem;
+
+    font-size: 36px;
+    color: var(--title);
+}
+
+#page-donations-new form .header span small {
+    width: 60%;
+
+    font-size: 14px;
+    text-align: center;
+    color: var(--text);
+}
+
+#page-donations-new form fieldset {
+    display: flex;
+    flex-direction: column;
+
+    border: none;
+}
+
+#page-donations-new form fieldset:not(:last-child) {
+    margin-bottom: 6.4rem;
+}
+
+#page-donations-new form fieldset legend {
+    width: 100%;
+
+    padding-bottom: .8rem;
+
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-color: var(--border);
+
+    font-size: 24px;
+    font-weight: bold;
+    
+    color: var(--title);
+}
+
+#page-donations-new form fieldset .field {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+
+    margin-top: 24px;
+}
+
+#page-donations-new form fieldset .field label {
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    
+    color: var(--text);   
+}
+
+#page-donations-new form fieldset .field textarea {
+    resize: vertical;
+}
+
+#page-donations-new form fieldset .field input,
+#page-donations-new form fieldset .field select,
+#page-donations-new form fieldset .field textarea {
+    padding: 1.65rem;
+
+    border: 1px solid var(--border-field);
+    border-color: #838383;
+    border-radius: 8px;
+
+    font: 1.6rem 'Archivo', 'Inter';
+    color: var(--black-text);
+}
+
+#page-donations-new form .field .stock-menu {
+    display: flex;
+    align-items: center;
+}
+
+#page-donations-new form .field .stock-menu .subtract,
+#page-donations-new form .field .stock-menu .add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 5.6rem;
+    width: 4.6rem;
+
+    border: none;
+    background-color: var(--primary);
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+#page-donations-new form .field .stock-menu .subtract:hover,
+#page-donations-new form .field .stock-menu .add:hover {
+    background-color: var(--primary-mono-e);
+}
+
+#page-donations-new form .field .stock-menu .subtract {
+    border-radius: 8px 0 0 8px;
+}
+
+#page-donations-new form .field .stock-menu .add {
+    border-radius: 0 8px 8px 0;
+}
+
+#page-donations-new form .field .stock-menu input {
+    /* text-align: center; */
+
+    height: 5.6rem;
+    width: 15rem;
+
+    border: none;
+    border-radius: 0;
+    border-top: 1px solid var(--primary);
+    border-bottom: 1px solid var(--primary);
+
+    font-size: 24px;
+}
+
+#page-donations-new form .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+}
+
+#page-donations-new form .footer button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 228px;
+    height: 56px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 24px;
+    /* font-weight: bold; */
+    background-color: var(--primary);
+    color: white;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease-in-out;
+}
+
+#page-donations-new form .footer button:hover {
+    background-color: var(--primary-mono-e);
+}
+
+
+

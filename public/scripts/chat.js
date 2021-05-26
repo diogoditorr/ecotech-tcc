@@ -1,5 +1,5 @@
 const form = document.querySelector(".typing-area");
 
-form.onSubmit = (event) => {
+form.onsubmit = (event) => {
     event.preventDefault();
 }

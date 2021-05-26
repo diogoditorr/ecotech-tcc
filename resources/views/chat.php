@@ -114,7 +114,7 @@
     </main>
 </div>
 
-<script src="javascript/chat.js"></script>
+<script src="../../public/scripts/chat.js"></script>
 
 <?php include('../layouts/footer.php'); ?>
 

@@ -75,14 +75,14 @@
                         </div>
 
                         <div class="buttons">
-                            <button class="chat">
+                            <a class="chat" target="_blank"  href="./chat.php">
                                 <?php echo file_get_contents("../../public/assets/chat.svg"); ?>
                                 <span>Bate Papo</span>
-                            </button>
-                            <button class="whatsapp">
+                            </a>
+                            <a class="whatsapp" target="_blank" href="#">
                                 <?php echo file_get_contents("../../public/assets/whatsapp.svg"); ?>
                                 <span>Entrar em Contato</span>
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

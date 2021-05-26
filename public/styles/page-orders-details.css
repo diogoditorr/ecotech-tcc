@@ -163,7 +163,7 @@
     width: 100%;
 }
 
-#page-orders-details main .content .menu .buttons button {
+#page-orders-details main .content .menu .buttons a {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,6 +174,7 @@
     border: none;
     border-radius: 8px;
 
+    text-decoration: none;
     color: white;
     font-size: 18px;
     font-weight: 400;
@@ -187,28 +188,28 @@
     letter-spacing: 0.025em;
 }
 
-#page-orders-details main .content .menu .buttons button.chat {
+#page-orders-details main .content .menu .buttons a.chat {
     background-color: var(--primary);
 }
 
-#page-orders-details main .content .menu .buttons button.chat span {
+#page-orders-details main .content .menu .buttons a.chat span {
     margin-left: 1.4rem;
 }
 
-#page-orders-details main .content .menu .buttons button.chat:hover {
+#page-orders-details main .content .menu .buttons a.chat:hover {
     /* background-color: #5a3fbd; */
     background-color: var(--primary-mono-e);
 }
 
-#page-orders-details main .content .menu .buttons button.whatsapp {
+#page-orders-details main .content .menu .buttons a.whatsapp {
     background-color: #03CB0B;
 }
 
-#page-orders-details main .content .menu .buttons button.whatsapp span {
+#page-orders-details main .content .menu .buttons a.whatsapp span {
     margin-left: 1rem;
 }
 
-#page-orders-details main .content .menu .buttons button.whatsapp:hover {
+#page-orders-details main .content .menu .buttons a.whatsapp:hover {
     background-color: #24a728;
 }
 

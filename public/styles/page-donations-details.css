@@ -172,7 +172,7 @@
     margin-bottom: 2rem;
 }
 
-#page-donations-details main .content .menu .buttons button {
+#page-donations-details main .content .menu .buttons :is(button, a) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -188,6 +188,7 @@
     font-weight: 400;
 
     cursor: pointer;
+    text-decoration: none;
 
     transition: background-color 0.2s ease-in-out;
 }
@@ -196,53 +197,53 @@
     letter-spacing: 0.025em;
 }
 
-#page-donations-details main .content .menu .buttons button.save {
+#page-donations-details main .content .menu .buttons :is(button, a).save {
     background-color: hsl(223, 100%, 86%);
     color: #221160;
 }
 
-#page-donations-details main .content .menu .buttons button.save span {
+#page-donations-details main .content .menu .buttons :is(button, a).save span {
     margin-left: 1.4rem;
 }
 
-#page-donations-details main .content .menu .buttons button.save:hover {
+#page-donations-details main .content .menu .buttons :is(button, a).save:hover {
     background-color: hsl(222, 75%, 89%);
 }
 
-#page-donations-details main .content .menu .buttons button.cancel-order {
+#page-donations-details main .content .menu .buttons :is(button, a).cancel-order {
     background-color: #DA0000;
     color: #FFC8C8;
 }
 
-#page-donations-details main .content .menu .buttons button.cancel-order span {
+#page-donations-details main .content .menu .buttons :is(button, a).cancel-order span {
     margin-left: 1.4rem;
 }
 
-#page-donations-details main .content .menu .buttons button.cancel-order:hover {
+#page-donations-details main .content .menu .buttons :is(button, a).cancel-order:hover {
     background-color: hsl(0, 76%, 54%);
 }
 
-#page-donations-details main .content .menu .buttons button.chat {
+#page-donations-details main .content .menu .buttons :is(button, a).chat {
     background-color: var(--primary);
 }
 
-#page-donations-details main .content .menu .buttons button.chat span {
+#page-donations-details main .content .menu .buttons :is(button, a).chat span {
     margin-left: 1.4rem;
 }
 
-#page-donations-details main .content .menu .buttons button.chat:hover {
+#page-donations-details main .content .menu .buttons :is(button, a).chat:hover {
     /* background-color: #5a3fbd; */
     background-color: var(--primary-mono-e);
 }
 
-#page-donations-details main .content .menu .buttons button.whatsapp {
+#page-donations-details main .content .menu .buttons :is(button, a).whatsapp {
     background-color: #03CB0B;
 }
 
-#page-donations-details main .content .menu .buttons button.whatsapp span {
+#page-donations-details main .content .menu .buttons :is(button, a).whatsapp span {
     margin-left: 1rem;
 }
 
-#page-donations-details main .content .menu .buttons button.whatsapp:hover {
+#page-donations-details main .content .menu .buttons :is(button, a).whatsapp:hover {
     background-color: #24a728;
 }

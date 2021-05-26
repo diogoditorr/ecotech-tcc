@@ -30,7 +30,8 @@ main .navigation-profile a {
 }
 
 main .navigation-profile a svg {
-    height: var(--font-size);
+    /* height: var(--font-size); */
+    width: 24px;
 
     margin-right: 1.4rem;
 

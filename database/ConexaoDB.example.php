@@ -53,6 +53,7 @@ class ConexaoDB
                 `escola` TEXT NOT NULL,
                 `num_telefone_1` VARCHAR(20) NOT NULL,
                 `num_telefone_2` VARCHAR(20) NULL,
+                
                 PRIMARY KEY (`id`),
                 UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC),
                 UNIQUE INDEX `email_UNIQUE` (`email` ASC)
@@ -65,9 +66,11 @@ class ConexaoDB
                 `cidade` TEXT NOT NULL,
                 `bairro` TEXT NOT NULL,
                 `cep` VARCHAR(15) NOT NULL,
+
                 PRIMARY KEY (`id`),
                 INDEX `fk_pessoa_id_idx` (`pessoa_id` ASC),
                 UNIQUE INDEX `pessoa_id_UNIQUE` (`pessoa_id` ASC),
+
                 CONSTRAINT `fk_endereco_pessoa_id`
                     FOREIGN KEY (`pessoa_id`)
                     REFERENCES `pessoa` (`id`)
@@ -90,20 +93,20 @@ class ConexaoDB
                 
                 PRIMARY KEY (`id`),
                 CONSTRAINT `fk_perfil_pessoa_email`
-                FOREIGN KEY (`email`)
-                REFERENCES `pessoa` (`email`)
-                ON DELETE NO ACTION
-                ON UPDATE NO ACTION,
+                    FOREIGN KEY (`email`)
+                    REFERENCES `pessoa` (`email`)
+                    ON DELETE NO ACTION
+                    ON UPDATE NO ACTION,
                 CONSTRAINT `fk_perfil_pessoa_cpf`
-                FOREIGN KEY (`cpf`)
-                REFERENCES `pessoa` (`cpf`)
-                ON DELETE NO ACTION
-                ON UPDATE NO ACTION,
+                    FOREIGN KEY (`cpf`)
+                    REFERENCES `pessoa` (`cpf`)
+                    ON DELETE NO ACTION
+                    ON UPDATE NO ACTION,
                 CONSTRAINT `fk_perfil_pessoa_id`
-                FOREIGN KEY (`pessoa_id`)
-                REFERENCES `pessoa` (`id`)
-                ON DELETE NO ACTION
-                ON UPDATE NO ACTION
+                    FOREIGN KEY (`pessoa_id`)
+                    REFERENCES `pessoa` (`id`)
+                    ON DELETE NO ACTION
+                    ON UPDATE NO ACTION
             );
 
             CREATE TABLE IF NOT EXISTS `peca_eletronica` (
@@ -115,8 +118,10 @@ class ConexaoDB
                 `sobre` TEXT NOT NULL,
                 `imagem` TEXT NOT NULL,
                 `estoque` INT NULL DEFAULT 0,
+                
                 PRIMARY KEY (`id`),
                 INDEX `fk_pessoa_id_idx` (`pessoa_id` ASC),
+
                 CONSTRAINT `fk_peca_eletronica_pessoa_id`
                     FOREIGN KEY (`pessoa_id`)
                     REFERENCES `pessoa` (`id`)
@@ -125,12 +130,14 @@ class ConexaoDB
             );
 
             CREATE TABLE IF NOT EXISTS `interessados` (
-                `id` INT NOT NULL,
+                `id` INT NOT NULL AUTO_INCREMENT,
                 `pessoa_id` INT NOT NULL,
                 `peca_eletronica_id` INT NOT NULL,
+
                 PRIMARY KEY (`id`),
                 INDEX `fk_pessoa_id_idx` (`pessoa_id` ASC),
                 INDEX `fk_peca_eletronica_id_idx` (`peca_eletronica_id` ASC),
+
                 CONSTRAINT `fk_interessados_pessoa_id`
                     FOREIGN KEY (`pessoa_id`)
                     REFERENCES `pessoa` (`id`)
@@ -144,16 +151,18 @@ class ConexaoDB
             );
 
             CREATE TABLE IF NOT EXISTS `pedidos` (
-                `id` VARCHAR(8) NOT NULL,
+                `id` VARCHAR(8) NOT NULL AUTO_INCREMENT,
                 `peca_eletronica_id` INT NOT NULL,
                 `doador_id` INT NOT NULL,
                 `cliente_id` INT NOT NULL,
                 `status` TEXT NOT NULL DEFAULT 'pendente',
                 `created_at` TIMESTAMP NOT NULL,
+
                 PRIMARY KEY (`id`),
                 INDEX `fk_doador_id_idx` (`doador_id` ASC),
                 INDEX `fk_cliente_id_idx` (`cliente_id` ASC),
                 INDEX `fk_peca_eletronica_id_idx` (`peca_eletronica_id` ASC),
+
                 CONSTRAINT `fk_pedidos_doador_id`
                     FOREIGN KEY (`doador_id`)
                     REFERENCES `pessoa` (`id`)

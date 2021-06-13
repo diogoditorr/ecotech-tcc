@@ -37,7 +37,9 @@ class ConexaoDB
             die("Connection failed: " . $conn->connect_error);
         }
 
-        ConexaoDB::createDatabase($conn);
+        if (!ConexaoDB::createDatabase($conn)) {
+            die("Erro ao criar as tabelas: ".$conn->error);
+        };
 
         return $conn;
     }
@@ -151,11 +153,11 @@ class ConexaoDB
             );
 
             CREATE TABLE IF NOT EXISTS `pedidos` (
-                `id` VARCHAR(8) NOT NULL AUTO_INCREMENT,
+                `id` VARCHAR(8) NOT NULL,
                 `peca_eletronica_id` INT NOT NULL,
                 `doador_id` INT NOT NULL,
                 `cliente_id` INT NOT NULL,
-                `status` TEXT NOT NULL DEFAULT 'pendente',
+                `status` VARCHAR(9) NOT NULL DEFAULT 'pendente',
                 `created_at` TIMESTAMP NOT NULL,
 
                 PRIMARY KEY (`id`),
@@ -180,5 +182,19 @@ class ConexaoDB
                     ON UPDATE NO ACTION
             );
         ");
+
+        $error = false;
+        while ($conn->next_result()) {
+            if (!empty($conn->error)) {
+                $error = true;
+                break;
+            }
+
+            if ($result = $conn->store_result()) {
+                $result->free();
+            }
+        }
+
+        return $error;
     }
 }

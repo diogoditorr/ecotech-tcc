@@ -1,4 +1,10 @@
 <?php
+    session_start();
+
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: sign-in.php');
+    }
+
     $title = 'Ecotech | Explorar';
     $css['locations'] = [
         '../../public/styles/page-explore.css',
@@ -30,12 +36,12 @@
         </div>
     </nav>
 
-    <div class="search-bar animate-up-op">
-        <input type="text" placeholder="Pesquise por uma peça">
-        <button>
+    <form class="search-bar animate-up-op">
+        <input name="search" type="text" placeholder="Pesquise por uma peça">
+        <button type="submit">
             <img src="../../public/assets/search.svg" alt="">
         </button>
-    </div>
+    </form>
 
     <h2>Resultados:</h2>
 

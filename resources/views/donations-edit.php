@@ -1,13 +1,19 @@
 <?php
-$title = 'Ecotech | Editando peça';
-$css['locations'] = [
-    '../../public/styles/page-donations-edit.css',
-    '../../public/styles/navigation-bar.css',
-    '../../public/styles/navigation-profile.css',
-    '../../public/styles/animations.css',
-];
+    session_start();
 
-include('../layouts/header.php');
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: sign-in.php');
+    }
+
+    $title = 'Ecotech | Editando peça';
+    $css['locations'] = [
+        '../../public/styles/page-donations-edit.css',
+        '../../public/styles/navigation-bar.css',
+        '../../public/styles/navigation-profile.css',
+        '../../public/styles/animations.css',
+    ];
+
+    include('../layouts/header.php');
 ?>
 
 <div id="page-donations-edit">

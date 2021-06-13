@@ -17,7 +17,7 @@
     </header>
 
     <main>
-        <form class="animate-up-op" action="./explore.php" method="post">
+        <form action="../../src/php/sign-in.php" method="post" class="animate-up-op" >
             <div class="header">
                 <h1>Sign In</h1>
             </div>

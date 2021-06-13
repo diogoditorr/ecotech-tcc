@@ -135,4 +135,37 @@ class Perfil
         
         return (new ConexaoDB())->conectar();
     }
+
+    public function verificarCredenciaisUsuario($email, $cpf, $password)
+    {
+        $conn = $this->getConnection();
+
+        $result = mysqli_query($conn, "
+            SELECT * FROM perfil 
+            WHERE (cpf = '{$cpf}' OR email = '{$email}') AND senha = '{$password}'
+        ");
+
+        if (!$result) {
+            $conn->close();
+            return false;
+        }
+
+        $obj = $result->fetch_object();
+
+        if ($obj === null) {
+            $conn -> close();
+            return false;
+        }
+
+        $this->setId($obj->id);
+        $this->setPessoaId($obj->pessoa_id);
+        $this->setEmail($obj->email);
+        $this->setCpf($obj->cpf);
+        $this->setNomeUsuario($obj->nome_usuario);
+        $this->setSenha($obj->senha);
+
+        $conn->close();
+
+        return $this;
+    }
 }

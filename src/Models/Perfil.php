@@ -4,8 +4,8 @@ class Perfil
 {
     private int $id;
     private int $pessoaId;
-    private string $email;
     private string $cpf;
+    private string $email;
     private string $nomeUsuario;
     private string $senha;
 
@@ -136,13 +136,39 @@ class Perfil
         return (new ConexaoDB())->conectar();
     }
 
-    public function verificarCredenciaisUsuario($email, $cpf, $password)
+    public function inserir(): bool
     {
         $conn = $this->getConnection();
 
-        $result = mysqli_query($conn, "
+        $success = $conn->query("
+            INSERT INTO perfil 
+                (pessoa_id, cpf, email, nome_usuario, senha)
+            VALUES (
+                '{$this->getPessoaId()}',
+                '{$this->getCpf()}',
+                '{$this->getEmail()}',
+                '{$this->getNomeUsuario()}',
+                '{$this->getSenha()}'
+            )
+        ");
+
+        if (!$success) {
+            $conn->close();
+            return false;
+        }
+
+        return true;
+    }
+    
+    public function verificarCredenciaisUsuario($cpf, $email, $password)
+    {
+        $conn = $this->getConnection();
+
+        $result = $conn->query("
             SELECT * FROM perfil 
-            WHERE (cpf = '{$cpf}' OR email = '{$email}') AND senha = '{$password}'
+            WHERE 
+                (cpf = '{$cpf}' OR email = '{$email}') AND 
+                senha = '{$password}'
         ");
 
         if (!$result) {
@@ -167,5 +193,83 @@ class Perfil
         $conn->close();
 
         return $this;
+    }
+
+    public function getProfileByPersonId($pessoaId)
+    {
+        return $this->getProfile("pessoa_id", $pessoaId);
+    }
+    
+    public function getProfileByCpf($cpf)
+    {
+        return $this->getProfile("cpf", $cpf);
+    }
+    
+    public function getProfileByEmail($email)
+    {
+        return $this->getProfile("email", $email);
+    }
+
+    public function getProfile($column, $data)
+    {
+        $conn = $this->getConnection();
+
+        if ($column === "pessoa_id") {
+            $query = "SELECT * FROM perfil WHERE pessoa_id = '{$data}'";
+        }
+        
+        if ($column === "cpf") {
+            $query = "SELECT * FROM perfil WHERE cpf = '{$data}'";
+        }
+
+        if ($column === "email") {
+            $query = "SELECT * FROM perfil WHERE email = '{$data}'";
+        }
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $obj = $result->fetch_object();
+
+        if ($obj === null) {
+            $conn -> close();
+            return null;
+        }
+
+        $this->setId($obj->id);
+        $this->setPessoaId($obj->pessoa_id);
+        $this->setCpf($obj->cpf);
+        $this->setEmail($obj->email);
+        $this->setNomeUsuario($obj->nome_usuario);
+        $this->setSenha($obj->senha);
+
+        $conn->close();
+        return $this;
+    }
+
+    public function hasDataAlreadyRegistered($cpf, $email, $username)
+    {
+        $conn = $this->getConnection();
+
+        $result = $conn->query("
+            SELECT * FROM perfil
+            WHERE 
+                cpf = '{$cpf}' OR
+                email = '{$email}' OR
+                nome_usuario = '{$username}' 
+            ;
+        ");
+
+        if ($result->num_rows > 0) {
+            $conn->close();
+            return true;
+        }
+        
+        $conn->close();
+        return false;
     }
 }

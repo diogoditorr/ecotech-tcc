@@ -135,4 +135,28 @@ class Endereco
         
         return (new ConexaoDB())->conectar();
     }
+
+    public function inserir(): bool
+    {
+        $conn = $this->getConnection();
+
+        $result = $conn->query("
+            INSERT INTO endereco 
+                (pessoa_id, estado, cidade, bairro, cep)
+            VALUES (
+                '{$this->getPessoaId()}',
+                '{$this->getEstado()}',
+                '{$this->getCidade()}',
+                '{$this->getBairro()}',
+                '{$this->getCep()}'
+            )
+        ");
+
+        if (!$result) {
+            $conn->close();
+            return false;
+        }
+
+        return true;
+    }
 }

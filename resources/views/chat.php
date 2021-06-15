@@ -30,7 +30,7 @@
         <div class="right">
             <div class="profile">
                 <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
-                <div class="name">Diego</div>
+                <div class="name"><?= $_SESSION['user_username'] ?></div>
                 <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
             </div>
         </div>
@@ -107,7 +107,7 @@
                 </div>
 
                 <form action="#" class="typing-area">
-                    <!-- <input type="text" name="outgoing_user_id" value="<?= $_SESSION['unique_id'] ?>" hidden>
+                    <!-- <input type="text" name="outgoing_user_id" value="<?= $_SESSION['user_id'] ?>" hidden>
                     <input type="text" name="incoming_user_id" value="<?= $user_id ?>" hidden> -->
 
                     <input type="text" name="message" class="input-field" placeholder="Digite uma mensagem">

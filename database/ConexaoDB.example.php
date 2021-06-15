@@ -83,8 +83,8 @@ class ConexaoDB
             CREATE TABLE IF NOT EXISTS `perfil` (
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `pessoa_id` INT NOT NULL,
-                `email` VARCHAR(320) NOT NULL,
                 `cpf` VARCHAR(11) NOT NULL,
+                `email` VARCHAR(320) NOT NULL,
                 `nome_usuario` VARCHAR(45) NOT NULL,
                 `senha` TEXT NOT NULL,
                 
@@ -183,10 +183,10 @@ class ConexaoDB
             );
         ");
 
-        $error = false;
+        $noError = true;
         while ($conn->next_result()) {
             if (!empty($conn->error)) {
-                $error = true;
+                $noError = false;
                 break;
             }
 
@@ -195,6 +195,6 @@ class ConexaoDB
             }
         }
 
-        return $error;
+        return $noError;
     }
 }

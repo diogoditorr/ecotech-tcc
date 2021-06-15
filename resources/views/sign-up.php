@@ -17,7 +17,7 @@
     </header>
 
     <main>
-        <form class="animate-up-op" action="./explore.php" method="post">
+        <form action="../../src/php/sign-up.php" method="post" class="animate-up-op">
             <div class="form-data">
                 <div class="header">
                     <h1>Cadastro</h1>
@@ -28,11 +28,11 @@
     
                     <div class="field">
                         <label for="username">Nome de usuário</label>
-                        <input type="text" name="username" id="username" required>
+                        <input type="text" name="username" id="username" maxlength="45" required>
                     </div>
                     <div class="field">
                         <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" required>
+                        <input type="email" name="email" id="email" maxlength="320" required>
                     </div>
                     <div class="field-half">
                         <label for="password">Senha</label>
@@ -62,6 +62,7 @@
                                 type="tel" 
                                 name="phoneNumber1" 
                                 id="phoneNumber1" 
+                                maxlength="20"
                                 required
                             >
                         </div>
@@ -71,13 +72,14 @@
                                 type="tel" 
                                 name="phoneNumber2" 
                                 id="phoneNumber2" 
+                                maxlength="20"
                                 required
                             >
                         </div>
                     </div>
                     <div class="field-half">
                         <label for="cpf">CPF</label>
-                        <input type="text" name="cpf" id="cpf">
+                        <input type="text" name="cpf" id="cpf" maxlength="11" required>
                     </div>
                 </fieldset>
     

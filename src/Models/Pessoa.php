@@ -156,4 +156,85 @@ class Pessoa
 
         return (new ConexaoDB())->conectar();
     }
+
+    public function inserir(): bool
+    {
+        $conn = $this->getConnection();
+
+        $result = $conn->query("
+            INSERT INTO pessoa
+                (cpf, email, nome, escola, num_telefone_1, num_telefone_2)
+            VALUES (
+                '{$this->getCpf()}',
+                '{$this->getEmail()}',
+                '{$this->getNome()}',
+                '{$this->getEscola()}',
+                '{$this->getNumTelefone1()}',
+                '{$this->getNumTelefone2()}'
+            )
+        ");
+
+        if (!$result) {
+            $conn->close();
+            return false;
+        }
+
+        return true;
+    }
+
+    public function getPersonByPersonId($pessoaId)
+    {
+        return $this->getPerson("pessoa_id", $pessoaId);
+    }
+    
+    public function getPersonByEmail($email)
+    {
+        return $this->getPerson("email", $email);
+    }
+    
+    public function getPersonByCpf($cpf)
+    {
+        return $this->getPerson("cpf", $cpf);
+    }
+
+    public function getPerson($column, $data)
+    {
+        $conn = $this->getConnection();
+
+        if ($column === "pessoa_id") {
+            $query = "SELECT * FROM pessoa WHERE id = '{$data}'";
+        }
+
+        if ($column === "email") {
+            $query = "SELECT * FROM pessoa WHERE email = '{$data}'";
+        }
+
+        if ($column === "cpf") {
+            $query = "SELECT * FROM pessoa WHERE cpf = '{$data}'";
+        }
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $obj = $result->fetch_object();
+
+        if ($obj === null) {
+            $conn -> close();
+            return null;
+        }
+
+        $this->setId($obj->id);
+        $this->setCpf($obj->cpf);
+        $this->setEmail($obj->email);
+        $this->setNome($obj->nome);
+        $this->setNumTelefone1($obj->num_telefone_1);
+        $this->setNumTelefone2($obj->num_telefone_2);
+
+        $conn->close();
+        return $this;
+    }
 }

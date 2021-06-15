@@ -30,7 +30,7 @@
         <div class="right">
             <div class="profile">
                 <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
-                <div class="name">Diego</div>
+                <div class="name"><?= $_SESSION['user_username'] ?></div>
                 <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
             </div>
         </div>

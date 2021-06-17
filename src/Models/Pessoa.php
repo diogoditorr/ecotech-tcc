@@ -161,7 +161,7 @@ class Pessoa
     {
         $conn = $this->getConnection();
 
-        $result = $conn->query("
+        $query = "
             INSERT INTO pessoa
                 (cpf, email, nome, escola, num_telefone_1, num_telefone_2)
             VALUES (
@@ -172,12 +172,13 @@ class Pessoa
                 '{$this->getNumTelefone1()}',
                 '{$this->getNumTelefone2()}'
             )
-        ");
+        ";
 
-        if (!$result) {
-            $conn->close();
-            return false;
-        }
+        $conn->query($query) or 
+            trigger_error("
+                Query Failed! SQL: $query - Error: ". mysqli_error($conn), 
+                E_USER_ERROR
+            );
 
         return true;
     }

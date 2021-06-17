@@ -140,7 +140,7 @@ class Endereco
     {
         $conn = $this->getConnection();
 
-        $result = $conn->query("
+        $query = "
             INSERT INTO endereco 
                 (pessoa_id, estado, cidade, bairro, cep)
             VALUES (
@@ -150,12 +150,13 @@ class Endereco
                 '{$this->getBairro()}',
                 '{$this->getCep()}'
             )
-        ");
+        ";
 
-        if (!$result) {
-            $conn->close();
-            return false;
-        }
+        $conn->query($query) or 
+            trigger_error("
+                Query Failed! SQL: $query - Error: ". mysqli_error($conn), 
+                E_USER_ERROR
+            );
 
         return true;
     }

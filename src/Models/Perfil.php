@@ -140,7 +140,7 @@ class Perfil
     {
         $conn = $this->getConnection();
 
-        $success = $conn->query("
+        $query = "
             INSERT INTO perfil 
                 (pessoa_id, cpf, email, nome_usuario, senha)
             VALUES (
@@ -150,12 +150,13 @@ class Perfil
                 '{$this->getNomeUsuario()}',
                 '{$this->getSenha()}'
             )
-        ");
+        ";
 
-        if (!$success) {
-            $conn->close();
-            return false;
-        }
+        $conn->query($query) or
+            trigger_error("
+                Query Failed! SQL: $query - Error: ". mysqli_error($conn), 
+                E_USER_ERROR
+            );
 
         return true;
     }

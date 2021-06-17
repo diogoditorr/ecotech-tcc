@@ -116,7 +116,7 @@
     
                     <div class="field-half">
                         <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep" required>
+                        <input type="text" name="cep" id="cep" maxlength="15" required>
                     </div>
                 </fieldset>
             </div>

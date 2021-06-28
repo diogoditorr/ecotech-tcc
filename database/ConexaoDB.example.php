@@ -1,6 +1,6 @@
 <?php
 
-class ConexaoDB 
+class ConexaoDB
 {
     /*
         - Você deve copiar e colar o mesmo arquivo no mesmo diretório.
@@ -17,20 +17,20 @@ class ConexaoDB
         $port = Porta do banco de dados
         -------------------------------------------
     */
-    private $serverName = "localhost";
-    private $userName = "root";
-    private $password = "usbw";
-    private $dbName = "ecotech";
-    private $port = "3306";
+    private static $serverName = "localhost";
+    private static $userName = "root";
+    private static $password = "usbw";
+    private static $dbName = "ecotech";
+    private static $port = "3306";
 
-    public function conectar(): \mysqli
+    public static function conectar(): \mysqli
     {
         $conn = new \mysqli(
-            $this->serverName,
-            $this->userName,
-            $this->password,
-            $this->dbName,
-            $this->port
+            ConexaoDB::$serverName,
+            ConexaoDB::$userName,
+            ConexaoDB::$password,
+            ConexaoDB::$dbName,
+            ConexaoDB::$port
         );
 
         if ($conn->connect_error) {
@@ -38,7 +38,7 @@ class ConexaoDB
         }
 
         if (!ConexaoDB::createDatabase($conn)) {
-            die("Erro ao criar as tabelas: ".$conn->error);
+            die("Erro ao criar as tabelas: " . $conn->error);
         };
 
         return $conn;

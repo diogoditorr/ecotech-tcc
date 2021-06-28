@@ -67,15 +67,13 @@
 
         <div class="part">
             <div class="image">
-                <img src="../../storage/parts/image_1.png" alt="">
+                <img src="../../storage/parts/image_4.png" alt="">
             </div>
-            <div class="name">Semicondutores e transístores</div>
+            <div class="name">Semicondutores</div>
             <div class="description">
-                Os componentes eletrônicos são todos os elementos que compõem a estrutura de um 
-                todos os componentes e fornecendo um trabalho conjunto onde um interfere no funcionamento 
-                do outro.
+                Semicondutores são sólidos geralmente cristalinos de condutividade elétrica intermediária entre condutores e isolantes.
             </div>
-            <div class="user-name">• Aluno: Jefferson</div>
+            <div class="user-name">• Aluno: Paulo</div>
             <div class="buttons">
                 <button class="see-details">Ver detalhes</button>
                 <button class="favorite"><img src="../../public/assets/heart.svg" alt=""></button>
@@ -84,17 +82,13 @@
 
         <div class="part">
             <div class="image">
-                <img src="../../storage/parts/image_1.png" alt="">
+                <img src="../../storage/parts/image_3.png" alt="">
             </div>
-            <div class="name">Semicondutores e transístores</div>
+            <div class="name">Semicondutor de Potência</div>
             <div class="description">
-                Os componentes eletrônicos são todos os elementos que compõem a estrutura de um 
-                circuito elétrico, ou seja, fazem parte de todo circuito eletrônico ou elétrico 
-                e estão sempre ligados entre si, formando um sequencial de funções, interligando 
-                todos os componentes e fornecendo um trabalho conjunto onde um interfere no funcionamento 
-                do outro.
+                As chaves semicondutoras de potência são os elementos mais importantes em circuitos de eletrônica de potência.
             </div>
-            <div class="user-name">• Aluno: Jefferson</div>
+            <div class="user-name">• Aluno: Luis Fernando</div>
             <div class="buttons">
                 <button class="see-details">Ver detalhes</button>
                 <button class="favorite"><img src="../../public/assets/heart.svg" alt=""></button>

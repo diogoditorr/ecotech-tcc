@@ -77,8 +77,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
-                        <td class="name">Semicondutores e transístores e transístores e transístores e transístores</td>
+                        <td class="image"><img src="../../storage/parts/image_4.png" alt=""></td>
+                        <td class="name">Semicondutores</td>
                         <td class="see-details">
                             <a href="./interested-details.php">
                                 <img src="../../public/assets/info.svg" alt="">

@@ -86,22 +86,22 @@
                     </div>
                     <div class="message incoming">
                         <div class="content">
-                            <p>Obrigado! Como podemos se encontrar?</p>
+                            <p>Como podemos se encontrar?</p>
+                        </div>
+                    </div>
+                    <div class="message outgoing">
+                        <div class="content">
+                            <p>Vou estar livre no dia 26 às 18:00 no centro. Tudo bem pra você?</p>
                         </div>
                     </div>
                     <div class="message incoming">
                         <div class="content">
-                            <p>Obrigado! Como podemos se encontrar?Obrigado! Como podemos se encontrar?Obrigado! Como podemos se encontrar?Obrigado! Como podemos se encontrar?</p>
+                            <p>Claro!</p>
                         </div>
                     </div>
-                    <div class="message incoming">
+                    <div class="message outgoing">
                         <div class="content">
-                            <p>Obrigado! Como podemos se encontrar?</p>
-                        </div>
-                    </div>
-                    <div class="message incoming">
-                        <div class="content">
-                            <p>Obrigado! Como podemos se encontrar?</p>
+                            <p>Marcado então 😀</p>
                         </div>
                     </div>
                 </div>

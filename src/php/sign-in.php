@@ -7,18 +7,23 @@ if (!isset($_POST["emailCpf"]) || !isset($_POST["password"])) {
     exit();
 } 
 
+$profile = null;
 if (filter_var($_POST["emailCpf"], FILTER_VALIDATE_EMAIL)) {
-    $user = PessoasController::verificarCredenciaisUsuario(null, $_POST["emailCpf"], $_POST["password"]);
+    if (PessoasController::verificarCredenciaisUsuario(null, $_POST["emailCpf"], $_POST["password"]))
+        $profile = PessoasController::carregarPerfil(null, null, $_POST["emailCpf"]);
+
 } else {
-    $user = PessoasController::verificarCredenciaisUsuario($_POST["emailCpf"], null, $_POST["password"]);
+    if (PessoasController::verificarCredenciaisUsuario($_POST["emailCpf"], null, $_POST["password"]))
+        $profile = PessoasController::carregarPerfil(null, $_POST["emailCpf"], null);
 }
 
-if (!$user) {
+if ($profile === null) {
     header("Location: ../../resources/views/sign-in.php?error='Email/cpf ou senha invalida'");
     exit();
 }
 
 session_start();
-$_SESSION['user_id'] = $user->getPessoaId();
-$_SESSION['user_username'] = $user->getNomeUsuario();
+$_SESSION['user_id'] = $profile->getPessoaId();
+$_SESSION['user_username'] = $profile->getNomeUsuario();
+
 header("Location: ../../resources/views/explore.php");

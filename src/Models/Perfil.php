@@ -129,16 +129,68 @@ class Perfil
         return $this;
     }
 
-    public function getConnection(): \mysqli
+    private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
         
-        return (new ConexaoDB())->conectar();
+        return ConexaoDB::conectar();
+    }
+
+    private static function serialize(stdClass $object): Perfil
+    {
+        return (new Perfil())
+                    ->setId($object->id)
+                    ->setPessoaId($object->pessoa_id)
+                    ->setCpf($object->cpf)
+                    ->setEmail($object->email)
+                    ->setNomeUsuario($object->nome_usuario)
+                    ->setSenha($object->senha);
+    }
+    
+    private static function get($column, $data)
+    {
+        $conn = Perfil::getConnection();
+
+        $query = "SELECT * FROM perfil WHERE {$column} = '{$data}'";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $obj = $result->fetch_object();
+
+        if ($obj === null) {
+            $conn -> close();
+            return null;
+        }
+
+        $profile = Perfil::serialize($obj);
+
+        $conn->close();
+        return $profile;
+    }
+
+    public static function getByPersonId($pessoaId)
+    {
+        return Perfil::get("pessoa_id", $pessoaId);
+    }
+    
+    public static function getByCpf($cpf)
+    {
+        return Perfil::get("cpf", $cpf);
+    }
+    
+    public static function getByEmail($email)
+    {
+        return Perfil::get("email", $email);
     }
 
     public function inserir(): bool
     {
-        $conn = $this->getConnection();
+        $conn = Perfil::getConnection();
 
         $query = "
             INSERT INTO perfil 
@@ -161,9 +213,9 @@ class Perfil
         return true;
     }
     
-    public function verificarCredenciaisUsuario($cpf, $email, $password)
+    public static function verificarCredenciaisUsuario($cpf, $email, $password)
     {
-        $conn = $this->getConnection();
+        $conn = Perfil::getConnection();
 
         $result = $conn->query("
             SELECT * FROM perfil 
@@ -184,77 +236,17 @@ class Perfil
             return false;
         }
 
-        $this->setId($obj->id);
-        $this->setPessoaId($obj->pessoa_id);
-        $this->setEmail($obj->email);
-        $this->setCpf($obj->cpf);
-        $this->setNomeUsuario($obj->nome_usuario);
-        $this->setSenha($obj->senha);
+        $profile = Perfil::serialize($obj);
 
         $conn->close();
 
-        return $this;
+        return $profile;
     }
 
-    public function getProfileByPersonId($pessoaId)
+
+    public static function hasDataAlreadyRegistered(string $cpf, string $email, string $username)
     {
-        return $this->getProfile("pessoa_id", $pessoaId);
-    }
-    
-    public function getProfileByCpf($cpf)
-    {
-        return $this->getProfile("cpf", $cpf);
-    }
-    
-    public function getProfileByEmail($email)
-    {
-        return $this->getProfile("email", $email);
-    }
-
-    public function getProfile($column, $data)
-    {
-        $conn = $this->getConnection();
-
-        if ($column === "pessoa_id") {
-            $query = "SELECT * FROM perfil WHERE pessoa_id = '{$data}'";
-        }
-        
-        if ($column === "cpf") {
-            $query = "SELECT * FROM perfil WHERE cpf = '{$data}'";
-        }
-
-        if ($column === "email") {
-            $query = "SELECT * FROM perfil WHERE email = '{$data}'";
-        }
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            $conn->close();
-            return null;
-        }
-
-        $obj = $result->fetch_object();
-
-        if ($obj === null) {
-            $conn -> close();
-            return null;
-        }
-
-        $this->setId($obj->id);
-        $this->setPessoaId($obj->pessoa_id);
-        $this->setCpf($obj->cpf);
-        $this->setEmail($obj->email);
-        $this->setNomeUsuario($obj->nome_usuario);
-        $this->setSenha($obj->senha);
-
-        $conn->close();
-        return $this;
-    }
-
-    public function hasDataAlreadyRegistered($cpf, $email, $username)
-    {
-        $conn = $this->getConnection();
+        $conn = Perfil::getConnection();
 
         $result = $conn->query("
             SELECT * FROM perfil

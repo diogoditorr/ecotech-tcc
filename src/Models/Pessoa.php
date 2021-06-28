@@ -150,16 +150,68 @@ class Pessoa
         return $this;
     }
 
-    public function getConnection(): \mysqli
+    private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
 
-        return (new ConexaoDB())->conectar();
+        return ConexaoDB::conectar();
+    }
+
+    private static function serialize(stdClass $object): Pessoa
+    {
+        return (new Pessoa())
+                    ->setId($object->id)
+                    ->setCpf($object->cpf)
+                    ->setEmail($object->email)
+                    ->setNome($object->nome)
+                    ->setNumTelefone1($object->num_telefone_1)
+                    ->setNumTelefone2($object->num_telefone_2);
+    }
+                
+    private static function get($column, $data)
+    {
+        $conn = Pessoa::getConnection();
+
+        $query = "SELECT * FROM pessoa WHERE {$column} = '{$data}'";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $obj = $result->fetch_object();
+
+        if ($obj === null) {
+            $conn -> close();
+            return null;
+        }
+
+        $person = Pessoa::serialize($obj);
+
+        $conn->close();
+        return $person;
+    }
+
+    public static function getById($pessoaId)
+    {
+        return Pessoa::get("pessoa_id", $pessoaId);
+    }
+    
+    public static function getByEmail($email)
+    {
+        return Pessoa::get("email", $email);
+    }
+    
+    public static function getByCpf($cpf)
+    {
+        return Pessoa::get("cpf", $cpf);
     }
 
     public function inserir(): bool
     {
-        $conn = $this->getConnection();
+        $conn = Pessoa::getConnection();
 
         $query = "
             INSERT INTO pessoa
@@ -181,61 +233,5 @@ class Pessoa
             );
 
         return true;
-    }
-
-    public function getPersonByPersonId($pessoaId)
-    {
-        return $this->getPerson("pessoa_id", $pessoaId);
-    }
-    
-    public function getPersonByEmail($email)
-    {
-        return $this->getPerson("email", $email);
-    }
-    
-    public function getPersonByCpf($cpf)
-    {
-        return $this->getPerson("cpf", $cpf);
-    }
-
-    public function getPerson($column, $data)
-    {
-        $conn = $this->getConnection();
-
-        if ($column === "pessoa_id") {
-            $query = "SELECT * FROM pessoa WHERE id = '{$data}'";
-        }
-
-        if ($column === "email") {
-            $query = "SELECT * FROM pessoa WHERE email = '{$data}'";
-        }
-
-        if ($column === "cpf") {
-            $query = "SELECT * FROM pessoa WHERE cpf = '{$data}'";
-        }
-
-        $result = $conn->query($query);
-
-        if (!$result) {
-            $conn->close();
-            return null;
-        }
-
-        $obj = $result->fetch_object();
-
-        if ($obj === null) {
-            $conn -> close();
-            return null;
-        }
-
-        $this->setId($obj->id);
-        $this->setCpf($obj->cpf);
-        $this->setEmail($obj->email);
-        $this->setNome($obj->nome);
-        $this->setNumTelefone1($obj->num_telefone_1);
-        $this->setNumTelefone2($obj->num_telefone_2);
-
-        $conn->close();
-        return $this;
     }
 }

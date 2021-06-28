@@ -8,8 +8,7 @@ class PessoasController
 {
     public static function registrarUsuario(array $data)
     {
-        $dataAlreadyRegistered = (new Perfil())
-            ->hasDataAlreadyRegistered($data['cpf'], $data['email'], $data['username']);
+        $dataAlreadyRegistered = Perfil::hasDataAlreadyRegistered($data['cpf'], $data['email'], $data['username']);
 
         if ($dataAlreadyRegistered) {
             return array(
@@ -28,7 +27,7 @@ class PessoasController
             ->inserir();
 
         if ($registerPessoaSuccess) {
-            $pessoaId = (new Pessoa())->getPersonByCpf($data['cpf'])->getId();
+            $pessoaId = Pessoa::getByCpf($data['cpf'])->getId();
 
             $registerPerfilSuccess = (new Perfil())
                 ->setPessoaId($pessoaId)
@@ -65,13 +64,13 @@ class PessoasController
         $profile = null;
 
         if ($pessoaId) {
-            $profile = (new Perfil())->getProfileByPersonId($pessoaId);
+            $profile = Perfil::getByPersonId($pessoaId);
 
         } else if ($cpf) {
-            $profile = (new Perfil())->getProfileByCpf($cpf);
+            $profile = Perfil::getByCpf($cpf);
             
         } else if ($email) {
-            $profile = (new Perfil())->getProfileByEmail($email);
+            $profile = Perfil::getByEmail($email);
         }
 
         return $profile;
@@ -79,7 +78,6 @@ class PessoasController
 
     public static function verificarCredenciaisUsuario($cpf, $email, $password) 
     {
-        return (new Perfil())->verificarCredenciaisUsuario($cpf, $email, $password);
+        return Perfil::verificarCredenciaisUsuario($cpf, $email, $password);
     }
-
 }

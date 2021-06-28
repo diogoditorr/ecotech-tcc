@@ -73,19 +73,20 @@
 
                     <div class="field">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" required>
+                        <input type="text" name="name" id="name" value="Semicondutores e transístores" required>
                     </div>
                     <div class="field">
                         <label for="type">Tipo</label>
-                        <input type="text" name="type" id="type" required>
+                        <input type="text" name="type" id="type" value="Semicondutores e transítores" required>
                     </div>
                     <div class="field">
                         <label for="model">Modelo</label>
-                        <input type="text" name="model" id="model" required>
+                        <input type="text" name="model" id="model" value="ON Semiconductor - NCV303LSN15T1G / NA Transistor - 2N2222A" required>
                     </div>
                     <div class="field">
                         <label for="about">Sobre</label>
-                        <textarea name="about" id="about" cols="30" rows="10"></textarea>
+                        <textarea name="about" id="about" cols="30" rows="10">Os componentes eletrônicos são todos os elementos que compõem a estrutura de um circuito elétrico, ou seja, fazem parte de todo circuito eletrônico ou elétrico e estão sempre ligados entre si, formando um sequencial de funções, interligando todos os componentes e fornecendo um trabalho conjunto onde um interfere no funcionamento do outro.
+                        </textarea>
                     </div>
 
                     <div class="field">
@@ -95,7 +96,7 @@
                             <button class="subtract">
                                 <?php echo file_get_contents("../../public/assets/arrow-left-stock-menu.svg"); ?>
                             </button>
-                            <input type="number" name="stock" id="stock" value="0">
+                            <input type="number" name="stock" id="stock" value="4">
                             <button class="add">
                                 <?php echo file_get_contents("../../public/assets/arrow-right-stock-menu.svg"); ?>
                             </button>

@@ -53,7 +53,7 @@
         </section>
 
         <section class="content">
-            <form action="./explore.php" method="post">
+            <form action="../../src/php/donations-new.php" method="post" enctype="multipart/form-data">
 
                 <div class="header">
                     <?php echo file_get_contents("../../public/assets/gear.svg"); ?>
@@ -85,7 +85,7 @@
                     </div>
                     <div class="field">
                         <label for="about">Sobre</label>
-                        <textarea name="about" id="about" cols="30" rows="10"></textarea>
+                        <textarea name="about" id="about" cols="30" rows="10" required></textarea>
                     </div>
 
                     <div class="field">
@@ -106,7 +106,7 @@
                 <fieldset>
                     <legend>Imagem</legend>
 
-                    <input type="file">
+                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required>
                 </fieldset>
 
                 <div class="footer">

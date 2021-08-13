@@ -157,7 +157,7 @@ class Pessoa
         return ConexaoDB::conectar();
     }
 
-    private static function serialize(stdClass $object): Pessoa
+    private static function unserialize(stdClass $object): Pessoa
     {
         return (new Pessoa())
                     ->setId($object->id)
@@ -188,7 +188,7 @@ class Pessoa
             return null;
         }
 
-        $person = Pessoa::serialize($obj);
+        $person = Pessoa::unserialize($obj);
 
         $conn->close();
         return $person;

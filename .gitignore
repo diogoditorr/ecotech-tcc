@@ -1,3 +1,5 @@
 .vscode
 .env
 ConexaoDB.php
+/vendor/
+/storage/parts/*

@@ -136,7 +136,7 @@ class Perfil
         return ConexaoDB::conectar();
     }
 
-    private static function serialize(stdClass $object): Perfil
+    private static function unserialize(stdClass $object): Perfil
     {
         return (new Perfil())
                     ->setId($object->id)
@@ -150,7 +150,6 @@ class Perfil
     private static function get($column, $data)
     {
         $conn = Perfil::getConnection();
-
         $query = "SELECT * FROM perfil WHERE {$column} = '{$data}'";
 
         $result = $conn->query($query);
@@ -167,7 +166,7 @@ class Perfil
             return null;
         }
 
-        $profile = Perfil::serialize($obj);
+        $profile = Perfil::unserialize($obj);
 
         $conn->close();
         return $profile;
@@ -210,6 +209,8 @@ class Perfil
                 E_USER_ERROR
             );
 
+        $conn->close();
+
         return true;
     }
     
@@ -236,7 +237,7 @@ class Perfil
             return false;
         }
 
-        $profile = Perfil::serialize($obj);
+        $profile = Perfil::unserialize($obj);
 
         $conn->close();
 

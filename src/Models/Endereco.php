@@ -129,16 +129,16 @@ class Endereco
         return $this;
     }
 
-    public function getConnection(): \mysqli
+    private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
         
-        return (new ConexaoDB())->conectar();
+        return ConexaoDB::conectar();
     }
 
     public function inserir(): bool
     {
-        $conn = $this->getConnection();
+        $conn = Endereco::getConnection();
 
         $query = "
             INSERT INTO endereco 

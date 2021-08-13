@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+
+use Models\Imagem;
+
 class PecaEletronica
 {
     private int $id;
@@ -8,7 +12,7 @@ class PecaEletronica
     private string $tipo;
     private string $modelo;
     private string $sobre;
-    private string $imagem;
+    private Imagem $imagem;
     private int $estoque;
 
     /**
@@ -171,10 +175,47 @@ class PecaEletronica
         return $this;
     }
 
-    public function getConnection(): \mysqli
+    private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
         
-        return (new ConexaoDB())->conectar();
+        return \ConexaoDB::conectar();
+    }
+
+    private static function storageImage(Imagem $image) {
+        $directory = __DIR__."/../../storage/parts/";
+        if (!move_uploaded_file($image->tmpNamePath, $directory.$image->nameFormated)) {
+            throw new \Exception("Failed to upload image");
+        }
+    }
+
+    public function inserir()
+    {
+        PecaEletronica::storageImage($this->imagem);
+
+        $connection = PecaEletronica::getConnection();
+        $query = "
+            INSERT INTO peca_eletronica 
+                (pessoa_id, nome, tipo, modelo, sobre, imagem, estoque) 
+            VALUES (
+                {$this->getPessoaId()}, 
+                '{$this->getNome()}', 
+                '{$this->getTipo()}', 
+                '{$this->getModelo()}', 
+                '{$this->getSobre()}', 
+                '{$this->getImagem()->nameFormated}', 
+                {$this->getEstoque()}
+            )
+        ";
+
+        $connection->query($query) or
+            trigger_error("
+                Query Failed! SQL: $query - Error: ". mysqli_error($connection), 
+                E_USER_ERROR
+            );
+
+        $connection->close();
+
+        return true;
     }
 }

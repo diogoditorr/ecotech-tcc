@@ -129,10 +129,10 @@ class Pedido
         return $this;
     }
 
-    public static function getConnection(): \mysqli
+    private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
         
-        return (new ConexaoDB())->conectar();
+        return ConexaoDB::conectar();
     }
 }

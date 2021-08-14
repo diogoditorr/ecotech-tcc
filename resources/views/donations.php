@@ -1,5 +1,4 @@
 <?php
-
     require_once __DIR__ . '/../../vendor/autoload.php';
 
     use Controllers\PecasEletronicasController;
@@ -82,7 +81,7 @@
                     <tbody>
                         <?php
                             $pecasEletronicas = PecasEletronicasController::buscarPecas($_SESSION['user_id']);
-                    
+
                             /** 
                             * @var PecaEletronica $peca 
                             */ 
@@ -99,7 +98,7 @@
                                     <td class=\"stock\">{$peca->getEstoque()}</td>
                                     <td class=\"buttons\">
                                         <div class=\"wrapper\">
-                                            <a class=\"edit\" href=\"./donations-edit.php\">".
+                                            <a class=\"edit\" href=\"./donations-edit.php?peca_id={$peca->getId()}\">".
                                                 file_get_contents("../../public/assets/edit.svg")."
                                                 <span>Editar</span>
                                             </a>

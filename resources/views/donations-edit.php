@@ -1,8 +1,23 @@
-<?php
+<?php   
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+    use Controllers\PecasEletronicasController;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+    }
+    
+    if (!isset($_GET['peca_id'])) {
+        header('Location: donations.php');
+    }
+    
+    $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
+    if ($pecaEletronica == null) {
+        header('Location: donations.php');
+        // http_response_code(404);
+        // exit();
     }
 
     $title = 'Ecotech | Editando peça';
@@ -53,8 +68,7 @@
         </section>
 
         <section class="content">
-            <form action="./explore.php" method="post">
-
+            <form action="../../src/php/donations-edit.php" method="post" enctype="multipart/form-data">
                 <div class="header">
                     <?php echo file_get_contents("../../public/assets/gear.svg"); ?>
 
@@ -71,22 +85,22 @@
                 <fieldset>
                     <legend>Dados</legend>
 
+                    <input type="number" name="id" value="<?=$pecaEletronica->getId()?>" hidden>
                     <div class="field">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" value="Semicondutores e transístores" required>
+                        <input type="text" name="name" id="name" value="<?=$pecaEletronica->getNome()?>" required>
                     </div>
                     <div class="field">
                         <label for="type">Tipo</label>
-                        <input type="text" name="type" id="type" value="Semicondutores e transítores" required>
+                        <input type="text" name="type" id="type" value="<?=$pecaEletronica->getTipo()?>" required>
                     </div>
                     <div class="field">
                         <label for="model">Modelo</label>
-                        <input type="text" name="model" id="model" value="ON Semiconductor - NCV303LSN15T1G / NA Transistor - 2N2222A" required>
+                        <input type="text" name="model" id="model" value="<?=$pecaEletronica->getModelo()?>" required>
                     </div>
                     <div class="field">
                         <label for="about">Sobre</label>
-                        <textarea name="about" id="about" cols="30" rows="10">Os componentes eletrônicos são todos os elementos que compõem a estrutura de um circuito elétrico, ou seja, fazem parte de todo circuito eletrônico ou elétrico e estão sempre ligados entre si, formando um sequencial de funções, interligando todos os componentes e fornecendo um trabalho conjunto onde um interfere no funcionamento do outro.
-                        </textarea>
+                        <textarea name="about" id="about" cols="30" rows="10" required><?=$pecaEletronica->getSobre()?></textarea>
                     </div>
 
                     <div class="field">
@@ -96,7 +110,7 @@
                             <button class="subtract">
                                 <?php echo file_get_contents("../../public/assets/arrow-left-stock-menu.svg"); ?>
                             </button>
-                            <input type="number" name="stock" id="stock" value="4">
+                            <input type="number" name="stock" id="stock" value="<?=$pecaEletronica->getEstoque()?>" required>
                             <button class="add">
                                 <?php echo file_get_contents("../../public/assets/arrow-right-stock-menu.svg"); ?>
                             </button>
@@ -109,11 +123,11 @@
 
                     <div class="container-image">
                         <div class="image">
-                            <img src="../../storage/parts/image_1.png" alt="">
+                            <img src="../../storage/parts/<?=$pecaEletronica->getImagem()->name?>" alt="">
                         </div>
                     </div>
 
-                    <input type="file">
+                    <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg">
                 </fieldset>
 
                 <div class="footer">

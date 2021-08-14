@@ -41,6 +41,39 @@ class PecasEletronicasController
         return PecaEletronica::buscarPecas($userId);
     }
 
+    public static function getById($pecaId)
+    {
+        return PecaEletronica::getById($pecaId);
+    }
+
+    public static function editarPeca(array $data)
+    {
+        if ($data['image'] !== null)
+            $data['image'] = new Imagem($data['image']);
+        
+        try {
+            (new PecaEletronica)
+                ->setId($data['id'])
+                ->setNome($data['name'])
+                ->setTipo($data['type'])
+                ->setModelo($data['model'])
+                ->setSobre($data['about'])
+                ->setEstoque($data['stock'])
+                ->setImagem($data['image'])
+                ->editarPeca();
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'error' => $e->getMessage()
+            ];
+        }
+
+        return [
+            'success' => true,
+            'error' => null
+        ];
+    }
+
     private static function validateImageExtension(Imagem $image) {
         $extensions = ['png', 'jpeg', 'jpg'];
         if (!in_array($image->extension, $extensions)) {

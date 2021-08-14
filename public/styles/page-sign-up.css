@@ -24,11 +24,10 @@
     left: calc(50% - 149px);
 }
 
-
 /* Form */
 #page-sign-up form {
     width: 60%;
-    
+
     margin: auto;
     border-radius: 8px;
 
@@ -39,7 +38,7 @@
 }
 
 #page-sign-up form .form-data {
-    padding: 6rem 6.4rem 9rem 6.4rem;   
+    padding: 6rem 6.4rem 9rem 6.4rem;
 }
 
 #page-sign-up form .header {
@@ -69,7 +68,7 @@
 #page-sign-up form fieldset legend {
     width: 100%;
 
-    padding-bottom: .8rem;
+    padding-bottom: 0.8rem;
 
     border-bottom-width: 1px;
     border-bottom-style: solid;
@@ -77,7 +76,7 @@
 
     font-size: 24px;
     font-weight: bold;
-    
+
     color: var(--title);
 }
 
@@ -105,12 +104,12 @@
     margin-bottom: 8px;
 
     font-size: 14px;
-    
-    color: var(--text);   
+
+    color: var(--text);
 }
 
 #page-sign-up form fieldset .field input,
-#page-sign-up form fieldset .field select, 
+#page-sign-up form fieldset .field select,
 #page-sign-up form fieldset .field-half input {
     padding: 1.65rem;
 
@@ -118,14 +117,13 @@
     border-color: #838383;
     border-radius: 8px;
 
-    font: 1.6rem 'Archivo', 'Inter';
+    font: 1.6rem "Archivo", "Inter";
     color: var(--black-text);
 }
 
 #page-sign-up form fieldset .field-half input {
     width: calc(50% - 1.5rem);
 }
-
 
 /* Form footer */
 #page-sign-up form .footer {
@@ -135,7 +133,7 @@
 
     padding: 3.7rem 6.4rem;
 
-    border-color: #AFAFAF;
+    border-color: #afafaf;
     border-top-width: 1px;
     border-top-style: solid;
     border-radius: 0 0 8px 8px;
@@ -150,7 +148,7 @@
 
 #page-sign-up form .footer .warning span {
     width: 20rem;
- 
+
     margin-left: 2.2rem;
 
     color: var(--text);
@@ -162,18 +160,24 @@
     align-items: center;
 
     padding: 3.6rem 11.6rem;
-    
+
     border: 1px black solid;
     border-radius: 8px;
-    
-    background-color: #0EC5DE;
+
+    background-color: #0ec5de;
     box-shadow: inset 0px -8px 0px rgba(0, 0, 0, 0.25);
 
     cursor: pointer;
+
+    --delay: 0.2s;
+    transition: 
+        padding var(--delay) ease-in-out,
+        margin var(--delay) ease-in-out,
+        box-shadow var(--delay) ease-in-out;
 }
 
 #page-sign-up form .footer button:hover {
-    margin-top: .8rem;
+    margin-top: 0.8rem;
     padding: 3.2rem 11.6rem;
 
     box-shadow: inset 0px -4px 0px rgba(0, 0, 0, 0.25);

@@ -12,13 +12,18 @@ if (!isset($_SESSION['user_id'])) {
 
 // Verify if all data is filled in
 if (empty($_FILES['image']['name'])) {
-    throw new \Exception('No image file');
+    $imageInfo = null;
+} else {
+    $imageInfo = $_FILES['image'];
 }
 
-$result = PecasEletronicasController::registrarPeca($_POST + $_FILES);
+$result = PecasEletronicasController::editarPeca($_POST + ['image' => $imageInfo]);
 
 if ($result['success']) {
     header("Location: ../../resources/views/donations.php");
 } else {
-    header("Location: ../../resources/views/donations-new.php");
+    header(
+        "Location: ../../resources/views/donations-edit.php?".
+            "peca_id={$_POST['id']}&error={$result['error']}"
+    );
 }

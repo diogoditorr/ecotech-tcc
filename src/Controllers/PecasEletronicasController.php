@@ -36,6 +36,11 @@ class PecasEletronicasController
         ];
     }
 
+    public static function buscarPecas(int $userId)
+    {
+        return PecaEletronica::buscarPecas($userId);
+    }
+
     private static function validateImageExtension(Imagem $image) {
         $extensions = ['png', 'jpeg', 'jpg'];
         if (!in_array($image->extension, $extensions)) {

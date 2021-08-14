@@ -1,4 +1,10 @@
 <?php
+
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+    use Controllers\PecasEletronicasController;
+    use Models\PecaEletronica;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
@@ -74,6 +80,38 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                            $pecasEletronicas = PecasEletronicasController::buscarPecas($_SESSION['user_id']);
+                    
+                            /** 
+                            * @var PecaEletronica $peca 
+                            */ 
+                            foreach ($pecasEletronicas as $peca) {
+                                echo "
+                                <tr>
+                                    <td class=\"image\">
+                                        <img 
+                                            src=\"../../storage/parts/{$peca->getImagem()->name}\" 
+                                            alt=\"Imagem da peça\"
+                                        >
+                                    </td>
+                                    <td class=\"name\">{$peca->getNome()}</td>
+                                    <td class=\"stock\">{$peca->getEstoque()}</td>
+                                    <td class=\"buttons\">
+                                        <div class=\"wrapper\">
+                                            <a class=\"edit\" href=\"./donations-edit.php\">".
+                                                file_get_contents("../../public/assets/edit.svg")."
+                                                <span>Editar</span>
+                                            </a>
+                                            <button class=\"delete\" onclick=\"\">".
+                                                file_get_contents('../../public/assets/trash.svg')."
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                ";
+                            }
+                        ?>
                         <tr>
                             <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
                             <td class="name">Semicondutores e transístores</td>

@@ -184,7 +184,8 @@ class PecaEletronica
 
     private static function storageImage(Imagem $image) {
         $directory = __DIR__."/../../storage/parts/";
-        if (!move_uploaded_file($image->tmpNamePath, $directory.$image->nameFormated)) {
+        
+        if (!move_uploaded_file($image->tmpNamePath, $directory.$image->getNameFormatted())) {
             throw new \Exception("Failed to upload image");
         }
     }
@@ -203,7 +204,7 @@ class PecaEletronica
                 '{$this->getTipo()}', 
                 '{$this->getModelo()}', 
                 '{$this->getSobre()}', 
-                '{$this->getImagem()->nameFormated}', 
+                '{$this->getImagem()->getNameFormatted()}',
                 {$this->getEstoque()}
             )
         ";
@@ -217,5 +218,48 @@ class PecaEletronica
         $connection->close();
 
         return true;
+    }
+
+    public static function buscarPecas(int $userId): array
+    {   
+        $connection = PecaEletronica::getConnection();
+        $query = "
+            SELECT 
+                peca_eletronica.id, 
+                peca_eletronica.pessoa_id,
+                peca_eletronica.nome, 
+                peca_eletronica.tipo, 
+                peca_eletronica.modelo, 
+                peca_eletronica.sobre, 
+                peca_eletronica.imagem, 
+                peca_eletronica.estoque 
+            FROM peca_eletronica
+            WHERE peca_eletronica.pessoa_id = {$userId}
+        ";
+        
+        $result = $connection->query($query) or
+            trigger_error("
+                Query Failed! SQL: $query - Error: ". mysqli_error($connection),
+                E_USER_ERROR
+            );
+        
+        $pecasEletronicas = [];
+        while ($row = $result->fetch_assoc()) {
+            if ($row !== null) {
+                \array_push($pecasEletronicas, 
+                    (new PecaEletronica())
+                        ->setId($row["id"])
+                        ->setPessoaId($row["pessoa_id"])
+                        ->setNome($row["nome"])
+                        ->setTipo($row["tipo"])
+                        ->setModelo($row["modelo"])
+                        ->setSobre($row["sobre"])
+                        ->setImagem(Imagem::createByName($row["imagem"]))
+                        ->setEstoque($row["estoque"])
+                );
+            }
+        }
+
+        return $pecasEletronicas;
     }
 }

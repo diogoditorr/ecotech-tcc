@@ -36,9 +36,19 @@ class PecasEletronicasController
         ];
     }
 
-    public static function buscarPecas(int $userId)
+    public static function getAll()
     {
-        return PecaEletronica::buscarPecas($userId);
+        return PecaEletronica::getAll();
+    }
+
+    public static function getAllByName(string $name)
+    {
+        return PecaEletronica::getAllByName($name);
+    }
+
+    public static function getAllByUserId(int $userId)
+    {
+        return PecaEletronica::getAllByUserId($userId);
     }
 
     public static function getById($pecaId)
@@ -83,4 +93,6 @@ class PecasEletronicasController
             );
         }
     }
+
+
 }

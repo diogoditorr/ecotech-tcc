@@ -8,6 +8,7 @@ class PecaEletronica
 {
     private int $id;
     private int $pessoaId;
+    private string|null $pessoaIdNome;
     private string $nome;
     private string $tipo;
     private string $modelo;
@@ -51,6 +52,26 @@ class PecaEletronica
     public function setPessoaId($pessoaId)
     {
         $this->pessoaId = $pessoaId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pessoaIdName
+     */ 
+    public function getPessoaIdNome()
+    {
+        return $this->pessoaIdNome;
+    }
+
+    /**
+     * Set the value of pessoaIdNome
+     *
+     * @return  self
+     */ 
+    public function setPessoaIdNome($pessoaIdNome)
+    {
+        $this->pessoaIdNome = $pessoaIdNome;
 
         return $this;
     }
@@ -187,6 +208,11 @@ class PecaEletronica
         return (new PecaEletronica())
             ->setId($object['id'])
             ->setPessoaId($object['pessoa_id'])
+            ->setPessoaIdNome(
+                isset($object['pessoa_id_nome']) 
+                    ? $object['pessoa_id_nome'] 
+                    : null
+            )
             ->setNome($object['nome'])
             ->setTipo($object['tipo'])
             ->setModelo($object['modelo'])
@@ -259,23 +285,94 @@ class PecaEletronica
         return $pecaEletronica;
     }
 
-    public static function buscarPecas(int $userId): array
+    public static function getAll()
+    {
+        $conn = PecaEletronica::getConnection();
+        
+        $query = "
+            SELECT 
+                peca_eletronica.id, 
+                peca_eletronica.pessoa_id, 
+                peca_eletronica.nome, 
+                peca_eletronica.tipo, 
+                peca_eletronica.modelo, 
+                peca_eletronica.sobre, 
+                peca_eletronica.imagem, 
+                peca_eletronica.estoque,
+                pessoa.nome AS pessoa_id_nome
+            FROM peca_eletronica
+            INNER JOIN pessoa
+                ON peca_eletronica.pessoa_id = pessoa.id
+        ";
+
+        $result = $conn->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($conn),
+                E_USER_ERROR
+            );
+
+        $pecasEletronicas = [];
+        while ($obj = $result->fetch_assoc()) {
+            if ($obj !== null)
+                $pecasEletronicas[] = PecaEletronica::fromArray($obj);
+        }
+
+        $conn->close();
+        return $pecasEletronicas;
+    }
+
+    public static function getAllByName(string $name)
+    {
+        $conn = PecaEletronica::getConnection();
+        
+        $query = "
+            SELECT 
+                peca_eletronica.id, 
+                peca_eletronica.pessoa_id, 
+                peca_eletronica.nome, 
+                peca_eletronica.tipo, 
+                peca_eletronica.modelo, 
+                peca_eletronica.sobre, 
+                peca_eletronica.imagem, 
+                peca_eletronica.estoque,
+                pessoa.nome AS pessoa_id_nome
+            FROM peca_eletronica
+            INNER JOIN pessoa
+                ON peca_eletronica.pessoa_id = pessoa.id
+            WHERE peca_eletronica.nome LIKE '%{$name}%'
+        ";
+
+        $result = $conn->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($conn),
+                E_USER_ERROR
+            );
+
+        $pecasEletronicas = [];
+        while ($obj = $result->fetch_assoc()) {
+            if ($obj !== null)
+                $pecasEletronicas[] = PecaEletronica::fromArray($obj);
+        }
+
+        $conn->close();
+        return $pecasEletronicas;
+    }
+
+    public static function getAllByUserId(int $userId): array
     {
         $connection = PecaEletronica::getConnection();
         $query = "SELECT * FROM peca_eletronica WHERE pessoa_id = {$userId}";
 
         $result = $connection->query($query) or
             trigger_error(
-                "
-                Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                "Query Failed! SQL: $query - Error: " . mysqli_error($connection),
                 E_USER_ERROR
             );
 
         $pecasEletronicas = [];
         while ($row = $result->fetch_assoc()) {
-            if ($row !== null) {
+            if ($row !== null)
                 \array_push($pecasEletronicas, PecaEletronica::fromArray($row));
-            }
         }
 
         return $pecasEletronicas;

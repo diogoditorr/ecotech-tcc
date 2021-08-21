@@ -80,7 +80,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $pecasEletronicas = PecasEletronicasController::buscarPecas($_SESSION['user_id']);
+                            $pecasEletronicas = PecasEletronicasController::getAllByUserId($_SESSION['user_id']);
 
                             /** 
                             * @var PecaEletronica $peca 

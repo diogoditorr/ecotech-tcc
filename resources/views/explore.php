@@ -1,4 +1,9 @@
 <?php
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+    use Controllers\PecasEletronicasController;
+    use Models\PecaEletronica;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
@@ -37,7 +42,12 @@
     </nav>
 
     <form class="search-bar animate-up-op">
-        <input name="search" type="text" placeholder="Pesquise por uma peça">
+        <input 
+            name="search" 
+            type="text" 
+            placeholder="Pesquise por uma peça" 
+            value="<?=isset($_GET['search']) ? $_GET['search'] : ''?>"
+        >
         <button type="submit">
             <img src="../../public/assets/search.svg" alt="">
         </button>
@@ -46,6 +56,34 @@
     <h2>Resultados:</h2>
 
     <div class="cards animate-up-op">
+        <?php
+            if (!isset($_GET['search'])) {
+                $pecasEletronicas = PecasEletronicasController::getAll();
+            } else {
+                $pecasEletronicas = PecasEletronicasController::getAllByName($_GET['search']);
+            }
+
+            /** @var PecaEletronica $pecaEletronica */
+            foreach ($pecasEletronicas as $pecaEletronica) { 
+                if ($pecaEletronica->getEstoque() > 0) {
+                    echo "
+                        <div class=\"part\">
+                            <div class=\"image\">
+                                <img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" alt=\"\">
+                            </div>
+                            <div class=\"name\">{$pecaEletronica->getNome()}</div>
+                            <div class=\"description\">{$pecaEletronica->getSobre()}</div>
+                            <div class=\"user-name\">• Aluno: {$pecaEletronica->getPessoaIdNome()}</div>
+                            <div class=\"buttons\">
+                                <button class=\"see-details\">Ver detalhes</button>
+                                <button class=\"favorite\"><img src=\"../../public/assets/heart.svg\" alt=\"\"></button>
+                            </div>
+                        </div>
+                    ";
+                }
+            }           
+        ?>
+
         <div class="part">
             <div class="image">
                 <img src="../../storage/parts/image_1.png" alt="">

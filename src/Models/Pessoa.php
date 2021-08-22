@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+
+use ConexaoDB;
+
 class Pessoa
 {
     private int $id;
@@ -9,6 +13,7 @@ class Pessoa
     private string $escola;
     private string $numTelefone1;
     private string $numTelefone2;
+    private Endereco $endereco;
 
     /**
      * Get the value of id
@@ -150,6 +155,26 @@ class Pessoa
         return $this;
     }
 
+    /**
+     * Get the value of endereco
+     */ 
+    public function getEndereco()
+    {
+        return $this->endereco;
+    }
+
+    /**
+     * Set the value of endereco
+     *
+     * @return  self
+     */ 
+    public function setEndereco($endereco)
+    {
+        $this->endereco = $endereco;
+
+        return $this;
+    }
+
     private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
@@ -157,22 +182,46 @@ class Pessoa
         return ConexaoDB::conectar();
     }
 
-    private static function unserialize(stdClass $object): Pessoa
+    private static function fromArray(array $data): Pessoa
     {
+        $endereco = (new Endereco())
+                        ->setPessoaId($data["id"])
+                        ->setEstado($data["estado"])
+                        ->setCidade($data["cidade"])
+                        ->setBairro($data["bairro"])
+                        ->setCep($data["cep"]);
+
         return (new Pessoa())
-                    ->setId($object->id)
-                    ->setCpf($object->cpf)
-                    ->setEmail($object->email)
-                    ->setNome($object->nome)
-                    ->setNumTelefone1($object->num_telefone_1)
-                    ->setNumTelefone2($object->num_telefone_2);
+                    ->setId($data['id'])
+                    ->setCpf($data['cpf'])
+                    ->setEmail($data['email'])
+                    ->setNome($data['nome'])
+                    ->setNumTelefone1($data['num_telefone_1'])
+                    ->setNumTelefone2($data['num_telefone_2'])
+                    ->setEndereco($endereco);
     }
                 
     private static function get($column, $data)
     {
         $conn = Pessoa::getConnection();
 
-        $query = "SELECT * FROM pessoa WHERE {$column} = '{$data}'";
+        $query = "
+            SELECT 
+                pessoa.id,
+                pessoa.cpf,
+                pessoa.email,
+                pessoa.nome,
+                pessoa.num_telefone_1,
+                pessoa.num_telefone_2,
+                endereco.estado,
+                endereco.cidade,
+                endereco.bairro,
+                endereco.cep
+            FROM pessoa
+            INNER JOIN endereco 
+                ON pessoa.id = endereco.pessoa_id
+            WHERE pessoa.{$column} = '{$data}'
+        ";
 
         $result = $conn->query($query);
 
@@ -181,14 +230,14 @@ class Pessoa
             return null;
         }
 
-        $obj = $result->fetch_object();
+        $arrayObject = $result->fetch_assoc();
 
-        if ($obj === null) {
+        if ($arrayObject === null) {
             $conn -> close();
             return null;
         }
 
-        $person = Pessoa::unserialize($obj);
+        $person = Pessoa::fromArray($arrayObject);
 
         $conn->close();
         return $person;
@@ -196,7 +245,7 @@ class Pessoa
 
     public static function getById($pessoaId)
     {
-        return Pessoa::get("pessoa_id", $pessoaId);
+        return Pessoa::get("id", $pessoaId);
     }
     
     public static function getByEmail($email)

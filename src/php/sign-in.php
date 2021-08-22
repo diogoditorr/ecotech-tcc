@@ -1,6 +1,8 @@
 <?php
 
-include "../Controllers/PessoasController.php";
+require __DIR__.'/../../vendor/autoload.php';
+
+use Controllers\PessoasController;
 
 if (!isset($_POST["emailCpf"]) || !isset($_POST["password"])) {
     header("Location: ../../resources/views/sign-in.php?error='Email/cpf ou senha não preenchidos!'");

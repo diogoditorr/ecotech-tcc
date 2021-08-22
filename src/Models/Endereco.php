@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+
+use ConexaoDB;
+
 class Endereco
 {
     private int $id;
@@ -134,6 +138,16 @@ class Endereco
         require_once "../../database/ConexaoDB.php";
         
         return ConexaoDB::conectar();
+    }
+
+    private static function fromArray(array $data)
+    {
+        return (new Endereco())
+                    ->setPessoaId($data["pessoa_id"])
+                    ->setEstado($data["estado"])
+                    ->setCidade($data["cidade"])
+                    ->setBairro($data["bairro"])
+                    ->setCep($data["cep"]);
     }
 
     public function inserir(): bool

@@ -1,5 +1,9 @@
 <?php
 
+namespace Models;
+
+use ConexaoDB;
+
 class Perfil
 {
     private int $id;
@@ -136,7 +140,7 @@ class Perfil
         return ConexaoDB::conectar();
     }
 
-    private static function unserialize(stdClass $object): Perfil
+    private static function unserialize(\stdClass $object): Perfil
     {
         return (new Perfil())
                     ->setId($object->id)

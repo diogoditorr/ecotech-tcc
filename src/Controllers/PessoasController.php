@@ -1,8 +1,10 @@
 <?php
 
-include "../Models/Pessoa.php";
-include "../Models/Perfil.php";
-include "../Models/Endereco.php";
+namespace Controllers;
+
+use Models\Pessoa;
+use Models\Perfil;
+use Models\Endereco;
 
 class PessoasController 
 {
@@ -79,5 +81,10 @@ class PessoasController
     public static function verificarCredenciaisUsuario($cpf, $email, $password) 
     {
         return Perfil::verificarCredenciaisUsuario($cpf, $email, $password);
+    }
+
+    public static function getByPersonId(int $personId)
+    {
+        return Pessoa::getById($personId);
     }
 }

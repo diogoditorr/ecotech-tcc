@@ -203,22 +203,22 @@ class PecaEletronica
         return \ConexaoDB::conectar();
     }
 
-    private static function fromArray(array $object): PecaEletronica
+    private static function fromArray(array $data): PecaEletronica
     {
         return (new PecaEletronica())
-            ->setId($object['id'])
-            ->setPessoaId($object['pessoa_id'])
+            ->setId($data['id'])
+            ->setPessoaId($data['pessoa_id'])
             ->setPessoaIdNome(
-                isset($object['pessoa_id_nome']) 
-                    ? $object['pessoa_id_nome'] 
+                isset($data['pessoa_id_nome']) 
+                    ? $data['pessoa_id_nome'] 
                     : null
             )
-            ->setNome($object['nome'])
-            ->setTipo($object['tipo'])
-            ->setModelo($object['modelo'])
-            ->setSobre($object['sobre'])
-            ->setImagem(Imagem::createByName($object['imagem']))
-            ->setEstoque($object['estoque']);
+            ->setNome($data['nome'])
+            ->setTipo($data['tipo'])
+            ->setModelo($data['modelo'])
+            ->setSobre($data['sobre'])
+            ->setImagem(Imagem::createByName($data['imagem']))
+            ->setEstoque($data['estoque']);
     }
 
     private function storageImage()

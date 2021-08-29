@@ -223,6 +223,7 @@ table:is(.table-registers, .table-donations) tbody tr {
 }
 
 .table-donations tbody .status {
+    text-transform: capitalize;
     justify-content: flex-start;
 
     font-size: 22px;

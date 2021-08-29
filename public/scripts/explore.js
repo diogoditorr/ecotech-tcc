@@ -73,9 +73,13 @@ function seeDetails(id) {
                     </section>
         
                     <div class="button-wrapper">
-                        <button class="order">
-                            <span>Fazer Pedido</span>
-                        </button>
+                        <form action="../../src/php/make-order.php" method="post">
+                            <input type="hidden" name="partId" value="${data.part.id}">
+                            <input type="hidden" name="doadorId" value="${data.part.person.id}">
+                            <button class="order">
+                                <span>Fazer Pedido</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             `;

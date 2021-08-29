@@ -158,7 +158,7 @@ class ConexaoDB
                 `doador_id` INT NOT NULL,
                 `cliente_id` INT NOT NULL,
                 `status` VARCHAR(9) NOT NULL DEFAULT 'pendente',
-                `created_at` TIMESTAMP NOT NULL,
+                `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
                 PRIMARY KEY (`id`),
                 INDEX `fk_doador_id_idx` (`doador_id` ASC),
@@ -194,7 +194,11 @@ class ConexaoDB
                 $result->free();
             }
         }
-
+        
+        if (!empty($conn->error)) {
+            $noError = false;
+        }
+        
         return $noError;
     }
 }

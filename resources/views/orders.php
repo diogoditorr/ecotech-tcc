@@ -1,4 +1,9 @@
 <?php
+    require __DIR__ . '/../../vendor/autoload.php';
+
+    use Controllers\PedidosController;
+    use Models\Pedido;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
@@ -68,42 +73,47 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
-                        <td class="order-id">#P9ACN678</td>
-                        <td class="name">Semicondutores e transístores</td>
-                        <td class="status pending">Pendente</td>
-                        <td class="see-details">
-                            <a href="./orders-details.php">
-                                <img src="../../public/assets/info.svg" alt="">
-                                <span>Detalhes</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="image"><img src="../../storage/parts/image_2.png" alt=""></td>
-                        <td class="order-id">#CHJ9K10L</td>
-                        <td class="name">Semicondutores e transístores</td>
-                        <td class="status delivered">Entregue</td>
-                        <td class="see-details">
-                            <a href="./orders-details.php">
-                                <img src="../../public/assets/info.svg" alt="">
-                                <span>Detalhes</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
-                        <td class="order-id">#WWJ9K10L</td>
-                        <td class="name">Semicondutores e transístores</td>
-                        <td class="status cancelled">Cancelado</td>
-                        <td class="see-details">
-                            <a href="./orders-details.php">
-                                <img src="../../public/assets/info.svg" alt="">
-                                <span>Detalhes</span>
-                            </a>
-                        </td>
-                    </tr>
+                    <?php
+                        $pedidos = PedidosController::getAllByClientId($_SESSION['user_id']);
+                        
+                        /**
+                        * @var Pedido $pedido 
+                        */
+                        foreach ($pedidos as $pedido) {
+                            switch ($pedido->getStatus()) {
+                                case 'pendente':
+                                    $status = 'pending';
+                                    break;
+                                
+                                case 'entregue':
+                                    $status = 'delivered';
+                                    break;
+                                
+                                case 'cancelado':
+                                    $status = 'cancelled';
+                                    break;
+
+                                default:
+                                    $status = 'pending';
+                                    break;
+                            }
+
+                            echo "
+                                <tr>
+                                    <td class=\"image\"><img src=\"../../storage/parts/{$pedido->getPecaEletronica()->getImagem()->name}\" alt=\"\"></td>
+                                    <td class=\"order-id\">#{$pedido->getId()}</td>
+                                    <td class=\"name\">{$pedido->getPecaEletronica()->getNome()}</td>
+                                    <td class=\"status {$status}\">{$pedido->getStatus()}</td>
+                                    <td class=\"see-details\">
+                                        <a href=\"./orders-details.php\">
+                                            <img src=\"../../public/assets/info.svg\" alt=\"\">
+                                            <span>Detalhes</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            ";
+                        }
+                    ?>
                 </tbody>
             </table>
         </section>

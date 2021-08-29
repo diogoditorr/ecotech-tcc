@@ -1,10 +1,12 @@
 <?php
 
+namespace Models;
+
 class Pedido
 {
     private string $id;
-    private int $pecaEletronicaId;
-    private string $doardorId;
+    private PecaEletronica $pecaEletronica;
+    private string $doadorId;
     private string $clienteId;
     private string $status;
     private string $created_at;
@@ -30,41 +32,41 @@ class Pedido
     }
 
     /**
-     * Get the value of pecaEletronicaId
+     * Get the value of pecaEletronica
      */ 
-    public function getPecaEletronicaId()
+    public function getPecaEletronica()
     {
-        return $this->pecaEletronicaId;
+        return $this->pecaEletronica;
     }
 
     /**
-     * Set the value of pecaEletronicaId
+     * Set the value of pecaEletronica
      *
      * @return  self
      */ 
-    public function setPecaEletronicaId($pecaEletronicaId)
+    public function setPecaEletronica($pecaEletronica)
     {
-        $this->pecaEletronicaId = $pecaEletronicaId;
+        $this->pecaEletronica = $pecaEletronica;
 
         return $this;
     }
 
     /**
-     * Get the value of doardorId
+     * Get the value of doadorId
      */ 
-    public function getDoardorId()
+    public function getDoadorId()
     {
-        return $this->doardorId;
+        return $this->doadorId;
     }
 
     /**
-     * Set the value of doardorId
+     * Set the value of doadorId
      *
      * @return  self
      */ 
-    public function setDoardorId($doardorId)
+    public function setDoadorId($doadorId)
     {
-        $this->doardorId = $doardorId;
+        $this->doadorId = $doadorId;
 
         return $this;
     }
@@ -133,6 +135,117 @@ class Pedido
     {
         require_once "../../database/ConexaoDB.php";
         
-        return ConexaoDB::conectar();
+        return \ConexaoDB::conectar();
+    }
+
+    private static function fromArray(array $data)
+    {
+        $pecaEletronica = (new PecaEletronica())
+                        ->setId($data['peca_eletronica_id'])
+                        ->setNome($data['nome'])
+                        ->setImagem(Imagem::createByName($data['imagem']));
+
+        return (new Pedido())
+                    ->setId($data['id'])
+                    ->setPecaEletronica($pecaEletronica)
+                    ->setDoadorId($data['doador_id'])
+                    ->setClienteId($data['cliente_id'])
+                    ->setStatus($data['status'])
+                    ->setCreated_at($data['created_at']);
+    }
+
+    public function inserir()
+    {
+        $connection = Pedido::getConnection();
+        $query = "
+            INSERT INTO pedidos 
+                (id, peca_eletronica_id, doador_id, cliente_id)
+            VALUES (
+                '{$this->id}',
+                {$this->pecaEletronica->getId()}, 
+                {$this->doadorId}, 
+                {$this->clienteId}
+            )
+        ";
+
+        $connection->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $connection->close();
+
+        return true;
+    }
+
+    public static function getAllByClientId($clientId)
+    {
+        $conn = Pedido::getConnection();
+
+        $query = "
+            SELECT 
+                pedidos.id,
+                pedidos.peca_eletronica_id,
+                pedidos.doador_id,
+                pedidos.cliente_id,
+                pedidos.status,
+                pedidos.created_at,
+                peca_eletronica.nome,
+                peca_eletronica.imagem
+            FROM pedidos
+            INNER JOIN peca_eletronica 
+                ON pedidos.peca_eletronica_id = peca_eletronica.id
+            WHERE pedidos.cliente_id = '{$clientId}'
+        ";
+
+        $result = $conn->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($conn),
+                E_USER_ERROR
+            );
+
+        $pedidos = [];
+        while ($row = $result->fetch_assoc()) {
+            if ($row !== null)
+                \array_push($pedidos, Pedido::fromArray($row));
+        }
+
+        return $pedidos;
+    }
+
+    public static function getAllByDonorId($donorId)
+    {
+        $conn = Pedido::getConnection();
+
+        $query = "
+            SELECT 
+                pedidos.id,
+                pedidos.peca_eletronica_id,
+                pedidos.doador_id,
+                pedidos.cliente_id,
+                pedidos.status,
+                pedidos.created_at,
+                peca_eletronica.nome,
+                peca_eletronica.imagem
+            FROM pedidos
+            INNER JOIN peca_eletronica 
+                ON pedidos.peca_eletronica_id = peca_eletronica.id
+            WHERE pedidos.doador_id = '{$donorId}'
+        ";
+
+        $result = $conn->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($conn),
+                E_USER_ERROR
+            );
+
+        $pedidos = [];
+        while ($row = $result->fetch_assoc()) {
+            if ($row !== null)
+                \array_push($pedidos, Pedido::fromArray($row));
+        }
+
+        return $pedidos;
     }
 }

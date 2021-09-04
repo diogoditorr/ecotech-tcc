@@ -140,23 +140,12 @@
                             * @var Pedido $pedido 
                             */
                             foreach ($pedidos as $pedido) {
-                                switch ($pedido->getStatus()) {
-                                    case 'pendente':
-                                        $status = 'pending';
-                                        break;
-                                    
-                                    case 'entregue':
-                                        $status = 'delivered';
-                                        break;
-                                    
-                                    case 'cancelado':
-                                        $status = 'cancelled';
-                                        break;
-
-                                    default:
-                                        $status = 'pending';
-                                        break;
-                                }
+                                $status = match ($pedido->getStatus()) {
+                                    'pendente' => 'pending',
+                                    'entregue' => 'delivered',
+                                    'cancelado' => 'cancelled',
+                                    default => 'pending'
+                                };
 
                                 echo "
                                     <tr>

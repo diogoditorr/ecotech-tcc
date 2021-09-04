@@ -130,6 +130,7 @@
     margin: auto 0;
 
     font-size: 24px;
+    text-transform: capitalize;
 }
 
 #page-orders-details main .content .menu .status span {

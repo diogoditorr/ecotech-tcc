@@ -80,23 +80,12 @@
                         * @var Pedido $pedido 
                         */
                         foreach ($pedidos as $pedido) {
-                            switch ($pedido->getStatus()) {
-                                case 'pendente':
-                                    $status = 'pending';
-                                    break;
-                                
-                                case 'entregue':
-                                    $status = 'delivered';
-                                    break;
-                                
-                                case 'cancelado':
-                                    $status = 'cancelled';
-                                    break;
-
-                                default:
-                                    $status = 'pending';
-                                    break;
-                            }
+                            $status = match ($pedido->getStatus()) {
+                                'pendente' => 'pending',
+                                'entregue' => 'delivered',
+                                'cancelado' => 'cancelled',
+                                default => 'pending'
+                            };
 
                             echo "
                                 <tr>
@@ -105,7 +94,7 @@
                                     <td class=\"name\">{$pedido->getPecaEletronica()->getNome()}</td>
                                     <td class=\"status {$status}\">{$pedido->getStatus()}</td>
                                     <td class=\"see-details\">
-                                        <a href=\"./orders-details.php\">
+                                        <a href=\"./orders-details.php?pedido_id={$pedido->getId()}\">
                                             <img src=\"../../public/assets/info.svg\" alt=\"\">
                                             <span>Detalhes</span>
                                         </a>

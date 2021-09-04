@@ -1,8 +1,20 @@
 <?php
-    session_start();
+    require_once __DIR__ . '/../../vendor/autoload.php';
 
+    use Controllers\PedidosController;
+
+    session_start();
+    
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
+    }
+
+    $pedido = PedidosController::getDetailsById($_GET['pedido_id']);
+
+    if ($pedido->getCliente()->getId() != $_SESSION['user_id']) {
+        header('Location: ./orders.php');
+        exit();
     }
 
     $title = 'Ecotech | Detalhes do pedido';
@@ -56,7 +68,7 @@
             <header>
                 <span>
                     <p>Pedido</p>
-                    <small>#P9ACN678</small>
+                    <small>#<?=$pedido->getId()?></small>
                 </span>
 
                 <a class="back" href="./orders.php">
@@ -67,17 +79,17 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/image_1.png" alt="">
+                        <img src="../../storage/parts/<?=$pedido->getPecaEletronica()->getImagem()->name?>" alt="">
                     </div>
 
                     <div class="menu">
                         <div class="name">
-                            Semicondutores e transístores
+                            <?=$pedido->getPecaEletronica()->getNome()?>
                         </div>
                         
                         <div class="status">
                             <span>Status:</span>
-                            <div class="pending">Pendente</div>
+                            <div class="pending"><?=$pedido->getStatus()?></div>
                         </div>
 
                         <div class="buttons">
@@ -103,17 +115,21 @@
                     <tbody>
                         <tr>
                             <td>Nome</td>
-                            <td>Jefferson Carvalho de Almeida</td>
+                            <td><?=$pedido->getDoador()->getNome()?></td>
                         </tr>
                         <tr>
                             <td>Endereço</td>
-                            <td>Avenida Rua Ilha Bela, 80, Petrolina - Pernambuco</td>
+                            <td>
+                                NÃO IMPLEMENTADO!!, 
+                                <?=$pedido->getDoador()->getEndereco()->getCidade()?> - 
+                                <?=$pedido->getDoador()->getEndereco()->getEstado()?>
+                            </td>
                         </tr>
                         <tr>
                             <td>Telefone</td>
                             <td>
-                                (15) 99000-99 <br>
-                                (15) 3380-3099
+                                <?=$pedido->getDoador()->getNumTelefone1()?> <br>
+                                <?=$pedido->getDoador()->getNumTelefone2()?>
                             </td>
                         </tr>
                     </tbody>
@@ -129,24 +145,18 @@
                     <tbody>
                         <tr>
                             <td>Tipo</td>
-                            <td>Semicondutores e transítores</td>
+                            <td><?=$pedido->getPecaEletronica()->getTipo()?></td>
                         </tr>
                         <tr>
                             <td>Modelo</td>
                             <td>
-                                ON Semiconductor - NCV303LSN15T1G / NA Transistor - 2N2222A
+                                <?=$pedido->getPecaEletronica()->getModelo()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Sobre</td>
                             <td>
-                                Os componentes eletrônicos são todos os elementos que 
-                                compõem a estrutura de um circuito elétrico, ou seja, 
-                                fazem parte de todo circuito eletrônico ou elétrico e 
-                                estão sempre ligados entre si, formando um sequencial 
-                                de funções, interligando todos os componentes e 
-                                fornecendo um trabalho conjunto onde um interfere no 
-                                funcionamento do outro.
+                                <?=$pedido->getPecaEletronica()->getSobre()?>
                             </td>
                         </tr>
                     </tbody>

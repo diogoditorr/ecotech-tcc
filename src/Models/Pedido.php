@@ -5,15 +5,15 @@ namespace Models;
 class Pedido
 {
     private string $id;
-    private PecaEletronica $pecaEletronica;
-    private string $doadorId;
-    private string $clienteId;
+    private PecaEletronica|null $pecaEletronica;
+    private Pessoa|null $doador;
+    private Pessoa|null $cliente;
     private string $status;
     private string $created_at;
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -23,7 +23,7 @@ class Pedido
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId($id)
     {
         $this->id = $id;
@@ -33,7 +33,7 @@ class Pedido
 
     /**
      * Get the value of pecaEletronica
-     */ 
+     */
     public function getPecaEletronica()
     {
         return $this->pecaEletronica;
@@ -43,7 +43,7 @@ class Pedido
      * Set the value of pecaEletronica
      *
      * @return  self
-     */ 
+     */
     public function setPecaEletronica($pecaEletronica)
     {
         $this->pecaEletronica = $pecaEletronica;
@@ -52,48 +52,48 @@ class Pedido
     }
 
     /**
-     * Get the value of doadorId
-     */ 
-    public function getDoadorId()
+     * Get the value of doador
+     */
+    public function getDoador()
     {
-        return $this->doadorId;
+        return $this->doador;
     }
 
     /**
-     * Set the value of doadorId
+     * Set the value of doador
      *
      * @return  self
-     */ 
-    public function setDoadorId($doadorId)
+     */
+    public function setDoador($doador)
     {
-        $this->doadorId = $doadorId;
+        $this->doador = $doador;
 
         return $this;
     }
 
     /**
-     * Get the value of clienteId
-     */ 
-    public function getClienteId()
+     * Get the value of cliente
+     */
+    public function getCliente()
     {
-        return $this->clienteId;
+        return $this->cliente;
     }
 
     /**
-     * Set the value of clienteId
+     * Set the value of cliente
      *
      * @return  self
-     */ 
-    public function setClienteId($clienteId)
+     */
+    public function setCliente($cliente)
     {
-        $this->clienteId = $clienteId;
+        $this->cliente = $cliente;
 
         return $this;
     }
 
     /**
      * Get the value of status
-     */ 
+     */
     public function getStatus()
     {
         return $this->status;
@@ -103,7 +103,7 @@ class Pedido
      * Set the value of status
      *
      * @return  self
-     */ 
+     */
     public function setStatus($status)
     {
         $this->status = $status;
@@ -113,7 +113,7 @@ class Pedido
 
     /**
      * Get the value of created_at
-     */ 
+     */
     public function getCreated_at()
     {
         return $this->created_at;
@@ -123,7 +123,7 @@ class Pedido
      * Set the value of created_at
      *
      * @return  self
-     */ 
+     */
     public function setCreated_at($created_at)
     {
         $this->created_at = $created_at;
@@ -134,24 +134,54 @@ class Pedido
     private static function getConnection(): \mysqli
     {
         require_once "../../database/ConexaoDB.php";
-        
+
         return \ConexaoDB::conectar();
     }
 
-    private static function fromArray(array $data)
-    {
-        $pecaEletronica = (new PecaEletronica())
-                        ->setId($data['peca_eletronica_id'])
-                        ->setNome($data['nome'])
-                        ->setImagem(Imagem::createByName($data['imagem']));
+    private static function fromArray(
+        array $data,
+        bool $setPart = false,
+        bool $setDonor = false
+    ): Pedido {
+        $pecaEletronica = (new PecaEletronica())->setId($data['peca_eletronica_id']);
+        $doador = (new Pessoa())->setId($data['doador_id']);
+        $cliente = (new Pessoa())->setId($data['cliente_id']);
+            
+        if ($setPart) {
+            $pecaEletronica
+                ->setPessoaId($doador->getId())
+                ->setNome($data['peca_eletronica_nome'])
+                ->setTipo($data['peca_eletronica_tipo'])
+                ->setModelo($data['peca_eletronica_modelo'])
+                ->setSobre($data['peca_eletronica_sobre'])
+                ->setImagem(Imagem::createByName($data['peca_eletronica_imagem']))
+                ->setEstoque($data['peca_eletronica_estoque']);
+        }
+
+        if ($setDonor) {
+            $doador
+                ->setCpf($data['doador_cpf'])
+                ->setEmail($data['doador_email'])
+                ->setNome($data['doador_nome'])
+                ->setEscola($data['doador_escola'])
+                ->setNumTelefone1($data['doador_num_telefone_1'])
+                ->setNumTelefone2($data['doador_num_telefone_2'])
+                ->setEndereco(
+                    (new Endereco())
+                        ->setEstado($data['doador_estado'])
+                        ->setCidade($data['doador_cidade'])
+                        ->setBairro($data['doador_bairro'])
+                        ->setCep($data['doador_cep'])
+                );
+        }
 
         return (new Pedido())
-                    ->setId($data['id'])
-                    ->setPecaEletronica($pecaEletronica)
-                    ->setDoadorId($data['doador_id'])
-                    ->setClienteId($data['cliente_id'])
-                    ->setStatus($data['status'])
-                    ->setCreated_at($data['created_at']);
+            ->setId($data['id'])
+            ->setPecaEletronica($pecaEletronica)
+            ->setDoador($doador)
+            ->setCliente($cliente)
+            ->setStatus($data['status'])
+            ->setCreated_at($data['created_at']);
     }
 
     public function inserir()
@@ -163,8 +193,8 @@ class Pedido
             VALUES (
                 '{$this->id}',
                 {$this->pecaEletronica->getId()}, 
-                {$this->doadorId}, 
-                {$this->clienteId}
+                {$this->doador->getId()}, 
+                {$this->cliente->getId()}
             )
         ";
 
@@ -191,8 +221,12 @@ class Pedido
                 pedidos.cliente_id,
                 pedidos.status,
                 pedidos.created_at,
-                peca_eletronica.nome,
-                peca_eletronica.imagem
+                peca_eletronica.nome as peca_eletronica_nome,
+                peca_eletronica.tipo as peca_eletronica_tipo,
+                peca_eletronica.modelo as peca_eletronica_modelo,
+                peca_eletronica.sobre as peca_eletronica_sobre,
+                peca_eletronica.imagem as peca_eletronica_imagem,
+                peca_eletronica.estoque as peca_eletronica_estoque
             FROM pedidos
             INNER JOIN peca_eletronica 
                 ON pedidos.peca_eletronica_id = peca_eletronica.id
@@ -206,9 +240,9 @@ class Pedido
             );
 
         $pedidos = [];
-        while ($row = $result->fetch_assoc()) {
-            if ($row !== null)
-                \array_push($pedidos, Pedido::fromArray($row));
+        while ($data = $result->fetch_assoc()) {
+            if ($data !== null)
+                \array_push($pedidos, Pedido::fromArray($data, setPart: true));
         }
 
         return $pedidos;
@@ -226,8 +260,12 @@ class Pedido
                 pedidos.cliente_id,
                 pedidos.status,
                 pedidos.created_at,
-                peca_eletronica.nome,
-                peca_eletronica.imagem
+                peca_eletronica.nome as peca_eletronica_nome,
+                peca_eletronica.tipo as peca_eletronica_tipo,
+                peca_eletronica.modelo as peca_eletronica_modelo,
+                peca_eletronica.sobre as peca_eletronica_sobre,
+                peca_eletronica.imagem as peca_eletronica_imagem,
+                peca_eletronica.estoque as peca_eletronica_estoque
             FROM pedidos
             INNER JOIN peca_eletronica 
                 ON pedidos.peca_eletronica_id = peca_eletronica.id
@@ -241,11 +279,71 @@ class Pedido
             );
 
         $pedidos = [];
-        while ($row = $result->fetch_assoc()) {
-            if ($row !== null)
-                \array_push($pedidos, Pedido::fromArray($row));
+        while ($data = $result->fetch_assoc()) {
+            if ($data !== null)
+                \array_push($pedidos, Pedido::fromArray($data, setPart: true));
         }
 
         return $pedidos;
+    }
+
+    public static function getDetailsById($id)
+    {
+        $conn = Pedido::getConnection();
+        /*
+            Query that joins three tables: pedidos, peca_eletronica and pessoa
+        */
+        $query = "
+            SELECT 
+                pedidos.id,
+                pedidos.peca_eletronica_id,
+                pedidos.doador_id,
+                pedidos.cliente_id,
+                pedidos.status,
+                pedidos.created_at,
+                peca_eletronica.nome as peca_eletronica_nome,
+                peca_eletronica.tipo as peca_eletronica_tipo,
+                peca_eletronica.modelo as peca_eletronica_modelo,
+                peca_eletronica.sobre as peca_eletronica_sobre,
+                peca_eletronica.imagem as peca_eletronica_imagem,
+                peca_eletronica.estoque as peca_eletronica_estoque,
+                pessoa.cpf AS doador_cpf,
+                pessoa.email AS doador_email,
+                pessoa.nome AS doador_nome,
+                pessoa.escola as doador_escola,
+                pessoa.num_telefone_1 AS doador_num_telefone_1,
+                pessoa.num_telefone_2 AS doador_num_telefone_2,
+                endereco.estado AS doador_estado,
+                endereco.cidade AS doador_cidade,
+                endereco.bairro AS doador_bairro,
+                endereco.cep AS doador_cep
+            FROM pedidos
+            INNER JOIN peca_eletronica 
+                ON pedidos.peca_eletronica_id = peca_eletronica.id
+            INNER JOIN pessoa 
+                ON pedidos.doador_id = pessoa.id
+            INNER JOIN endereco
+                ON pedidos.doador_id = endereco.pessoa_id
+            WHERE pedidos.id = '{$id}'
+        ";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $data = $result->fetch_assoc();
+
+        if ($data === null) {
+            $conn->close();
+            return null;
+        }
+
+        $pedido = Pedido::fromArray($data, setPart: true, setDonor: true);
+
+        $conn->close();
+        return $pedido;
     }
 }

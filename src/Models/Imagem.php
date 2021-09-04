@@ -4,6 +4,7 @@ namespace Models;
 
 class Imagem {
     public string $name;
+    public string|null $nameFormatted;
     public string|null $type;
     public string|null $tmpNamePath;
     public string $extension;
@@ -17,10 +18,10 @@ class Imagem {
         $this->extension = end($exploded);
     }
 
-    public function getNameFormatted()
+    public function setNameFormatted()
     {
         date_default_timezone_set("America/Sao_Paulo");
-        return date("H-i-s")."_".date("d-m-Y")."_".$this->name;
+        $this->nameFormatted = date("H-i-s")."_".date("d-m-Y")."_".$this->name;
     }
 
     public static function createByName(string $name) 

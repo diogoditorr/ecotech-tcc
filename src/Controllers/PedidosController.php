@@ -4,8 +4,9 @@ namespace Controllers;
 
 use Models\Pedido;
 use Models\PecaEletronica;
+use Models\Pessoa;
 
-class PedidosController 
+class PedidosController
 {
     public static function fazerPedido(array $data)
     {
@@ -20,8 +21,12 @@ class PedidosController
             ->setPecaEletronica(
                 (new PecaEletronica())->setId($data['partId'])
             )
-            ->setDoadorId($data['doadorId'])
-            ->setClienteId($_SESSION['user_id'])
+            ->setDoador(
+                (new Pessoa())->setId($data['doadorId'])
+            )
+            ->setCliente(
+                (new Pessoa())->setId($_SESSION['user_id'])
+            )
             ->setCreated_at(date('d-m-Y H:i:s'))
             ->inserir();
 
@@ -31,7 +36,7 @@ class PedidosController
                 'error' => 'Não foi possível fazer o pedido'
             ];
         }
-        
+
         return [
             'success' => true,
             'error' => null
@@ -46,5 +51,10 @@ class PedidosController
     public static function getAllByDonorId($donorId)
     {
         return Pedido::getAllByDonorId($donorId);
+    }
+
+    public static function getDetailsById($id)
+    {
+        return Pedido::getDetailsById($id);
     }
 }

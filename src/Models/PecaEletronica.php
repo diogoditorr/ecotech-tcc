@@ -9,10 +9,10 @@ class PecaEletronica
     private int $id;
     private int $pessoaId;
     private string|null $pessoaIdNome;
-    private string $nome;
-    private string $tipo;
-    private string $modelo;
-    private string $sobre;
+    private string|null $nome;
+    private string|null $tipo;
+    private string|null $modelo;
+    private string|null $sobre;
     private Imagem|null $imagem;
     private int $estoque;
 
@@ -225,13 +225,14 @@ class PecaEletronica
     {
         $directory = __DIR__ . "/../../storage/parts/";
 
-        if (!move_uploaded_file($this->imagem->tmpNamePath, $directory.$this->imagem->getNameFormatted())) {
+        if (!move_uploaded_file($this->imagem->tmpNamePath, $directory.$this->imagem->nameFormatted)) {
             throw new \Exception("Failed to upload image");
         }
     }
 
     public function inserir()
     {
+        $this->imagem->setNameFormatted();
         $this->storageImage();
 
         $connection = PecaEletronica::getConnection();
@@ -239,13 +240,13 @@ class PecaEletronica
             INSERT INTO peca_eletronica 
                 (pessoa_id, nome, tipo, modelo, sobre, imagem, estoque) 
             VALUES (
-                {$this->getPessoaId()}, 
-                '{$this->getNome()}', 
-                '{$this->getTipo()}', 
-                '{$this->getModelo()}', 
-                '{$this->getSobre()}', 
-                '{$this->getImagem()->getNameFormatted()}',
-                {$this->getEstoque()}
+                {$this->pessoaId}, 
+                '{$this->nome}', 
+                '{$this->tipo}', 
+                '{$this->modelo}', 
+                '{$this->sobre}', 
+                '{$this->imagem->nameFormatted}',
+                {$this->estoque}
             )
         ";
 
@@ -383,6 +384,7 @@ class PecaEletronica
         $connection = PecaEletronica::getConnection();
 
         if ($this->getImagem() != null) {
+            $this->imagem->setNameFormatted();
             $this->storageImage();
 
             $query = "
@@ -392,7 +394,7 @@ class PecaEletronica
                     tipo = '{$this->getTipo()}', 
                     modelo = '{$this->getModelo()}', 
                     sobre = '{$this->getSobre()}', 
-                    imagem = '{$this->getImagem()->getNameFormatted()}', 
+                    imagem = '{$this->getImagem()->nameFormatted}', 
                     estoque = {$this->getEstoque()} 
                 WHERE 
                     id = {$this->getId()}

@@ -57,4 +57,14 @@ class PedidosController
     {
         return Pedido::getDetailsById($id);
     }
+
+    public static function changeStatus($id, $status)
+    {
+        return Pedido::changeStatus($id, $status);
+    }
+
+    public static function delete($id)
+    {
+        return Pedido::delete($id);
+    }
 }

@@ -78,6 +78,7 @@
                     </div>
 
                     <div class="menu">
+                        <input name="orderId" type="text" value="<?=$pedido->getId()?>" hidden>
                         <div class="name">
                             <?=$pedido->getPecaEletronica()->getNome()?>
                         </div>
@@ -94,7 +95,8 @@
                                     };
                                     $options = [
                                         "pending" => "<option value=\"pending\" REPLACE>Pendente</option>",
-                                        "delivered" => "<option value=\"delivered\" REPLACE>Entregue</option>"
+                                        "delivered" => "<option value=\"delivered\" REPLACE>Entregue</option>",
+                                        "cancelled" => "<option value=\"cancelled\" REPLACE>Cancelado</option>"
                                     ];
                                     foreach ($options as $statusCase => $option) {
                                         if ($statusCase == $status) {
@@ -136,8 +138,7 @@
         </section>
     </main>
     
-
+<script defer src="../../public/scripts/donations-details.js" type="text/javascript"></script>
 </div>
-
 
 <?php include('../layouts/footer.php'); ?>

@@ -84,6 +84,11 @@ class PecasEletronicasController
         ];
     }
 
+    public static function delete(int $partId)
+    {
+        return PecaEletronica::delete($partId);
+    }
+
     private static function validateImageExtension(Imagem $image) {
         $extensions = ['png', 'jpeg', 'jpg'];
         if (!in_array($image->extension, $extensions)) {
@@ -93,6 +98,4 @@ class PecasEletronicasController
             );
         }
     }
-
-
 }

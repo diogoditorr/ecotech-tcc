@@ -210,6 +210,19 @@
     background-color: hsl(222, 75%, 89%);
 }
 
+#page-donations-details main .content .menu .buttons :is(button, a).save.disabled {
+    background-color: hsl(0, 0%, 89%);
+    color: #2e2e2e;
+    cursor: not-allowed;
+}
+
+#page-donations-details main .content .menu .buttons :is(button, a).save.disabled > svg {
+    fill: #2e2e2e;
+}
+
+#page-donations-details main .content .menu .buttons :is(button, a).save.disabled:hover {
+}
+
 #page-donations-details main .content .menu .buttons :is(button, a).cancel-order {
     background-color: #DA0000;
     color: #FFC8C8;

@@ -263,6 +263,7 @@ class Pedido
                 \array_push($pedidos, Pedido::fromArray($data, setPart: true));
         }
 
+        $conn->close();
         return $pedidos;
     }
 
@@ -302,6 +303,7 @@ class Pedido
                 \array_push($pedidos, Pedido::fromArray($data, setPart: true));
         }
 
+        $conn->close();
         return $pedidos;
     }
 
@@ -380,5 +382,46 @@ class Pedido
 
         $conn->close();
         return $pedido;
+    }
+
+    public static function changeStatus($id, $status)
+    {
+        $conn = Pedido::getConnection();
+
+        $query = "
+            UPDATE pedidos
+            SET status = '{$status}'
+            WHERE id = '{$id}'
+        ";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return false;
+        }
+
+        $conn->close();
+        return true;
+    }
+    
+    public static function delete($id)
+    {
+        $conn = Pedido::getConnection();
+
+        $query = "
+            DELETE FROM pedidos
+            WHERE id = '{$id}'
+        ";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return false;
+        }
+
+        $conn->close();
+        return true;
     }
 }

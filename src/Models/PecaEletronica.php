@@ -422,4 +422,23 @@ class PecaEletronica
         $connection->close();
         return true;
     }
+
+    public static function delete($partId)
+    {
+        $connection = PecaEletronica::getConnection();
+
+        $query = "
+            DELETE FROM peca_eletronica
+            WHERE id = {$partId}
+        ";
+
+        $connection->query($query) or
+            trigger_error("
+                Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $connection->close();
+        return true;
+    }
 }

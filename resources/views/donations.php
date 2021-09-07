@@ -105,9 +105,9 @@
                                                 file_get_contents("../../public/assets/edit.svg")."
                                                 <span>Editar</span>
                                             </a>
-                                            <button class=\"delete\" onclick=\"\">".
+                                            <a class=\"delete\" href=\"../../src/php/donations-delete.php?partId={$peca->getId()}\">".
                                                 file_get_contents('../../public/assets/trash.svg')."
-                                            </button>
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

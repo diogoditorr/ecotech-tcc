@@ -141,10 +141,10 @@
                         <span>Cancelar</span>
                     </a>
 
-                    <button class="delete" type="submit">
+                    <a class="delete" href="../../src/php/donations-delete.php?partId=<?=$pecaEletronica->getId()?>">
                         <?php echo file_get_contents("../../public/assets/trash.svg"); ?>
                         <span>Excluir</span>
-                    </button>
+                    </a>
                 </div>
             </form>
         </section>

@@ -10,8 +10,9 @@
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
     }
-    
+
     $title = 'Ecotech | Doações';
     $css['locations'] = [
         '../../public/styles/page-donations.css',
@@ -154,7 +155,7 @@
                                         <td class=\"name\">{$pedido->getPecaEletronica()->getNome()}</td>
                                         <td class=\"status {$status}\">{$pedido->getStatus()}</td>
                                         <td class=\"see-details\">
-                                            <a href=\"./donations-details.php\">
+                                            <a href=\"./donations-details.php?pedido_id={$pedido->getId()}\">
                                                 <img src=\"../../public/assets/info.svg\" alt=\"\">
                                                 <span>Detalhes</span>
                                             </a>

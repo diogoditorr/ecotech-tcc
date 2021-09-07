@@ -141,7 +141,8 @@ class Pedido
     private static function fromArray(
         array $data,
         bool $setPart = false,
-        bool $setDonor = false
+        bool $setDonor = false,
+        bool $setClient = false
     ): Pedido {
         $pecaEletronica = (new PecaEletronica())->setId($data['peca_eletronica_id']);
         $doador = (new Pessoa())->setId($data['doador_id']);
@@ -172,6 +173,23 @@ class Pedido
                         ->setCidade($data['doador_cidade'])
                         ->setBairro($data['doador_bairro'])
                         ->setCep($data['doador_cep'])
+                );
+        }
+
+        if ($setClient) {
+            $cliente
+                ->setCpf($data['cliente_cpf'])
+                ->setEmail($data['cliente_email'])
+                ->setNome($data['cliente_nome'])
+                ->setEscola($data['cliente_escola'])
+                ->setNumTelefone1($data['cliente_num_telefone_1'])
+                ->setNumTelefone2($data['cliente_num_telefone_2'])
+                ->setEndereco(
+                    (new Endereco())
+                        ->setEstado($data['cliente_estado'])
+                        ->setCidade($data['cliente_cidade'])
+                        ->setBairro($data['cliente_bairro'])
+                        ->setCep($data['cliente_cep'])
                 );
         }
 
@@ -290,9 +308,7 @@ class Pedido
     public static function getDetailsById($id)
     {
         $conn = Pedido::getConnection();
-        /*
-            Query that joins three tables: pedidos, peca_eletronica and pessoa
-        */
+
         $query = "
             SELECT 
                 pedidos.id,
@@ -307,23 +323,37 @@ class Pedido
                 peca_eletronica.sobre as peca_eletronica_sobre,
                 peca_eletronica.imagem as peca_eletronica_imagem,
                 peca_eletronica.estoque as peca_eletronica_estoque,
-                pessoa.cpf AS doador_cpf,
-                pessoa.email AS doador_email,
-                pessoa.nome AS doador_nome,
-                pessoa.escola as doador_escola,
-                pessoa.num_telefone_1 AS doador_num_telefone_1,
-                pessoa.num_telefone_2 AS doador_num_telefone_2,
-                endereco.estado AS doador_estado,
-                endereco.cidade AS doador_cidade,
-                endereco.bairro AS doador_bairro,
-                endereco.cep AS doador_cep
+                pessoa_doador.cpf AS doador_cpf,
+                pessoa_doador.email AS doador_email,
+                pessoa_doador.nome AS doador_nome,
+                pessoa_doador.escola as doador_escola,
+                pessoa_doador.num_telefone_1 AS doador_num_telefone_1,
+                pessoa_doador.num_telefone_2 AS doador_num_telefone_2,
+                endereco_doador.estado AS doador_estado,
+                endereco_doador.cidade AS doador_cidade,
+                endereco_doador.bairro AS doador_bairro,
+                endereco_doador.cep AS doador_cep,
+                pessoa_cliente.cpf AS cliente_cpf,
+                pessoa_cliente.email AS cliente_email,
+                pessoa_cliente.nome AS cliente_nome,
+                pessoa_cliente.escola as cliente_escola,
+                pessoa_cliente.num_telefone_1 AS cliente_num_telefone_1,
+                pessoa_cliente.num_telefone_2 AS cliente_num_telefone_2,
+                endereco_cliente.estado AS cliente_estado,
+                endereco_cliente.cidade AS cliente_cidade,
+                endereco_cliente.bairro AS cliente_bairro,
+                endereco_cliente.cep AS cliente_cep
             FROM pedidos
             INNER JOIN peca_eletronica 
                 ON pedidos.peca_eletronica_id = peca_eletronica.id
-            INNER JOIN pessoa 
-                ON pedidos.doador_id = pessoa.id
-            INNER JOIN endereco
-                ON pedidos.doador_id = endereco.pessoa_id
+            INNER JOIN pessoa as pessoa_doador
+                ON pedidos.doador_id = pessoa_doador.id
+            INNER JOIN pessoa as pessoa_cliente
+                ON pedidos.cliente_id = pessoa_cliente.id
+            INNER JOIN endereco as endereco_doador
+                ON pedidos.doador_id = endereco_doador.pessoa_id
+            INNER JOIN endereco as endereco_cliente
+                ON pedidos.cliente_id = endereco_cliente.pessoa_id
             WHERE pedidos.id = '{$id}'
         ";
 
@@ -341,7 +371,12 @@ class Pedido
             return null;
         }
 
-        $pedido = Pedido::fromArray($data, setPart: true, setDonor: true);
+        $pedido = Pedido::fromArray(
+            $data, 
+            setPart: true, 
+            setDonor: true, 
+            setClient: true
+        );
 
         $conn->close();
         return $pedido;

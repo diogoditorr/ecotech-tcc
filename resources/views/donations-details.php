@@ -1,9 +1,16 @@
 <?php
+    require_once __DIR__ . '/../../vendor/autoload.php';
+
+    use Controllers\PedidosController;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
     }
+
+    $pedido = PedidosController::getDetailsById($_GET['pedido_id']);
     
     $title = 'Ecotech | Detalhes da doação';
     $css['locations'] = [
@@ -56,7 +63,7 @@
             <header>
                 <span>
                     <p>Doação</p>
-                    <small>#P9ACN678</small>
+                    <small>#<?=$pedido->getId()?></small>
                 </span>
 
                 <a class="back" href="./donations.php">
@@ -67,19 +74,36 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/image_1.png" alt="">
+                        <img src="../../storage/parts/<?=$pedido->getPecaEletronica()->getImagem()->name?>" alt="">
                     </div>
 
                     <div class="menu">
                         <div class="name">
-                            Semicondutores e transístores
+                            <?=$pedido->getPecaEletronica()->getNome()?>
                         </div>
                         
                         <div class="status">
                             <span>Status:</span>
                             <select name="status" id="status">
-                                <option value="pending">Pendente</option>
-                                <option value="delivered">Entregue</option>
+                                <?php
+                                    $status = match ($pedido->getStatus()) {
+                                        'pendente' => 'pending',
+                                        'entregue' => 'delivered',
+                                        'cancelado' => 'cancelled',
+                                        default => 'pending'
+                                    };
+                                    $options = [
+                                        "pending" => "<option value=\"pending\" REPLACE>Pendente</option>",
+                                        "delivered" => "<option value=\"delivered\" REPLACE>Entregue</option>"
+                                    ];
+                                    foreach ($options as $statusCase => $option) {
+                                        if ($statusCase == $status) {
+                                            echo str_replace("REPLACE", "selected", $option);
+                                        } else {
+                                            echo str_replace("REPLACE", "", $option);
+                                        }
+                                    }
+                                ?>
                             </select>
                         </div>
 

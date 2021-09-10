@@ -15,6 +15,7 @@
         '../../public/styles/page-explore.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/modal.css',
+        '../../public/styles/skeleton.css',
         '../../public/styles/animations.css',
     ];
 
@@ -96,6 +97,79 @@
         </header>
 
         <div class="content"></div>
+
+        <template id="modal-skeleton-template">
+            <div class="left">
+                <section>
+                    <div class="image skeleton">
+                        <div></div>
+                    </div>
+                    <div class="name">
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                    <div class="stock">
+                        <span style="width: 100%">
+                            <div class="skeleton skeleton-text skeleton-title"></div>
+                        </span>
+                        <div style="width: 100%" class="amount">
+                            <div class="skeleton skeleton-text skeleton-title"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="button-wrapper">
+                    <button class="favorite skeleton">
+                    </button>
+                </div>
+            </div>
+    
+            <div class="right">
+                <section>
+                    <div class="field">
+                        <div class="skeleton skeleton-text skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+    
+                    <div class="field">
+                        <div class="skeleton skeleton-text skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+                    
+                    <div class="field">
+                        <div class="skeleton skeleton-text skeleton-title"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                        <div class="skeleton skeleton-text"></div>
+                    </div>
+    
+                    <div class="field">
+                        <span style="width: 100%">
+                            <div class="skeleton skeleton-text skeleton-title"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text"></div>
+                        </span>
+                        <br>
+                        <span style="width: 100%">
+                            <div class="skeleton skeleton-text skeleton-title"></div>
+                            <div class="skeleton skeleton-text"></div>
+                            <div class="skeleton skeleton-text"></div>
+                        </span>
+                    </div>
+                </section>
+    
+                <div class="button-wrapper">
+                    <button class="order skeleton">
+                            
+                    </button>
+                </div>
+            </div>
+        </template>
     </div>
 </div>
 

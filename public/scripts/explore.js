@@ -3,16 +3,19 @@ const parts = document.querySelectorAll("#page-explore .part");
 const page = document.querySelector("#page-explore");
 const modal = document.querySelector("#modal");
 const modalContent = document.querySelector("#modal .content");
+const modalSkeletonTemplate = document.getElementById("modal-skeleton-template");
 const close = document.querySelector("#modal .close");
 
-function seeDetails(id) {
+function seeDetails(partId) {
+    modalContent.innerHTML = modalSkeletonTemplate.innerHTML;
+
     fetch("../../src/php/get-part-details.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify({
-            partId: id,
+            partId
         }),
     })
         .then((response) => response.json())

@@ -78,7 +78,7 @@
     overflow: hidden;
 }
 
-#modal .left .image > img {
+#modal .left .image > :is(img, div) {
     width: 412px;
     height: 412px;
     
@@ -187,6 +187,7 @@
 }
 
 #modal .right .field h2 {
+    width: 100%;
     margin-bottom: 1.4rem;
 
     border-bottom: 5px solid var(--primary-mono-d);

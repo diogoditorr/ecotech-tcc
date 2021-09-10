@@ -89,7 +89,12 @@
                         
                         <div class="status">
                             <span>Status:</span>
-                            <div class="pending"><?=$pedido->getStatus()?></div>
+                            <div class="<?=match ($pedido->getStatus()) {
+                                    'pendente' => 'pending',
+                                    'entregue' => 'delivered',
+                                    'cancelado' => 'cancelled',
+                                    default => 'pending'
+                                };?>"><?=$pedido->getStatus()?></div>
                         </div>
 
                         <div class="buttons">

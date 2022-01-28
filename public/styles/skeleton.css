@@ -11,15 +11,16 @@
     border-radius: 0.3rem;
 }
 
+.skeleton-text:last-child:not(:first-child) {
+    margin-bottom: 0;
+    width: 80%;
+}
+
 .skeleton-title {
     height: 3rem;
     margin-bottom: 1rem;
 }
 
-.skeleton-text:last-child:not(:first-child) {
-    margin-bottom: 0;
-    width: 80%;
-}
 
 @keyframes skeleton-loading {
     0% {

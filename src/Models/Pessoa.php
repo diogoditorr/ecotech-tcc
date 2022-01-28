@@ -3,17 +3,18 @@
 namespace Models;
 
 use ConexaoDB;
+use Models\BaseModel;
 
-class Pessoa
+class Pessoa extends BaseModel
 {
-    private int $id;
-    private string $cpf;
-    private string $email;
-    private string $nome;
-    private string $escola;
-    private string $numTelefone1;
-    private string $numTelefone2;
-    private Endereco $endereco;
+    protected int $id;
+    protected string $cpf;
+    protected string $email;
+    protected string $nome;
+    protected string $escola;
+    protected string $numTelefone1;
+    protected string $numTelefone2;
+    protected Endereco $endereco;
 
     /**
      * Get the value of id
@@ -233,7 +234,7 @@ class Pessoa
         $arrayObject = $result->fetch_assoc();
 
         if ($arrayObject === null) {
-            $conn -> close();
+            $conn->close();
             return null;
         }
 
@@ -256,6 +257,34 @@ class Pessoa
     public static function getByCpf($cpf)
     {
         return Pessoa::get("cpf", $cpf);
+    }
+
+    public static function getIdByCpf(string $cpf)
+    {
+        $conn = Pessoa::getConnection();
+
+        $query = "
+            SELECT id
+            FROM pessoa
+            WHERE cpf = '{$cpf}'
+        ";
+
+        $result = $conn->query($query);
+
+        if (!$result) {
+            $conn->close();
+            return null;
+        }
+
+        $arrayObject = $result->fetch_assoc();
+
+        if ($arrayObject === null) {
+            $conn->close();
+            return null;
+        }
+
+        $conn->close();
+        return $arrayObject['id'];
     }
 
     public function inserir(): bool

@@ -186,3 +186,39 @@
 
     cursor: pointer;
 }
+
+#page-explore .part .favorite svg {
+    height: 24px;
+}
+
+#page-explore .part .favorite svg:nth-child(2) {
+    display: none;
+    height: 24px;
+    fill: #FF1137;
+    /* fill: #F92345; */
+    /* fill: #CC0525; */
+    /* fill: #D67585; */
+    /* fill: #F7A6B4; */
+}
+
+#page-explore .part .favorite[data-is-favorited='true'] {
+    /* background-color: var(--terciary-2); */
+}
+
+#page-explore .part .favorite[data-is-favorited='true'] svg:nth-child(1) {
+    display: none;
+}
+
+#page-explore .part .favorite[data-is-favorited='true'] svg:nth-child(2) {
+    display: initial;
+}
+
+#page-explore .part .favorite.disabled {
+    background-color: hsl(0, 0%, 83%);
+}
+
+#page-explore .part .favorite.disabled svg {
+    fill: hsl(0, 0%, 45%);
+}
+
+

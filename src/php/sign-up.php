@@ -1,6 +1,8 @@
 <?php
 
-include "../Controllers/PessoasController.php";
+use Controllers\PessoasController;
+
+require_once __DIR__ . "/../../vendor/autoload.php";
 
 if (!$_POST['password'] === $_POST['passwordConfirm']) {
     header("Location: ../../resources/views/sign-up.php?error=\"As senhas não coincidem\"");

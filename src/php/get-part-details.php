@@ -2,8 +2,10 @@
 
 require __DIR__.'/../../vendor/autoload.php';
 
+use Controllers\InteressadosController;
 use Controllers\PecasEletronicasController;
 use Controllers\PessoasController;
+use Models\Interessado;
 
 session_start();
 
@@ -19,7 +21,7 @@ if (!isset($_POST['partId'])) {
 }
 
 $part = PecasEletronicasController::getById($_POST['partId']);
-$person = PessoasController::getByPersonId($part->getPessoaId());
+$person = PessoasController::getById($part->getPessoaId());
 
 echo json_encode([
     'part' => [
@@ -42,6 +44,7 @@ echo json_encode([
         'model' => $part->getModelo(),
         'description' => $part->getSobre(),
         'image' => $part->getImagem()->name,
-        'stock' => $part->getEstoque()
+        'stock' => $part->getEstoque(),
+        'isFavorited' => InteressadosController::isPartFavorited($part->getId(), $_SESSION['user_id'])
     ]
 ]);

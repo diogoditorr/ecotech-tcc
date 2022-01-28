@@ -1,10 +1,13 @@
 <?php
 
-class Interessado
+namespace Models;
+
+use Models\BaseModel;
+class Interessado extends BaseModel
 {
-    private int $id;
-    private int $pessoaId;
-    private int $pecaEletronicaId;
+    protected int $id;
+    protected int $pessoaId;
+    protected int $pecaEletronicaId;
 
     /**
      * Get the value of id
@@ -70,6 +73,107 @@ class Interessado
     {
         require_once "../../database/ConexaoDB.php";
         
-        return ConexaoDB::conectar();
+        return \ConexaoDB::conectar();
+    }
+
+    private static function fromArray(array $data): Interessado
+    {
+        $interessado = (new Interessado())
+                            ->setId($data["id"])
+                            ->setPessoaId($data["pessoa_id"])
+                            ->setPecaEletronicaId($data["peca_eletronica_id"]);
+
+        return $interessado;
+    }
+
+    public static function isPartFavorited($partId, $userId): bool
+    {
+        $connection = self::getConnection();
+
+        $query = "
+            SELECT * 
+            FROM interessados
+            WHERE 
+                pessoa_id = {$userId} AND 
+                peca_eletronica_id = {$partId}
+        ";
+
+        $result = $connection->query($query);
+
+        $connection->close();
+
+        if ($result->num_rows > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function favoritePart($partId, $userId)
+    {
+        $connection = self::getConnection();
+
+        $query = "
+            INSERT INTO interessados (pessoa_id, peca_eletronica_id)
+            VALUES ({$userId}, {$partId})
+        ";
+
+        $result = $connection->query($query);
+
+        $connection->close();
+
+        if ($result === false) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public static function unfavoritePart($partId, $userId)
+    {
+        $connection = self::getConnection();
+
+        $query = "
+            DELETE FROM interessados 
+            WHERE 
+                pessoa_id = {$userId} AND 
+                peca_eletronica_id = {$partId}
+        ";
+
+        $result = $connection->query($query);
+
+        $connection->close();
+
+        if ($result === false) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public static function getAllByUserId(int $userId): array
+    {
+        $connection = self::getConnection();
+
+        $query = "
+            SELECT * 
+            FROM interessados
+            WHERE pessoa_id = {$userId}
+        ";
+
+        $result = $connection->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $interessados = [];
+        while ($data = $result->fetch_assoc()) {
+            if ($data !== null)
+                $interessados[] = Interessado::fromArray($data);
+        }
+
+        $connection->close();
+        return $interessados;
     }
 }

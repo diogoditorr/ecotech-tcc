@@ -13,7 +13,7 @@
     $pedido = PedidosController::getDetailsById($_GET['pedido_id']);
     
     $title = 'Ecotech | Detalhes da doação';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-donations-details.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',
@@ -137,8 +137,9 @@
 
         </section>
     </main>
-    
-<script defer src="../../public/scripts/donations-details.js" type="text/javascript"></script>
 </div>
+
+<!-- <script src="../../public/scripts/donations-details.js" type="module"></script> -->
+<script src="../../build/bundle.js"></script>
 
 <?php include('../layouts/footer.php'); ?>

@@ -6,7 +6,7 @@
     }
 
     $title = 'Ecotech | Bate papo';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-chat.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',

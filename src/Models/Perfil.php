@@ -3,15 +3,15 @@
 namespace Models;
 
 use ConexaoDB;
-
-class Perfil
+use Models\BaseModel;
+class Perfil extends BaseModel
 {
-    private int $id;
-    private int $pessoaId;
-    private string $cpf;
-    private string $email;
-    private string $nomeUsuario;
-    private string $senha;
+    protected int $id;
+    protected int $pessoaId;
+    protected string $cpf;
+    protected string $email;
+    protected string $nomeUsuario;
+    protected string $senha;
 
     /**
      * Get the value of id

@@ -1,12 +1,36 @@
 <?php
+    require_once __DIR__ . "/../../vendor/autoload.php";
+
+    use Controllers\InteressadosController;
+    use Controllers\PecasEletronicasController;
+    use Controllers\PessoasController;
+    use Models\Interessado;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
+    }
+
+    $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
+    if (!isset($pecaEletronica)) {
+        http_response_code(404);
+        exit();
+    }
+
+    $pessoa = PessoasController::getById($pecaEletronica->getPessoaId());
+
+    if (!InteressadosController::isPartFavorited(
+            $pecaEletronica->getId(),
+            $_SESSION['user_id']
+        )) {
+        http_response_code(403);
+        exit();
     }
 
     $title = 'Ecotech | Detalhes da peça';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-interested-details.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',
@@ -64,17 +88,17 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/image_1.png" alt="">
+                        <img src="../../storage/parts/<?=$pecaEletronica->getImagem()->name?>" alt="">
                     </div>
 
                     <div class="menu">
                         <div class="name">
-                            Semicondutores e transístores
+                            <?=$pecaEletronica->getNome()?>
                         </div>
-                        
+
                         <div class="stock">
                             <span>Estoque:</span>
-                            <div class="amount">3 unidades</div>
+                            <div class="amount"><?=$pecaEletronica->getEstoque()?> unidades</div>
                         </div>
 
                         <div class="buttons">
@@ -82,9 +106,13 @@
                                 <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
                                 <span>Remover</span>
                             </button>
-                            <button class="order">
-                                <span>Fazer Pedido</span>
-                            </button>
+                            <form action="../../src/php/make-order.php" method="post">
+                                <input type="hidden" name="partId" value="<?=$pecaEletronica->getId()?>">
+                                <input type="hidden" name="doadorId" value="<?=$pecaEletronica->getPessoaId()?>">
+                                <button class="order">
+                                    <span>Fazer Pedido</span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -99,17 +127,21 @@
                     <tbody>
                         <tr>
                             <td>Nome</td>
-                            <td>Jefferson Carvalho de Almeida</td>
+                            <td><?=$pessoa->getNome()?></td>
                         </tr>
                         <tr>
                             <td>Endereço</td>
-                            <td>Avenida Rua Ilha Bela, 80, Petrolina - Pernambuco</td>
+                            <td>
+                                <?=$pessoa->getEndereco()->getBairro()?>, 
+                                <?=$pessoa->getEndereco()->getCidade()?> - 
+                                <?=$pessoa->getEndereco()->getEstado()?>
+                            </td>
                         </tr>
                         <tr>
                             <td>Telefone</td>
                             <td>
-                                (15) 99000-99 <br>
-                                (15) 3380-3099
+                                <?=$pessoa->getNumTelefone1()?> <br>
+                                <?=$pessoa->getNumTelefone2()?>
                             </td>
                         </tr>
                     </tbody>
@@ -125,24 +157,18 @@
                     <tbody>
                         <tr>
                             <td>Tipo</td>
-                            <td>Semicondutores e transítores</td>
+                            <td><?=$pecaEletronica->getTipo()?></td>
                         </tr>
                         <tr>
                             <td>Modelo</td>
                             <td>
-                                ON Semiconductor - NCV303LSN15T1G / NA Transistor - 2N2222A
+                                <?=$pecaEletronica->getModelo()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Sobre</td>
                             <td>
-                                Os componentes eletrônicos são todos os elementos que 
-                                compõem a estrutura de um circuito elétrico, ou seja, 
-                                fazem parte de todo circuito eletrônico ou elétrico e 
-                                estão sempre ligados entre si, formando um sequencial 
-                                de funções, interligando todos os componentes e 
-                                fornecendo um trabalho conjunto onde um interfere no 
-                                funcionamento do outro.
+                                <?=$pecaEletronica->getSobre()?>
                             </td>
                         </tr>
                     </tbody>
@@ -151,7 +177,7 @@
 
         </section>
     </main>
-    
+
 
 </div>
 

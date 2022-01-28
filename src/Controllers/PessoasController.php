@@ -29,7 +29,7 @@ class PessoasController
             ->inserir();
 
         if ($registerPessoaSuccess) {
-            $pessoaId = Pessoa::getByCpf($data['cpf'])->getId();
+            $pessoaId = Pessoa::getIdByCpf($data['cpf']);
 
             $registerPerfilSuccess = (new Perfil())
                 ->setPessoaId($pessoaId)
@@ -83,8 +83,8 @@ class PessoasController
         return Perfil::verificarCredenciaisUsuario($cpf, $email, $password);
     }
 
-    public static function getByPersonId(int $personId)
+    public static function getById(int $id)
     {
-        return Pessoa::getById($personId);
+        return Pessoa::getById($id);
     }
 }

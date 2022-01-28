@@ -16,10 +16,14 @@
     <!-- Css -->
     <link rel="stylesheet" type="text/css" href="../../public/styles/main.css">
     <?php 
-        foreach($css["locations"] as $location) {
-            echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"$location\">";
+        /** @var string $path */
+        /** @var array $css */
+        foreach($css["paths"] as $path) {
+            echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\">";
         }
     ?>
+
+    <!-- Scripts -->
 
     <title><?= $title ?? 'Document' ?></title>
 </head>

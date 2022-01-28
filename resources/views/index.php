@@ -1,6 +1,6 @@
 <?php
     $title = 'Ecotech';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-home.css',
         '../../public/styles/animations.css',
     ];

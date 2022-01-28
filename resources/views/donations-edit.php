@@ -7,21 +7,24 @@
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
     }
     
     if (!isset($_GET['peca_id'])) {
-        header('Location: donations.php');
+        // header('Location: donations.php');
+        http_response_code(400);
+        exit();
     }
     
     $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
     if ($pecaEletronica == null) {
-        header('Location: donations.php');
-        // http_response_code(404);
-        // exit();
+        // header('Location: donations.php');
+        http_response_code(404);
+        exit();
     }
 
     $title = 'Ecotech | Editando peça';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-donations-edit.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',

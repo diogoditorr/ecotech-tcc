@@ -6,7 +6,7 @@
     }
 
     $title = 'Ecotech | Novo cadastro de peça';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-donations-new.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',

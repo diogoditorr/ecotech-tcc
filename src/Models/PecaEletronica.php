@@ -3,18 +3,19 @@
 namespace Models;
 
 use Models\Imagem;
+use Models\BaseModel;
 
-class PecaEletronica
+class PecaEletronica extends BaseModel
 {
-    private int $id;
-    private int $pessoaId;
-    private string|null $pessoaIdNome;
-    private string|null $nome;
-    private string|null $tipo;
-    private string|null $modelo;
-    private string|null $sobre;
-    private Imagem|null $imagem;
-    private int $estoque;
+    protected int $id;
+    protected int $pessoaId;
+    protected string|null $pessoaIdNome;
+    protected string|null $nome;
+    protected string|null $tipo;
+    protected string|null $modelo;
+    protected string|null $sobre;
+    protected Imagem|null $imagem;
+    protected int $estoque;
 
     /**
      * Get the value of id
@@ -313,9 +314,9 @@ class PecaEletronica
             );
 
         $pecasEletronicas = [];
-        while ($obj = $result->fetch_assoc()) {
-            if ($obj !== null)
-                $pecasEletronicas[] = PecaEletronica::fromArray($obj);
+        while ($data = $result->fetch_assoc()) {
+            if ($data !== null)
+                $pecasEletronicas[] = PecaEletronica::fromArray($data);
         }
 
         $conn->close();
@@ -363,6 +364,30 @@ class PecaEletronica
     {
         $connection = PecaEletronica::getConnection();
         $query = "SELECT * FROM peca_eletronica WHERE pessoa_id = {$userId}";
+
+        $result = $connection->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $pecasEletronicas = [];
+        while ($row = $result->fetch_assoc()) {
+            if ($row !== null)
+                \array_push($pecasEletronicas, PecaEletronica::fromArray($row));
+        }
+
+        return $pecasEletronicas;
+    }
+
+    public static function getAllByIds(array $ids): array
+    {
+        $connection = PecaEletronica::getConnection();
+        $query = "
+            SELECT * 
+            FROM peca_eletronica 
+            WHERE id IN (" . implode(',', $ids) . ")
+        ";
 
         $result = $connection->query($query) or
             trigger_error(

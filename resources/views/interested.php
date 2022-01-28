@@ -1,12 +1,19 @@
 <?php
+    require_once __DIR__ . "/../../vendor/autoload.php";
+
+    use Controllers\InteressadosController;
+    use Controllers\PecasEletronicasController;
+    use Models\PecaEletronica;
+
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
+        exit();
     }
 
     $title = 'Ecotech | Interessados';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-interested.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',
@@ -66,26 +73,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="image"><img src="../../storage/parts/image_1.png" alt=""></td>
-                        <td class="name">Semicondutores e transístores</td>
-                        <td class="see-details">
-                            <a href="./interested-details.php">
-                                <img src="../../public/assets/info.svg" alt="">
-                                <span>Detalhes</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="image"><img src="../../storage/parts/image_4.png" alt=""></td>
-                        <td class="name">Semicondutores</td>
-                        <td class="see-details">
-                            <a href="./interested-details.php">
-                                <img src="../../public/assets/info.svg" alt="">
-                                <span>Detalhes</span>
-                            </a>
-                        </td>
-                    </tr>
+                    <?php
+                        $interessados = InteressadosController::getAllByUserId($_SESSION['user_id']);
+
+                        $pecasEletronicasId = array_reduce($interessados, function($array, $item) {
+                            $array[] = $item->getPecaEletronicaId();
+                            return $array;
+                        });
+
+                        $pecasEletronicas = PecasEletronicasController::getAllByIds($pecasEletronicasId);
+
+                        /** @var PecaEletronica $pecaEletronica */
+                        foreach($pecasEletronicas as $pecaEletronica) {
+                            echo "
+                                <tr>
+                                    <td 
+                                        class=\"image\"><img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" 
+                                        alt=\"Part Image\"
+                                    ></td>
+                                    <td class=\"name\">{$pecaEletronica->getNome()}</td>
+                                    <td class=\"see-details\">
+                                        <a href=\"./interested-details.php?peca_id={$pecaEletronica->getId()}\">
+                                            <img src=\"../../public/assets/info.svg\" alt=\"\">
+                                            <span>Detalhes</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            ";
+                        }
+                    ?>
                 </tbody>
             </table>
         </section>

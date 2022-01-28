@@ -1,8 +1,10 @@
 <?php
     require_once __DIR__ . '/../../vendor/autoload.php';
 
+    use Controllers\InteressadosController;
     use Controllers\PecasEletronicasController;
     use Models\PecaEletronica;
+    use Models\Interessado;
 
     session_start();
 
@@ -11,7 +13,7 @@
     }
 
     $title = 'Ecotech | Explorar';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-explore.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/modal.css',
@@ -63,12 +65,19 @@
             } else {
                 $pecasEletronicas = PecasEletronicasController::getAllByName($_GET['search']);
             }
+            
+            $pecasFavoritadas = array_map(function(Interessado $interested) {
+                return (int) $interested->getPecaEletronicaId();
+            }, InteressadosController::getAllByUserId($_SESSION['user_id']));
 
             /** @var PecaEletronica $pecaEletronica */
             foreach ($pecasEletronicas as $pecaEletronica) { 
                 if ($pecaEletronica->getEstoque() > 0) {
                     echo "
-                        <div data-id=\"{$pecaEletronica->getId()}\" class=\"part\">
+                        <div 
+                            data-id=\"{$pecaEletronica->getId()}\" 
+                            class=\"part\"
+                        >
                             <div class=\"image\">
                                 <img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" alt=\"\">
                             </div>
@@ -77,7 +86,15 @@
                             <div class=\"user-name\">• Aluno: {$pecaEletronica->getPessoaIdNome()}</div>
                             <div class=\"buttons\">
                                 <button class=\"see-details\">Ver detalhes</button>
-                                <button class=\"favorite\"><img src=\"../../public/assets/heart.svg\" alt=\"\"></button>
+                                <button 
+                                    class=\"favorite\"
+                                    data-is-favorited=\"".(in_array($pecaEletronica->getId(), $pecasFavoritadas) ? 'true' : 'false')."\"
+                                >
+                                    ".
+                                    file_get_contents("../../public/assets/heart.svg").
+                                    file_get_contents("../../public/assets/heart-filled.svg").
+                                    "
+                                </button>
                             </div>
                         </div>
                     ";
@@ -173,6 +190,7 @@
     </div>
 </div>
 
-<script defer src="../../public/scripts/explore.js" type="text/javascript"></script>
-
+<!-- <script defer src="../../public/scripts/explore.js" type="text/javascript"></script> -->
+<!-- <script src="../../build/bundle.js"></script> -->
+<script src="../../public/scripts/explore.js" type="module"></script>
 <?php include('../layouts/footer.php'); ?>

@@ -1,3 +1,5 @@
+import utils from "./utils.js";
+
 const saveButton = document.querySelector(
     "#page-donations-details .buttons .save"
 );
@@ -11,44 +13,21 @@ const select = document.querySelector(
     "#page-donations-details select[id='status']"
 );
 
-function handleStatus(status) {
-    switch (status) {
-        case "pending":
-            return "pendente";
-        case "delivered":
-            return "entregue";
-        case "cancelled":
-            return "cancelado";
-        default:
-            return "pendente";
-    }
-}
-
-function toFormData(data) {
-    const formData = new FormData();
-
-    for (let key in data) {
-        formData.append(key, data[key]);
-    }
-
-    return formData;
-}
-
 saveButton.addEventListener("click", () => {
-    saveButton.classList.add("disabled");
-    saveButton.disabled = true;
+    disableSaveButton();
 
     fetch("../../src/php/order-edit.php", {
         method: "POST",
-        body: toFormData({
+        body: utils.toFormData({
             orderId: orderId.value,
-            status: handleStatus(select.options[select.selectedIndex].value),
+            status: utils.handleStatus(
+                select.options[select.selectedIndex].value
+            ),
         }),
     })
         .then((response) => response.json())
         .then((data) => {
-            saveButton.classList.remove("disabled");
-            saveButton.disabled = false;
+            enableSaveButton();
 
             console.log(data);
             alert("Status changed with success!");
@@ -62,7 +41,7 @@ saveButton.addEventListener("click", () => {
 cancelButton.addEventListener("click", () => {
     fetch("../../src/php/order-cancel.php", {
         method: "POST",
-        body: toFormData({
+        body: utils.toFormData({
             orderId: orderId.value,
         }),
     })
@@ -81,3 +60,13 @@ cancelButton.addEventListener("click", () => {
             alert("Something went wrong. Please try again later.");
         });
 });
+
+function enableSaveButton() {
+    saveButton.classList.remove("disabled");
+    saveButton.disabled = false;
+}
+
+function disableSaveButton() {
+    saveButton.classList.add("disabled");
+    saveButton.disabled = true;
+}

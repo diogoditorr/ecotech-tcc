@@ -1,6 +1,6 @@
 <?php
     $title = 'Ecotech | Cadastro de Usuário';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-sign-up.css',
         '../../public/styles/animations.css',
     ];

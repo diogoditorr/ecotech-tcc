@@ -14,7 +14,7 @@
     }
 
     $title = 'Ecotech | Doações';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-donations.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',

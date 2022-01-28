@@ -2,14 +2,16 @@
 
 namespace Models;
 
-class Pedido
+use Models\BaseModel;
+
+class Pedido extends BaseModel
 {
-    private string $id;
-    private PecaEletronica|null $pecaEletronica;
-    private Pessoa|null $doador;
-    private Pessoa|null $cliente;
-    private string $status;
-    private string $created_at;
+    protected string $id;
+    protected PecaEletronica|null $pecaEletronica;
+    protected Pessoa|null $doador;
+    protected Pessoa|null $cliente;
+    protected string $status;
+    protected string $created_at;
 
     /**
      * Get the value of id
@@ -249,6 +251,7 @@ class Pedido
             INNER JOIN peca_eletronica 
                 ON pedidos.peca_eletronica_id = peca_eletronica.id
             WHERE pedidos.cliente_id = '{$clientId}'
+            ORDER BY pedidos.created_at DESC
         ";
 
         $result = $conn->query($query) or
@@ -289,6 +292,7 @@ class Pedido
             INNER JOIN peca_eletronica 
                 ON pedidos.peca_eletronica_id = peca_eletronica.id
             WHERE pedidos.doador_id = '{$donorId}'
+            ORDER BY pedidos.created_at DESC
         ";
 
         $result = $conn->query($query) or

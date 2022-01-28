@@ -3,15 +3,16 @@
 namespace Models;
 
 use ConexaoDB;
+use Models\BaseModel;
 
-class Endereco
+class Endereco extends BaseModel
 {
-    private int $id;
-    private int $pessoaId;
-    private string $estado;
-    private string $cidade;
-    private string $bairro;
-    private string $cep;
+    protected int $id;
+    protected int $pessoaId;
+    protected string $estado;
+    protected string $cidade;
+    protected string $bairro;
+    protected string $cep;
 
     /**
      * Get the value of id

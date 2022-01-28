@@ -11,7 +11,7 @@
     }
 
     $title = 'Ecotech | Pedidos';
-    $css['locations'] = [
+    $css['paths'] = [
         '../../public/styles/page-orders.css',
         '../../public/styles/navigation-bar.css',
         '../../public/styles/navigation-profile.css',

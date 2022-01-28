@@ -51,6 +51,11 @@ class PecasEletronicasController
         return PecaEletronica::getAllByUserId($userId);
     }
 
+    public static function getAllByIds(array $ids)
+    {
+        return PecaEletronica::getAllByIds($ids);
+    }
+
     public static function getById($pecaId)
     {
         return PecaEletronica::getById($pecaId);

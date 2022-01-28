@@ -2,7 +2,9 @@
 
 namespace Models;
 
-class Imagem {
+use Models\BaseModel;
+
+class Imagem extends BaseModel {
     public string $name;
     public string|null $nameFormatted;
     public string|null $type;

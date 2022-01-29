@@ -140,6 +140,6 @@
 </div>
 
 <!-- <script src="../../public/scripts/donations-details.js" type="module"></script> -->
-<script src="../../build/bundle.js"></script>
+<script src="../../dist/assets/donations-details.js"></script>
 
 <?php include('../layouts/footer.php'); ?>

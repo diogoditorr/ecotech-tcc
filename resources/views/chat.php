@@ -120,7 +120,7 @@
     </main>
 </div>
 
-<script src="../../public/scripts/chat.js"></script>
+<script src="../../dist/assets/chat.js"></script>
 
 <?php include('../layouts/footer.php'); ?>
 

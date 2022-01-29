@@ -107,9 +107,6 @@
             </table>
         </section>
     </main>
-    
-
 </div>
-
 
 <?php include('../layouts/footer.php'); ?>

@@ -1,5 +1,18 @@
+import Part from "./part";
+
+interface MessageOptions {
+    favorited: string;
+    notFavorited: string;
+}
+
 export default class FavoriteButton {
-    constructor(part, button, isFavorited, message) {
+    part: Part;
+    button: HTMLButtonElement;
+    isFavorited: boolean;
+    message?: MessageOptions;
+    span?: HTMLSpanElement | null;
+    
+    constructor(part: Part, button: HTMLButtonElement, isFavorited: boolean, message?: MessageOptions) {
         this.part = part;
         this.button = button;
         this.button.addEventListener("click", this.toggleFavorite.bind(this));
@@ -52,9 +65,7 @@ export default class FavoriteButton {
                             this.part.favoriteButton.updateButtonDataset();
                         }
 
-                        if (this.message) {
-                            this.updateText();
-                        }
+                        this.updateText();
 
                         if (
                             this.part.favoriteButton !== this &&
@@ -81,15 +92,18 @@ export default class FavoriteButton {
         this.button.classList.add("disabled");
     }
 
-    setFavorite(value) {
+    setFavorite(value: boolean) {
         this.isFavorited = value;
     }
 
     updateButtonDataset() {
-        this.button.setAttribute("data-is-favorited", this.isFavorited);
+        this.button.setAttribute("data-is-favorited", this.isFavorited.toString());
     }
 
     updateText() {
+        if (!this.span || !this.message)
+            return
+
         this.span.textContent = this.isFavorited
             ? this.message.favorited
             : this.message.notFavorited;

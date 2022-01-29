@@ -1,20 +1,27 @@
-import FavoriteButton from "./favorite-button.js";
+import FavoriteButton from "./favorite-button";
+import Part from "./part";
 
 export default class Modal {
-    constructor(part) {
+    part: Part;
+    page: HTMLElement;
+    modal: HTMLElement;
+    modalContent: HTMLElement;
+    modalSkeletonTemplate: HTMLElement;
+
+    constructor(part: Part) {
         this.part = part;
-        this.page = document.querySelector("#page-explore");
-        this.modal = document.querySelector("#modal");
-        this.modalContent = document.querySelector("#modal .content");
+        this.page = document.querySelector("#page-explore") as HTMLElement;
+        this.modal = document.querySelector("#modal") as HTMLElement;
+        this.modalContent = document.querySelector("#modal .content") as HTMLElement;
         this.modalSkeletonTemplate = document.getElementById(
             "modal-skeleton-template"
-        );
+        ) as HTMLElement;
 
-        const close = document.querySelector("#modal .close");
+        const close = document.querySelector("#modal .close") as HTMLElement;
         close.addEventListener("click", this.closeModal.bind(this));
     }
 
-    static create(part) {
+    static create(part: Part) {
         const modal = new Modal(part);
         modal.openModal();
         modal.loadData();
@@ -123,7 +130,7 @@ export default class Modal {
 
                 new FavoriteButton(
                     this.part,
-                    this.modalContent.querySelector(".left button.favorite"),
+                    this.modalContent.querySelector(".left button.favorite") as HTMLButtonElement,
                     this.part.isFavorited,
                     {
                         favorited: "Remover",

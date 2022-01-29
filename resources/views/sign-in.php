@@ -52,6 +52,4 @@
     </main>
 </div>
 
-<!-- <script src="/public/scripts/sign-up.js"></script> -->
-
 <?php include('../layouts/footer.php'); ?>

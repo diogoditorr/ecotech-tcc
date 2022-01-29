@@ -190,7 +190,5 @@
     </div>
 </div>
 
-<!-- <script defer src="../../public/scripts/explore.js" type="text/javascript"></script> -->
-<!-- <script src="../../build/bundle.js"></script> -->
-<script src="../../public/scripts/explore.js" type="module"></script>
+<script src="../../dist/assets/explore.js"></script>
 <?php include('../layouts/footer.php'); ?>

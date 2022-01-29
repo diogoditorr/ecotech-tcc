@@ -1,4 +1,8 @@
-function toFormData(data) {
+interface AnyObject {
+    [key: string]: any;
+}
+
+function toFormData(data: AnyObject) {
     const formData = new FormData();
 
     for (let key in data) {
@@ -8,7 +12,7 @@ function toFormData(data) {
     return formData;
 }
 
-function handleStatus(status) {
+function handleStatus(status: string) {
     switch (status) {
         case "pending":
             return "pendente";

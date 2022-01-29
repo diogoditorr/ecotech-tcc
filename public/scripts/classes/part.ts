@@ -2,19 +2,24 @@ import Modal from './modal.js';
 import FavoriteButton from './favorite-button.js';
 
 export default class Part {
-    constructor(part) {
-        const seeDetailsButton = part.querySelector(".see-details");
-        const favoriteButton = part.querySelector(".favorite");
+    element: HTMLDivElement;
+    id: number;
+    isFavorited: boolean;
+    favoriteButton: FavoriteButton;
+
+    constructor(part: HTMLDivElement) {
+        const seeDetailsButton = part.querySelector(".see-details") as HTMLButtonElement;
+        const favoriteButton = part.querySelector(".favorite") as HTMLButtonElement;
 
         this.element = part
-        this.id = part.getAttribute("data-id");
+        this.id = Number(part.getAttribute("data-id"));
         this.isFavorited = favoriteButton.getAttribute("data-is-favorited") === "true";
         this.favoriteButton = new FavoriteButton(this, favoriteButton, this.isFavorited)
         
         seeDetailsButton.addEventListener("click", Modal.create.bind(null, this));
     }
 
-    setFavorite(value) {
+    setFavorite(value: boolean) {
         this.isFavorited = value;
     }
 }

@@ -1,17 +1,17 @@
-import utils from "./utils.js";
+import utils from "./utils";
 
 const saveButton = document.querySelector(
     "#page-donations-details .buttons .save"
-);
+) as HTMLButtonElement;
 const cancelButton = document.querySelector(
     "#page-donations-details .buttons .cancel-order"
-);
+) as HTMLButtonElement;
 const orderId = document.querySelector(
     "#page-donations-details input[name='orderId']"
-);
+) as HTMLInputElement;
 const select = document.querySelector(
     "#page-donations-details select[id='status']"
-);
+) as HTMLSelectElement;
 
 saveButton.addEventListener("click", () => {
     disableSaveButton();

@@ -448,6 +448,27 @@ class PecaEletronica extends BaseModel
         return true;
     }
 
+    public static function updateStock(int $partId, int $quantity)
+    {
+        $connection = PecaEletronica::getConnection();
+        $query = "
+            UPDATE peca_eletronica 
+            SET 
+                estoque = {$quantity} 
+            WHERE 
+                id = {$partId}
+        ";
+
+        $connection->query($query) or
+            trigger_error("
+                Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $connection->close();
+        return true;
+    }
+
     public static function delete($partId)
     {
         $connection = PecaEletronica::getConnection();

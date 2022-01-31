@@ -4,30 +4,30 @@
     use Controllers\InteressadosController;
     use Controllers\PecasEletronicasController;
     use Controllers\PessoasController;
-    use Models\Interessado;
-
+    use Php\Utils;
+    
     session_start();
-
+    
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
         exit();
     }
-
+    
     $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
     if (!isset($pecaEletronica)) {
         http_response_code(404);
         exit();
     }
-
+    
     $pessoa = PessoasController::getById($pecaEletronica->getPessoaId());
-
+    
     if (!InteressadosController::isPartFavorited(
-            $pecaEletronica->getId(),
-            $_SESSION['user_id']
+        $pecaEletronica->getId(),
+        $_SESSION['user_id']
         )) {
-        http_response_code(403);
-        exit();
-    }
+            http_response_code(403);
+            exit();
+        }
 
     $title = 'Ecotech | Detalhes da peça';
     $css['paths'] = [
@@ -102,10 +102,23 @@
                         </div>
 
                         <div class="buttons">
-                            <button class="remove-favorite">
-                                <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
-                                <span>Remover</span>
-                            </button>
+                            <?php
+                                $pecasFavoritadas = Utils::getFavoritedPartsId($_SESSION['user_id']);
+                                
+                                echo "
+                                    <button 
+                                        class=\"favorite\"
+                                        data-is-favorited=\"".(in_array($pecaEletronica->getId(), $pecasFavoritadas) ? 'true' : 'false')."\"
+                                    >
+                                        ".
+                                        file_get_contents("../../public/assets/heart.svg").
+                                        file_get_contents("../../public/assets/heart-filled.svg")
+                                        ."
+                                        <span></span>
+                                    </button>
+                                ";
+                            ?>
+                            
                             <form action="../../src/php/make-order.php" method="post">
                                 <input type="hidden" name="partId" value="<?=$pecaEletronica->getId()?>">
                                 <input type="hidden" name="doadorId" value="<?=$pecaEletronica->getPessoaId()?>">
@@ -177,9 +190,8 @@
 
         </section>
     </main>
-
-
 </div>
 
+<script src="../../dist/assets/interested-details.js" type="module"></script>
 
 <?php include('../layouts/footer.php'); ?>

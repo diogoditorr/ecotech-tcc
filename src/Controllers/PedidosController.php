@@ -16,6 +16,14 @@ class PedidosController
         // spaces and special characters
         $id = substr(md5(uniqid(rand(), true)), 0, 8);
 
+        $pecaEletronica = PecasEletronicasController::getById($data['partId']);
+
+        if ($pecaEletronica->getEstoque() <= 0)
+            return [
+                'success' => false,
+                'error' => 'Não há estoque disponível para essa peça'
+            ];
+
         $result = (new Pedido())
             ->setId($id)
             ->setPecaEletronica(
@@ -36,6 +44,11 @@ class PedidosController
                 'error' => 'Não foi possível fazer o pedido'
             ];
         }
+
+        PecasEletronicasController::updateStock(
+            $pecaEletronica->getId(), 
+            $pecaEletronica->getEstoque() - 1
+        );
 
         return [
             'success' => true,

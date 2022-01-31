@@ -136,6 +136,6 @@
     </main>
 </div>
 
-<script src="../../dist/assets/sign-up.js"></script>
+<script src="../../dist/assets/sign-up.js" type="module"></script>
 
 <?php include('../layouts/footer.php'); ?>

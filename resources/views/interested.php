@@ -75,39 +75,39 @@
                 <tbody>
                     <?php
                         $interessados = InteressadosController::getAllByUserId($_SESSION['user_id']);
-
-                        $pecasEletronicasId = array_reduce($interessados, function($array, $item) {
-                            $array[] = $item->getPecaEletronicaId();
-                            return $array;
-                        });
-
-                        $pecasEletronicas = PecasEletronicasController::getAllByIds($pecasEletronicasId);
-
-                        /** @var PecaEletronica $pecaEletronica */
-                        foreach($pecasEletronicas as $pecaEletronica) {
-                            echo "
-                                <tr>
-                                    <td 
-                                        class=\"image\"><img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" 
-                                        alt=\"Part Image\"
-                                    ></td>
-                                    <td class=\"name\">{$pecaEletronica->getNome()}</td>
-                                    <td class=\"see-details\">
-                                        <a href=\"./interested-details.php?peca_id={$pecaEletronica->getId()}\">
-                                            <img src=\"../../public/assets/info.svg\" alt=\"\">
-                                            <span>Detalhes</span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            ";
+                        
+                        if (count($interessados) > 0) {
+                            $pecasEletronicasId = array_reduce($interessados, function($array, $item) {
+                                $array[] = $item->getPecaEletronicaId();
+                                return $array;
+                            });
+    
+                            $pecasEletronicas = PecasEletronicasController::getAllByIds($pecasEletronicasId);
+    
+                            /** @var PecaEletronica $pecaEletronica */
+                            foreach($pecasEletronicas as $pecaEletronica) {
+                                echo "
+                                    <tr>
+                                        <td 
+                                            class=\"image\"><img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" 
+                                            alt=\"Part Image\"
+                                        ></td>
+                                        <td class=\"name\">{$pecaEletronica->getNome()}</td>
+                                        <td class=\"see-details\">
+                                            <a href=\"./interested-details.php?peca_id={$pecaEletronica->getId()}\">
+                                                <img src=\"../../public/assets/info.svg\" alt=\"\">
+                                                <span>Detalhes</span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ";
+                            }
                         }
                     ?>
                 </tbody>
             </table>
         </section>
     </main>
-    
-
 </div>
 
 

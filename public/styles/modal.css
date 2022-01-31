@@ -147,8 +147,8 @@
     cursor: pointer;
 }
 
-#modal .left .favorite img {
-    height: 32px;
+#modal .left .favorite:hover {
+    background-color: #a01b31;
 }
 
 #modal .left .favorite span {
@@ -160,6 +160,36 @@
     letter-spacing: 0.025em;
 
     color: white;
+}
+
+#modal .left .favorite svg {
+    height: 32px;
+    width: 32px;
+}
+
+#modal .left .favorite svg:nth-child(2) {
+    display: none;
+    fill: #FF1137;
+}
+
+#modal .left .favorite[data-is-favorited='true'] svg:nth-child(1) {
+    display: none;
+}
+
+#modal .left .favorite[data-is-favorited='true'] svg:nth-child(2) {
+    display: initial;
+}
+
+#modal .left .favorite.disabled {
+    background-color: hsl(0, 0%, 83%);
+}
+
+#modal .left .favorite.disabled span {
+    color: hsl(0, 0%, 45%);
+}
+
+#modal .left .favorite.disabled svg {
+    fill: hsl(0, 0%, 45%);
 }
 
 #modal .right {

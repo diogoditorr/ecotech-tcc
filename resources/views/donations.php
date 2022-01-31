@@ -5,8 +5,9 @@
     use Controllers\PedidosController;
     use Models\PecaEletronica;
     use Models\Pedido;
+use Php\Utils;
 
-    session_start();
+session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
@@ -141,12 +142,7 @@
                             * @var Pedido $pedido 
                             */
                             foreach ($pedidos as $pedido) {
-                                $status = match ($pedido->getStatus()) {
-                                    'pendente' => 'pending',
-                                    'entregue' => 'delivered',
-                                    'cancelado' => 'cancelled',
-                                    default => 'pending'
-                                };
+                                $status = Utils::parseStatus($pedido->getStatus());
 
                                 echo "
                                     <tr>
@@ -169,8 +165,6 @@
             </div>
         </section>
     </main>
-    
-
 </div>
 
 

@@ -201,10 +201,6 @@
     /* fill: #F7A6B4; */
 }
 
-#page-explore .part .favorite[data-is-favorited='true'] {
-    /* background-color: var(--terciary-2); */
-}
-
 #page-explore .part .favorite[data-is-favorited='true'] svg:nth-child(1) {
     display: none;
 }

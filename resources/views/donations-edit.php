@@ -154,6 +154,6 @@
     </main>
 </div>
 
-<script src="../../dist/assets/stock-menu.js"></script>
+<script src="../../dist/assets/stock-menu.js" type="module"></script>
 
 <?php include('../layouts/footer.php'); ?>

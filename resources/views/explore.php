@@ -5,6 +5,7 @@
     use Controllers\PecasEletronicasController;
     use Models\PecaEletronica;
     use Models\Interessado;
+    use Php\Utils;
 
     session_start();
 
@@ -66,9 +67,7 @@
                 $pecasEletronicas = PecasEletronicasController::getAllByName($_GET['search']);
             }
             
-            $pecasFavoritadas = array_map(function(Interessado $interested) {
-                return (int) $interested->getPecaEletronicaId();
-            }, InteressadosController::getAllByUserId($_SESSION['user_id']));
+            $pecasFavoritadas = Utils::getFavoritedPartsId($_SESSION['user_id']);
 
             /** @var PecaEletronica $pecaEletronica */
             foreach ($pecasEletronicas as $pecaEletronica) { 
@@ -190,5 +189,5 @@
     </div>
 </div>
 
-<script src="../../dist/assets/explore.js"></script>
+<script src="../../dist/assets/explore.js" type="module"></script>
 <?php include('../layouts/footer.php'); ?>

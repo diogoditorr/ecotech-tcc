@@ -2,8 +2,9 @@
     require_once __DIR__ . '/../../vendor/autoload.php';
 
     use Controllers\PedidosController;
+use Php\Utils;
 
-    session_start();
+session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
@@ -87,12 +88,7 @@
                             <span>Status:</span>
                             <select name="status" id="status">
                                 <?php
-                                    $status = match ($pedido->getStatus()) {
-                                        'pendente' => 'pending',
-                                        'entregue' => 'delivered',
-                                        'cancelado' => 'cancelled',
-                                        default => 'pending'
-                                    };
+                                    $status = Utils::parseStatus($pedido->getStatus());
                                     $options = [
                                         "pending" => "<option value=\"pending\" REPLACE>Pendente</option>",
                                         "delivered" => "<option value=\"delivered\" REPLACE>Entregue</option>",
@@ -139,7 +135,6 @@
     </main>
 </div>
 
-<!-- <script src="../../public/scripts/donations-details.js" type="module"></script> -->
-<script src="../../dist/assets/donations-details.js"></script>
+<script src="../../dist/assets/donations-details.js" type="module"></script>
 
 <?php include('../layouts/footer.php'); ?>

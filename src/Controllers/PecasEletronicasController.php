@@ -89,6 +89,10 @@ class PecasEletronicasController
         ];
     }
 
+    public static function updateStock($partId,int $quantity) {
+        return PecaEletronica::updateStock($partId, $quantity);
+    }
+
     public static function delete(int $partId)
     {
         return PecaEletronica::delete($partId);

@@ -154,20 +154,51 @@
     transition: background-color 0.2s ease-in-out;
 }
 
-#page-interested-details main .content .menu .buttons span {
+#page-interested-details main .content .menu .buttons button span {
     letter-spacing: 0.025em;
 }
 
-#page-interested-details main .content .menu .buttons button.remove-favorite {
+#page-interested-details main .content .menu .buttons button.favorite {
     background-color: var(--terciary);
 }
 
-#page-interested-details main .content .menu .buttons button.remove-favorite span {
+#page-interested-details main .content .menu .buttons button.favorite:hover {
+    background-color: #a01b31;
+}
+
+#page-interested-details main .content .menu .buttons button.favorite span {
     margin-left: 1.4rem;
 }
 
-#page-interested-details main .content .menu .buttons button.remove-favorite:hover {
-    background-color: #c2223c;
+#page-interested-details main .content .menu .buttons button.favorite svg {
+    height: 24px;
+    width: 24px;
+}
+
+#page-interested-details main .content .menu .buttons button.favorite svg:nth-child(2) {
+    display: none;
+    height: 32px;
+    fill: #FF1137;
+}
+
+#page-interested-details main .content .menu .buttons button.favorite[data-is-favorited='true'] svg:nth-child(1) {
+    display: none;
+}
+
+#page-interested-details main .content .menu .buttons button.favorite[data-is-favorited='true'] svg:nth-child(2) {
+    display: initial;
+}
+
+#page-interested-details main .content .menu .buttons button.favorite.disabled {
+    background-color: hsl(0, 0%, 83%);
+}
+
+#page-interested-details main .content .menu .buttons button.favorite.disabled span {
+    color: hsl(0, 0%, 45%);
+}
+
+#page-interested-details main .content .menu .buttons button.favorite.disabled svg {
+    fill: hsl(0, 0%, 45%);
 }
 
 #page-interested-details main .content .menu .buttons button.order {

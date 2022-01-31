@@ -1,19 +1,15 @@
-import Part from "./part";
-
-interface MessageOptions {
+export interface IMessageOptions {
     favorited: string;
     notFavorited: string;
 }
 
 export default class FavoriteButton {
-    part: Part;
     button: HTMLButtonElement;
     isFavorited: boolean;
-    message?: MessageOptions;
+    message?: IMessageOptions;
     span?: HTMLSpanElement | null;
     
-    constructor(part: Part, button: HTMLButtonElement, isFavorited: boolean, message?: MessageOptions) {
-        this.part = part;
+    constructor(button: HTMLButtonElement, isFavorited: boolean, message?: IMessageOptions) {
         this.button = button;
         this.button.addEventListener("click", this.toggleFavorite.bind(this));
         this.isFavorited = isFavorited;
@@ -29,9 +25,6 @@ export default class FavoriteButton {
 
     toggleFavorite() {
         this.disableButton();
-        if (this.part.favoriteButton !== this) {
-            this.part.favoriteButton.disableButton();
-        }
 
         // Send request to add to favorites
         fetch("../../src/php/favorite-part.php", {
@@ -40,39 +33,18 @@ export default class FavoriteButton {
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
-                partId: this.part.id,
+                // Get part id as "peca_id" from query params
+                partId: Number(new URLSearchParams(window.location.search).get("peca_id")),
             }),
         })
             .then((response) => {
                 setTimeout(() => {
                     if (response.status === 200) {
                         const status = !this.isFavorited;
-
                         this.setFavorite(status);
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.setFavorite(status);
-                        }
-
                         this.enableButton();
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.enableButton();
-                        }
-
-                        this.updatePart();
-
                         this.updateButtonDataset();
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.updateButtonDataset();
-                        }
-
                         this.updateText();
-
-                        if (
-                            this.part.favoriteButton !== this &&
-                            this.part.favoriteButton.message !== undefined
-                        ) {
-                            this.part.favoriteButton.updateText();
-                        }
                     }
                 }, 1000);
             })
@@ -109,7 +81,4 @@ export default class FavoriteButton {
             : this.message.notFavorited;
     }
 
-    updatePart() {
-        this.part.setFavorite(this.isFavorited);
-    }
 }

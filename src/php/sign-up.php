@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-use Controllers\PessoasController;
+use App\Controllers\PeopleController;
 
 require_once __DIR__ . "/../../vendor/autoload.php";
 
@@ -9,17 +9,17 @@ if (!$_POST['password'] === $_POST['passwordConfirm']) {
     exit();
 }
 
-$result = PessoasController::registrarUsuario($_POST);
+$result = PeopleController::registerUser($_POST);
 
 if (!$result['success']) {
     header("Location: ../../resources/views/sign-up.php?error=\"{$result['error']}\"");
     exit();
 } 
 
-$profile = PessoasController::carregarPerfil(null, null, $_POST['email']);
+$profile = PeopleController::loadProfile(null, null, $_POST['email']);
 
 session_start();
-$_SESSION['user_id'] = $profile->getPessoaId();
-$_SESSION['user_username'] = $profile->getNomeUsuario();
+$_SESSION['user_id'] = $profile->getPersonId();
+$_SESSION['user_username'] = $profile->getUserName();
 
 header("Location: ../../resources/views/explore.php");

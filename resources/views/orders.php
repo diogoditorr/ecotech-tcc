@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
     require __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\PedidosController;
-    use Models\Pedido;
-use Php\Utils;
+    use App\Controllers\OrdersController;
+    use App\Models\Order;
+    use App\Php\Util;
 
-session_start();
+    session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
@@ -75,22 +75,22 @@ session_start();
                 </thead>
                 <tbody>
                     <?php
-                        $pedidos = PedidosController::getAllByClientId($_SESSION['user_id']);
+                        $orders = OrdersController::getAllByReceiverId($_SESSION['user_id']);
                         
                         /**
-                        * @var Pedido $pedido 
+                        * @var Order $order
                         */
-                        foreach ($pedidos as $pedido) {
-                            $status = Utils::parseStatus($pedido->getStatus());
+                        foreach ($orders as $order) {
+                            $status = Util::parseStatus($order->getStatus());
 
                             echo "
                                 <tr>
-                                    <td class=\"image\"><img src=\"../../storage/parts/{$pedido->getPecaEletronica()->getImagem()->name}\" alt=\"\"></td>
-                                    <td class=\"order-id\">#{$pedido->getId()}</td>
-                                    <td class=\"name\">{$pedido->getPecaEletronica()->getNome()}</td>
-                                    <td class=\"status {$status}\">{$pedido->getStatus()}</td>
+                                    <td class=\"image\"><img src=\"../../storage/parts/{$order->getEletronicPart()->getImage()->name}\" alt=\"\"></td>
+                                    <td class=\"order-id\">#{$order->getId()}</td>
+                                    <td class=\"name\">{$order->getEletronicPart()->getName()}</td>
+                                    <td class=\"status {$status}\">{$order->getStatus()}</td>
                                     <td class=\"see-details\">
-                                        <a href=\"./orders-details.php?pedido_id={$pedido->getId()}\">
+                                        <a href=\"./orders-details.php?orderId={$order->getId()}\">
                                             <img src=\"../../public/assets/info.svg\" alt=\"\">
                                             <span>Detalhes</span>
                                         </a>

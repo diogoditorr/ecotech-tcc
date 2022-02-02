@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
     $title = 'Ecotech | Login';
     $css['paths'] = [
         '../../public/styles/page-sign-in.css',

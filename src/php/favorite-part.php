@@ -1,7 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Controllers\InteressadosController;
+use App\Controllers\InterestedController;
 
 if (preg_match('/^application\/json.*$/', $_SERVER['CONTENT_TYPE'])) {
     $_POST = json_decode(file_get_contents("php://input"), true);
@@ -12,10 +12,8 @@ if (!isset($_SESSION['user_id'])) {
     header("location: ../../resources/views/index.php");
 }
 
-if (InteressadosController::isPartFavorited($_POST['partId'], $_SESSION['user_id'])) {
-    $result = InteressadosController::unfavoritePart($_POST['partId'], $_SESSION['user_id']);
+if (InterestedController::isEletronicPartFavorited($_POST['eletronicPartId'], $_SESSION['user_id'])) {
+    InterestedController::unfavoriteEletronicPart($_POST['eletronicPartId'], $_SESSION['user_id']);
 } else {
-    $result = InteressadosController::favoritePart($_POST['partId'], $_SESSION['user_id']);
+    InterestedController::favoriteEletronicPart($_POST['eletronicPartId'], $_SESSION['user_id']);
 }
-
-echo "ok";

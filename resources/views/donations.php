@@ -1,13 +1,13 @@
-<?php
+<? declare(strict_types=1);
     require_once __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\PecasEletronicasController;
-    use Controllers\PedidosController;
-    use Models\PecaEletronica;
-    use Models\Pedido;
-use Php\Utils;
+    use App\Controllers\EletronicPartsController;
+    use App\Controllers\OrdersController;
+    use App\Models\EletronicPart;
+    use App\Models\Order;
+    use App\Php\Util;
 
-session_start();
+    session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
@@ -84,29 +84,29 @@ session_start();
                     </thead>
                     <tbody>
                         <?php
-                            $pecasEletronicas = PecasEletronicasController::getAllByUserId($_SESSION['user_id']);
+                            $eletronicParts = EletronicPartsController::getAllByUserId($_SESSION['user_id']);
 
                             /** 
-                            * @var PecaEletronica $peca 
+                            * @var EletronicPart $eletronicPart 
                             */ 
-                            foreach ($pecasEletronicas as $peca) {
+                            foreach ($eletronicParts as $eletronicPart) {
                                 echo "
                                 <tr>
                                     <td class=\"image\">
                                         <img 
-                                            src=\"../../storage/parts/{$peca->getImagem()->name}\" 
+                                            src=\"../../storage/parts/{$eletronicPart->getImage()->name}\" 
                                             alt=\"Imagem da peça\"
                                         >
                                     </td>
-                                    <td class=\"name\">{$peca->getNome()}</td>
-                                    <td class=\"stock\">{$peca->getEstoque()}</td>
+                                    <td class=\"name\">{$eletronicPart->getName()}</td>
+                                    <td class=\"stock\">{$eletronicPart->getStock()}</td>
                                     <td class=\"buttons\">
                                         <div class=\"wrapper\">
-                                            <a class=\"edit\" href=\"./donations-edit.php?peca_id={$peca->getId()}\">".
+                                            <a class=\"edit\" href=\"./donations-edit.php?eletronicPartId={$eletronicPart->getId()}\">".
                                                 file_get_contents("../../public/assets/edit.svg")."
                                                 <span>Editar</span>
                                             </a>
-                                            <a class=\"delete\" href=\"../../src/php/donations-delete.php?partId={$peca->getId()}\">".
+                                            <a class=\"delete\" href=\"../../src/php/donations-delete.php?eletronicPartId={$eletronicPart->getId()}\">".
                                                 file_get_contents('../../public/assets/trash.svg')."
                                             </a>
                                         </div>
@@ -136,22 +136,22 @@ session_start();
                     </thead>
                     <tbody>
                         <?php
-                            $pedidos = PedidosController::getAllByDonorId($_SESSION['user_id']);
+                            $orders = OrdersController::getAllByDonorId($_SESSION['user_id']);
                             
                             /**
-                            * @var Pedido $pedido 
+                            * @var Order $order 
                             */
-                            foreach ($pedidos as $pedido) {
-                                $status = Utils::parseStatus($pedido->getStatus());
+                            foreach ($orders as $order) {
+                                $status = Util::parseStatus($order->getStatus());
 
                                 echo "
                                     <tr>
-                                        <td class=\"image\"><img src=\"../../storage/parts/{$pedido->getPecaEletronica()->getImagem()->name}\" alt=\"\"></td>
-                                        <td class=\"order-id\">#{$pedido->getId()}</td>
-                                        <td class=\"name\">{$pedido->getPecaEletronica()->getNome()}</td>
-                                        <td class=\"status {$status}\">{$pedido->getStatus()}</td>
+                                        <td class=\"image\"><img src=\"../../storage/parts/{$order->getEletronicPart()->getImage()->name}\" alt=\"\"></td>
+                                        <td class=\"order-id\">#{$order->getId()}</td>
+                                        <td class=\"name\">{$order->getEletronicPart()->getName()}</td>
+                                        <td class=\"status {$status}\">{$order->getStatus()}</td>
                                         <td class=\"see-details\">
-                                            <a href=\"./donations-details.php?pedido_id={$pedido->getId()}\">
+                                            <a href=\"./donations-details.php?orderId={$order->getId()}\">
                                                 <img src=\"../../public/assets/info.svg\" alt=\"\">
                                                 <span>Detalhes</span>
                                             </a>

@@ -1,12 +1,12 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Controllers\PedidosController;
+use App\Controllers\OrdersController;
 
 session_start();
 
-$result = PedidosController::fazerPedido($_POST);
+$result = OrdersController::requestOrder($_POST);
 
 if (!$result['success'])
     header('Location: ../../resources/views/explore.php?error="' . $result['error']). '"';

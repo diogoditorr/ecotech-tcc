@@ -4,8 +4,9 @@
     "license": "Apache License 2.0",
     "autoload": {
         "psr-4": {
-            "": "src/",
-            "Php\\": "src/php/" 
+            "App\\": "src/",
+            "App\\Php\\": "src/php/",
+            "App\\Database\\": "db/"
         }
     },
     "authors": [
@@ -15,6 +16,8 @@
         }
     ],
     "require": {
-        "vlucas/phpdotenv": "^5.3"
+        "php": ">=8.0",
+        "vlucas/phpdotenv": "^5.3",
+        "robmorgan/phinx": "^0.12.10"
     }
 }

@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Models;
+namespace App\Models;
 
 class BaseModel
 {

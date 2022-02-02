@@ -22,41 +22,39 @@ export default class ExploreFavoriteButton extends FavoriteButton {
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
-                partId: this.part.id,
+                eletronicPartId: this.part.id,
             }),
         })
             .then((response) => {
-                setTimeout(() => {
-                    if (response.status === 200) {
-                        const status = !this.isFavorited;
+                if (response.status === 200) {
+                    const status = !this.isFavorited;
 
-                        this.setFavorite(status);
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.setFavorite(status);
-                        }
-
-                        this.enableButton();
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.enableButton();
-                        }
-
-                        this.updatePart();
-
-                        this.updateButtonDataset();
-                        if (this.part.favoriteButton !== this) {
-                            this.part.favoriteButton.updateButtonDataset();
-                        }
-
-                        this.updateText();
-
-                        if (
-                            this.part.favoriteButton !== this &&
-                            this.part.favoriteButton.message !== undefined
-                        ) {
-                            this.part.favoriteButton.updateText();
-                        }
+                    this.setFavorite(status);
+                    if (this.part.favoriteButton !== this) {
+                        this.part.favoriteButton.setFavorite(status);
                     }
-                }, 1000);
+
+                    this.enableButton();
+                    if (this.part.favoriteButton !== this) {
+                        this.part.favoriteButton.enableButton();
+                    }
+
+                    this.updatePart();
+
+                    this.updateButtonDataset();
+                    if (this.part.favoriteButton !== this) {
+                        this.part.favoriteButton.updateButtonDataset();
+                    }
+
+                    this.updateText();
+
+                    if (
+                        this.part.favoriteButton !== this &&
+                        this.part.favoriteButton.message !== undefined
+                    ) {
+                        this.part.favoriteButton.updateText();
+                    }
+                }
             })
             .catch((error) => {
                 this.enableButton();

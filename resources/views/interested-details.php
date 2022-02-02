@@ -1,10 +1,11 @@
-<?php
+<?php declare(strict_types=1);
     require_once __DIR__ . "/../../vendor/autoload.php";
 
-    use Controllers\InteressadosController;
-    use Controllers\PecasEletronicasController;
-    use Controllers\PessoasController;
-    use Php\Utils;
+    use App\Controllers\InterestedController;
+    use App\Controllers\EletronicPartsController;
+    use App\Controllers\PeopleController;
+    use App\Models\EletronicPart;
+    use App\Php\Util;
     
     session_start();
     
@@ -13,16 +14,16 @@
         exit();
     }
     
-    $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
-    if (!isset($pecaEletronica)) {
+    $eletronicPart = EletronicPartsController::getById((int) $_GET['eletronicPartId']);
+    if (!isset($eletronicPart)) {
         http_response_code(404);
         exit();
     }
     
-    $pessoa = PessoasController::getById($pecaEletronica->getPessoaId());
+    $person = PeopleController::getById($eletronicPart->getPersonId());
     
-    if (!InteressadosController::isPartFavorited(
-        $pecaEletronica->getId(),
+    if (!InterestedController::isEletronicPartFavorited(
+        $eletronicPart->getId(),
         $_SESSION['user_id']
         )) {
             http_response_code(403);
@@ -88,27 +89,27 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/<?=$pecaEletronica->getImagem()->name?>" alt="">
+                        <img src="../../storage/parts/<?=$eletronicPart->getImage()->name?>" alt="">
                     </div>
 
                     <div class="menu">
                         <div class="name">
-                            <?=$pecaEletronica->getNome()?>
+                            <?=$eletronicPart->getName()?>
                         </div>
 
                         <div class="stock">
                             <span>Estoque:</span>
-                            <div class="amount"><?=$pecaEletronica->getEstoque()?> unidades</div>
+                            <div class="amount"><?=$eletronicPart->getStock()?> unidades</div>
                         </div>
 
                         <div class="buttons">
                             <?php
-                                $pecasFavoritadas = Utils::getFavoritedPartsId($_SESSION['user_id']);
+                                $eletronicParts = Util::getFavoritedEletronicPartsId($_SESSION['user_id']);
                                 
                                 echo "
                                     <button 
                                         class=\"favorite\"
-                                        data-is-favorited=\"".(in_array($pecaEletronica->getId(), $pecasFavoritadas) ? 'true' : 'false')."\"
+                                        data-is-favorited=\"".(in_array($eletronicPart->getId(), $eletronicParts) ? 'true' : 'false')."\"
                                     >
                                         ".
                                         file_get_contents("../../public/assets/heart.svg").
@@ -119,9 +120,9 @@
                                 ";
                             ?>
                             
-                            <form action="../../src/php/make-order.php" method="post">
-                                <input type="hidden" name="partId" value="<?=$pecaEletronica->getId()?>">
-                                <input type="hidden" name="doadorId" value="<?=$pecaEletronica->getPessoaId()?>">
+                            <form action="../../src/php/request-order.php" method="post">
+                                <input type="hidden" name="eletronicPartId" value="<?=$eletronicPart->getId()?>">
+                                <input type="hidden" name="donorId" value="<?=$eletronicPart->getPersonId()?>">
                                 <button class="order">
                                     <span>Fazer Pedido</span>
                                 </button>
@@ -140,21 +141,22 @@
                     <tbody>
                         <tr>
                             <td>Nome</td>
-                            <td><?=$pessoa->getNome()?></td>
+                            <td><?=$person->getName()?></td>
                         </tr>
                         <tr>
                             <td>Endereço</td>
                             <td>
-                                <?=$pessoa->getEndereco()->getBairro()?>, 
-                                <?=$pessoa->getEndereco()->getCidade()?> - 
-                                <?=$pessoa->getEndereco()->getEstado()?>
+                                <?=$person->getAddress()->getAddress()?>,
+                                <?=$person->getAddress()->getDistrict()?>, 
+                                <?=$person->getAddress()->getCity()?> - 
+                                <?=$person->getAddress()->getState()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Telefone</td>
                             <td>
-                                <?=$pessoa->getNumTelefone1()?> <br>
-                                <?=$pessoa->getNumTelefone2()?>
+                                <?=$person->getPhoneNumber1()?> <br>
+                                <?=$person->getPhoneNumber2()?>
                             </td>
                         </tr>
                     </tbody>
@@ -170,18 +172,18 @@
                     <tbody>
                         <tr>
                             <td>Tipo</td>
-                            <td><?=$pecaEletronica->getTipo()?></td>
+                            <td><?=$eletronicPart->getType()?></td>
                         </tr>
                         <tr>
                             <td>Modelo</td>
                             <td>
-                                <?=$pecaEletronica->getModelo()?>
+                                <?=$eletronicPart->getModel()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Sobre</td>
                             <td>
-                                <?=$pecaEletronica->getSobre()?>
+                                <?=$eletronicPart->getDescription()?>
                             </td>
                         </tr>
                     </tbody>

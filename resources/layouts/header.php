@@ -16,8 +16,9 @@
     <!-- Css -->
     <link rel="stylesheet" type="text/css" href="../../public/styles/main.css">
     <?php 
-        /** @var string $path */
-        /** @var array $css */
+        /** @var array $css 
+         *  @var string $path
+        */
         foreach($css["paths"] as $path) {
             echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"$path\">";
         }

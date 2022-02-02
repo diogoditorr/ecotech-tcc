@@ -1,11 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Controllers\PedidosController;
+use App\Controllers\OrdersController;
 
 header('Content-Type: application/json');
 
-$result = PedidosController::changeStatus($_POST['orderId'], $_POST['status']);
+$result = OrdersController::changeStatus($_POST['orderId'], $_POST['status']);
 
 echo json_encode([
     'success' => $result

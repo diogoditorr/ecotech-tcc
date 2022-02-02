@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
     $title = 'Ecotech | Cadastro de Usuário';
     $css['paths'] = [
         '../../public/styles/page-sign-up.css',
@@ -27,8 +27,8 @@
                     <legend>Perfil</legend>
     
                     <div class="field">
-                        <label for="username">Nome de usuário</label>
-                        <input type="text" name="username" id="username" maxlength="45" required>
+                        <label for="userName">Nome de usuário</label>
+                        <input type="text" name="userName" id="userName" maxlength="45" required>
                     </div>
                     <div class="field">
                         <label for="email">E-mail</label>
@@ -49,11 +49,11 @@
     
                     <div class="field">
                         <label for="fullName">Nome completo</label>
-                        <input type="text" name="fullName" id="fullName" required>
+                        <input type="text" name="fullName" id="fullName" maxlength="255" required>
                     </div>
                     <div class="field">
                         <label for="school">Escola</label>
-                        <input type="text" name="school" id="school" required>
+                        <input type="text" name="school" id="school" maxlength="255" required>
                     </div>
                     <div class="field-group">
                         <div class="field">
@@ -106,17 +106,17 @@
     
                     <div class="field">
                         <label for="address">Endereço</label>
-                        <input type="text" name="address" id="address" required>
+                        <input type="text" name="address" id="address" maxlength="255" required>
                     </div>
     
                     <div class="field">
                         <label for="district">Bairro</label>
-                        <input type="text" name="district" id="district" required>
+                        <input type="text" name="district" id="district" maxlength="255" required>
                     </div>
     
                     <div class="field-half">
                         <label for="cep">CEP</label>
-                        <input type="text" name="cep" id="cep" maxlength="15" required>
+                        <input type="text" name="zipCode" id="cep" maxlength="15" required>
                     </div>
                 </fieldset>
             </div>

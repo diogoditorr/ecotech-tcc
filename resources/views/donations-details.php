@@ -1,17 +1,17 @@
-<?php
+<?php declare(strict_types=1);
     require_once __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\PedidosController;
-use Php\Utils;
+    use App\Controllers\OrdersController;
+    use App\Php\Util;
 
-session_start();
+    session_start();
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
         exit();
     }
 
-    $pedido = PedidosController::getDetailsById($_GET['pedido_id']);
+    $order = OrdersController::getDetailsById($_GET['orderId']);
     
     $title = 'Ecotech | Detalhes da doação';
     $css['paths'] = [
@@ -64,7 +64,7 @@ session_start();
             <header>
                 <span>
                     <p>Doação</p>
-                    <small>#<?=$pedido->getId()?></small>
+                    <small>#<?=$order->getId()?></small>
                 </span>
 
                 <a class="back" href="./donations.php">
@@ -75,20 +75,20 @@ session_start();
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/<?=$pedido->getPecaEletronica()->getImagem()->name?>" alt="">
+                        <img src="../../storage/parts/<?=$order->getEletronicPart()->getImage()->name?>" alt="">
                     </div>
 
                     <div class="menu">
-                        <input name="orderId" type="text" value="<?=$pedido->getId()?>" hidden>
+                        <input name="orderId" type="text" value="<?=$order->getId()?>" hidden>
                         <div class="name">
-                            <?=$pedido->getPecaEletronica()->getNome()?>
+                            <?=$order->getEletronicPart()->getName()?>
                         </div>
                         
                         <div class="status">
                             <span>Status:</span>
                             <select name="status" id="status">
                                 <?php
-                                    $status = Utils::parseStatus($pedido->getStatus());
+                                    $status = Util::parseStatus($order->getStatus());
                                     $options = [
                                         "pending" => "<option value=\"pending\" REPLACE>Pendente</option>",
                                         "delivered" => "<option value=\"delivered\" REPLACE>Entregue</option>",

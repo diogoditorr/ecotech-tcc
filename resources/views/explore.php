@@ -1,11 +1,9 @@
-<?php
+<?php declare(strict_types=1);
     require_once __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\InteressadosController;
-    use Controllers\PecasEletronicasController;
-    use Models\PecaEletronica;
-    use Models\Interessado;
-    use Php\Utils;
+    use App\Controllers\EletronicPartsController;
+    use App\Models\EletronicPart;
+    use App\Php\Util;
 
     session_start();
 
@@ -62,32 +60,32 @@
     <div class="cards animate-up-op">
         <?php
             if (!isset($_GET['search'])) {
-                $pecasEletronicas = PecasEletronicasController::getAll();
+                $eletronicParts = EletronicPartsController::getAll();
             } else {
-                $pecasEletronicas = PecasEletronicasController::getAllByName($_GET['search']);
+                $eletronicParts = EletronicPartsController::getAllByName($_GET['search']);
             }
             
-            $pecasFavoritadas = Utils::getFavoritedPartsId($_SESSION['user_id']);
+            $favoritedEletronicParts = Util::getFavoritedEletronicPartsId($_SESSION['user_id']);
 
-            /** @var PecaEletronica $pecaEletronica */
-            foreach ($pecasEletronicas as $pecaEletronica) { 
-                if ($pecaEletronica->getEstoque() > 0) {
+            /** @var EletronicPart $eletronicPart */
+            foreach ($eletronicParts as $eletronicPart) { 
+                if ($eletronicPart->getStock() > 0) {
                     echo "
                         <div 
-                            data-id=\"{$pecaEletronica->getId()}\" 
+                            data-id=\"{$eletronicPart->getId()}\" 
                             class=\"part\"
                         >
                             <div class=\"image\">
-                                <img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" alt=\"\">
+                                <img src=\"../../storage/parts/{$eletronicPart->getImage()->name}\" alt=\"\">
                             </div>
-                            <div class=\"name\">{$pecaEletronica->getNome()}</div>
-                            <div class=\"description\">{$pecaEletronica->getSobre()}</div>
-                            <div class=\"user-name\">• Aluno: {$pecaEletronica->getPessoaIdNome()}</div>
+                            <div class=\"name\">{$eletronicPart->getName()}</div>
+                            <div class=\"description\">{$eletronicPart->getDescription()}</div>
+                            <div class=\"user-name\">• Aluno: {$eletronicPart->getPersonIdName()}</div>
                             <div class=\"buttons\">
                                 <button class=\"see-details\">Ver detalhes</button>
                                 <button 
                                     class=\"favorite\"
-                                    data-is-favorited=\"".(in_array($pecaEletronica->getId(), $pecasFavoritadas) ? 'true' : 'false')."\"
+                                    data-is-favorited=\"".(in_array($eletronicPart->getId(), $favoritedEletronicParts) ? 'true' : 'false')."\"
                                 >
                                     ".
                                     file_get_contents("../../public/assets/heart.svg").

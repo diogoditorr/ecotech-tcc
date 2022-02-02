@@ -33,20 +33,18 @@ export default class FavoriteButton {
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
-                // Get part id as "peca_id" from query params
-                partId: Number(new URLSearchParams(window.location.search).get("peca_id")),
+                // Get part id as "eletronicPartId" from query params
+                eletronicPartId: Number(new URLSearchParams(window.location.search).get("eletronicPartId")),
             }),
         })
             .then((response) => {
-                setTimeout(() => {
-                    if (response.status === 200) {
-                        const status = !this.isFavorited;
-                        this.setFavorite(status);
-                        this.enableButton();
-                        this.updateButtonDataset();
-                        this.updateText();
-                    }
-                }, 1000);
+                if (response.status === 200) {
+                    const status = !this.isFavorited;
+                    this.setFavorite(status);
+                    this.enableButton();
+                    this.updateButtonDataset();
+                    this.updateText();
+                }
             })
             .catch((error) => {
                 this.enableButton();

@@ -1,13 +1,15 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Models;
+namespace App\Models;
 
-use Models\BaseModel;
-class Interessado extends BaseModel
+use App\Database\Connection;
+use App\Models\BaseModel;
+
+class Interested extends BaseModel
 {
     protected int $id;
-    protected int $pessoaId;
-    protected int $pecaEletronicaId;
+    protected int $personId;
+    protected int $eletronicPartId;
 
     /**
      * Get the value of id
@@ -30,72 +32,70 @@ class Interessado extends BaseModel
     }
 
     /**
-     * Get the value of pessoaId
+     * Get the value of personId
      */ 
-    public function getPessoaId()
+    public function getPersonId()
     {
-        return $this->pessoaId;
+        return $this->personId;
     }
 
     /**
-     * Set the value of pessoaId
+     * Set the value of personId
      *
      * @return  self
      */ 
-    public function setPessoaId($pessoaId)
+    public function setPersonId($personId)
     {
-        $this->pessoaId = $pessoaId;
+        $this->personId = $personId;
 
         return $this;
     }
 
     /**
-     * Get the value of pecaEletronicaId
+     * Get the value of eletronicPartId
      */ 
-    public function getPecaEletronicaId()
+    public function getEletronicPartId()
     {
-        return $this->pecaEletronicaId;
+        return $this->eletronicPartId;
     }
 
     /**
-     * Set the value of pecaEletronicaId
+     * Set the value of eletronicPartId
      *
      * @return  self
      */ 
-    public function setPecaEletronicaId($pecaEletronicaId)
+    public function setEletronicPartId($eletronicPartId)
     {
-        $this->pecaEletronicaId = $pecaEletronicaId;
+        $this->eletronicPartId = $eletronicPartId;
 
         return $this;
     }
 
     private static function getConnection(): \mysqli
     {
-        require_once "../../database/ConexaoDB.php";
-        
-        return \ConexaoDB::conectar();
+        return Connection::connect();
     }
 
-    private static function fromArray(array $data): Interessado
+    private static function fromArray(array $data): Interested
     {
-        $interessado = (new Interessado())
-                            ->setId($data["id"])
-                            ->setPessoaId($data["pessoa_id"])
-                            ->setPecaEletronicaId($data["peca_eletronica_id"]);
+        $interested = (new Interested())
+                            ->setId((int) $data["id"])
+                            ->setPersonId((int) $data["person_id"])
+                            ->setEletronicPartId((int) $data["eletronic_part_id"]);
 
-        return $interessado;
+        return $interested;
     }
 
-    public static function isPartFavorited($partId, $userId): bool
+    public static function isEletronicPartFavorited($eletronicPartId, $userId): bool
     {
         $connection = self::getConnection();
 
         $query = "
             SELECT * 
-            FROM interessados
+            FROM interested
             WHERE 
-                pessoa_id = {$userId} AND 
-                peca_eletronica_id = {$partId}
+                person_id = {$userId} AND 
+                eletronic_part_id = {$eletronicPartId}
         ";
 
         $result = $connection->query($query);
@@ -109,13 +109,13 @@ class Interessado extends BaseModel
         return false;
     }
 
-    public static function favoritePart($partId, $userId)
+    public static function favoriteEletronicPart($eletronicPartId, $userId)
     {
         $connection = self::getConnection();
 
         $query = "
-            INSERT INTO interessados (pessoa_id, peca_eletronica_id)
-            VALUES ({$userId}, {$partId})
+            INSERT INTO interested (person_id, eletronic_part_id)
+            VALUES ({$userId}, {$eletronicPartId})
         ";
 
         $result = $connection->query($query);
@@ -129,15 +129,15 @@ class Interessado extends BaseModel
         return true;
     }
 
-    public static function unfavoritePart($partId, $userId)
+    public static function unfavoriteEletronicPart($eletronicPartId, $userId)
     {
         $connection = self::getConnection();
 
         $query = "
-            DELETE FROM interessados 
+            DELETE FROM interested 
             WHERE 
-                pessoa_id = {$userId} AND 
-                peca_eletronica_id = {$partId}
+                person_id = {$userId} AND 
+                eletronic_part_id = {$eletronicPartId}
         ";
 
         $result = $connection->query($query);
@@ -157,8 +157,8 @@ class Interessado extends BaseModel
 
         $query = "
             SELECT * 
-            FROM interessados
-            WHERE pessoa_id = {$userId}
+            FROM interested
+            WHERE person_id = {$userId}
         ";
 
         $result = $connection->query($query) or
@@ -167,13 +167,13 @@ class Interessado extends BaseModel
                 E_USER_ERROR
             );
 
-        $interessados = [];
+        $interested = [];
         while ($data = $result->fetch_assoc()) {
             if ($data !== null)
-                $interessados[] = Interessado::fromArray($data);
+                $interested[] = Interested::fromArray($data);
         }
 
         $connection->close();
-        return $interessados;
+        return $interested;
     }
 }

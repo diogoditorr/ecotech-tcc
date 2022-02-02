@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types=1);
     require_once __DIR__ . "/../../vendor/autoload.php";
 
-    use Controllers\InteressadosController;
-    use Controllers\PecasEletronicasController;
-    use Models\PecaEletronica;
+    use App\Controllers\InterestedController;
+    use App\Controllers\EletronicPartsController;
+    use App\Models\EletronicPart;
+    use App\Models\Interested;
 
     session_start();
 
@@ -74,27 +75,27 @@
                 </thead>
                 <tbody>
                     <?php
-                        $interessados = InteressadosController::getAllByUserId($_SESSION['user_id']);
+                        $interested = InterestedController::getAllByUserId($_SESSION['user_id']);
                         
-                        if (count($interessados) > 0) {
-                            $pecasEletronicasId = array_reduce($interessados, function($array, $item) {
-                                $array[] = $item->getPecaEletronicaId();
+                        if (count($interested) > 0) {
+                            $eletronicPartsId = array_reduce($interested, function($array, Interested $item) {
+                                $array[] = $item->getEletronicPartId();
                                 return $array;
                             });
     
-                            $pecasEletronicas = PecasEletronicasController::getAllByIds($pecasEletronicasId);
+                            $eletronicParts = EletronicPartsController::getAllByIds($eletronicPartsId);
     
-                            /** @var PecaEletronica $pecaEletronica */
-                            foreach($pecasEletronicas as $pecaEletronica) {
+                            /** @var EletronicPart $eletronicPart */
+                            foreach($eletronicParts as $eletronicPart) {
                                 echo "
                                     <tr>
                                         <td 
-                                            class=\"image\"><img src=\"../../storage/parts/{$pecaEletronica->getImagem()->name}\" 
+                                            class=\"image\"><img src=\"../../storage/parts/{$eletronicPart->getImage()->name}\" 
                                             alt=\"Part Image\"
                                         ></td>
-                                        <td class=\"name\">{$pecaEletronica->getNome()}</td>
+                                        <td class=\"name\">{$eletronicPart->getName()}</td>
                                         <td class=\"see-details\">
-                                            <a href=\"./interested-details.php?peca_id={$pecaEletronica->getId()}\">
+                                            <a href=\"./interested-details.php?eletronicPartId={$eletronicPart->getId()}\">
                                                 <img src=\"../../public/assets/info.svg\" alt=\"\">
                                                 <span>Detalhes</span>
                                             </a>
@@ -109,6 +110,5 @@
         </section>
     </main>
 </div>
-
 
 <?php include('../layouts/footer.php'); ?>

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
     session_start();
 
     if (!isset($_SESSION['user_id'])) {
@@ -84,8 +84,8 @@
                         <input type="text" name="model" id="model" required>
                     </div>
                     <div class="field">
-                        <label for="about">Sobre</label>
-                        <textarea name="about" id="about" cols="30" rows="10" required></textarea>
+                        <label for="description">Sobre</label>
+                        <textarea name="description" id="description" cols="30" rows="10" required></textarea>
                     </div>
 
                     <div class="field">

@@ -1,9 +1,9 @@
-<?php
+<?php declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Controllers\PecasEletronicasController;
+use App\Controllers\EletronicPartsController;
 
-$result = PecasEletronicasController::delete($_GET['partId']);
+$result = EletronicPartsController::delete((int) $_GET['eletronicPartId']);
 
 if ($result) {
     header('Location: ../../resources/views/donations.php');

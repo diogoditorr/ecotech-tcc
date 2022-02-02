@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
     $title = 'Ecotech';
     $css['paths'] = [
         '../../public/styles/page-home.css',

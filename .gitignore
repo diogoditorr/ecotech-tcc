@@ -3,6 +3,4 @@ node_modules
 
 /storage/parts/*
 
-.vscode
 .env
-ConexaoDB.php

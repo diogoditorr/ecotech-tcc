@@ -1,10 +1,10 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Models;
+namespace App\Models;
 
-use Models\BaseModel;
+use App\Models\BaseModel;
 
-class Imagem extends BaseModel {
+class Image extends BaseModel {
     public string $name;
     public string|null $nameFormatted;
     public string|null $type;
@@ -28,7 +28,7 @@ class Imagem extends BaseModel {
 
     public static function createByName(string $name) 
     {
-        return new Imagem(array(
+        return new Image(array(
             'name' => $name,
             'type' => null,
             'tmp_name' => null

@@ -47,7 +47,7 @@ export default class Modal {
                 "Content-Type": "application/json;charset=utf-8",
             },
             body: JSON.stringify({
-                partId: this.part.id,
+                eletronicPartId: this.part.id,
             }),
         })
             .then((response) => response.json())
@@ -59,14 +59,14 @@ export default class Modal {
                         <section>
                             <div class="image">
                                 <img src="${
-                                    defaultStorage + data.part.image
+                                    defaultStorage + data.eletronicPart.image.name
                                 }" alt="">
                             </div>
-                            <div class="name">${data.part.name}</div>
+                            <div class="name">${data.eletronicPart.name}</div>
                             <div class="stock">
                                 <span>Estoque:</span>
                                 <div class="amount">${
-                                    data.part.stock
+                                    data.eletronicPart.stock
                                 } unidades</div>
                             </div>
                         </section>
@@ -88,41 +88,42 @@ export default class Modal {
                         <section>
                             <div class="field">
                                 <h2>Tipo:</h2>
-                                <p>${data.part.type}</p>
+                                <p>${data.eletronicPart.type}</p>
                             </div>
             
                             <div class="field">
                                 <h2>Modelo:</h2>
-                                <p>${data.part.model}</p>
+                                <p>${data.eletronicPart.model}</p>
                             </div>
                             
                             <div class="field">
                                 <h2>Sobre:</h2>
-                                <p>${data.part.description}</p>
+                                <p>${data.eletronicPart.description}</p>
                             </div>
             
                             <div class="field">
                                 <h2>Contato:</h2>
                                 <p>
-                                    NÃO IMPLEMENTADO!!! <br>
-                                    ${data.part.person.address.city} - 
-                                    ${data.part.person.address.state}
+                                    ${data.eletronicPart.person.address.address}, 
+                                    ${data.eletronicPart.person.address.district} <br>
+                                    ${data.eletronicPart.person.address.city} - 
+                                    ${data.eletronicPart.person.address.state}
                                 </p>
                                 <p>
                                     Telefone:<br> 
-                                    ${data.part.person.phoneNumber1}<br>
-                                    ${data.part.person.phoneNumber2}
+                                    ${data.eletronicPart.person.phoneNumber1}<br>
+                                    ${data.eletronicPart.person.phoneNumber2}
                                 </p>
                             </div>
                         </section>
             
                         <div class="button-wrapper">
-                            <form action="../../src/php/make-order.php" method="post">
-                                <input type="hidden" name="partId" value="${
-                                    data.part.id
+                            <form action="../../src/php/request-order.php" method="post">
+                                <input type="hidden" name="eletronicPartId" value="${
+                                    data.eletronicPart.id
                                 }">
-                                <input type="hidden" name="doadorId" value="${
-                                    data.part.person.id
+                                <input type="hidden" name="donorId" value="${
+                                    data.eletronicPart.person.id
                                 }">
                                 <button class="order">
                                     <span>Fazer Pedido</span>

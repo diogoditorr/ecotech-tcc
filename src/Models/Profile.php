@@ -1,17 +1,18 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace Models;
+namespace App\Models;
 
-use ConexaoDB;
-use Models\BaseModel;
-class Perfil extends BaseModel
+use App\Database\Connection;
+use App\Models\BaseModel;
+
+class Profile extends BaseModel
 {
     protected int $id;
-    protected int $pessoaId;
+    protected int $personId;
     protected string $cpf;
     protected string $email;
-    protected string $nomeUsuario;
-    protected string $senha;
+    protected string $userName;
+    protected string $password;
 
     /**
      * Get the value of id
@@ -34,21 +35,21 @@ class Perfil extends BaseModel
     }
 
     /**
-     * Get the value of pessoaId
+     * Get the value of personId
      */ 
-    public function getPessoaId()
+    public function getPersonId()
     {
-        return $this->pessoaId;
+        return $this->personId;
     }
 
     /**
-     * Set the value of pessoaId
+     * Set the value of personId
      *
      * @return  self
      */ 
-    public function setPessoaId($pessoaId)
+    public function setPersonId($personId)
     {
-        $this->pessoaId = $pessoaId;
+        $this->personId = $personId;
 
         return $this;
     }
@@ -94,67 +95,65 @@ class Perfil extends BaseModel
     }
 
     /**
-     * Get the value of nomeUsuario
+     * Get the value of userName
      */ 
-    public function getNomeUsuario()
+    public function getUserName()
     {
-        return $this->nomeUsuario;
+        return $this->userName;
     }
 
     /**
-     * Set the value of nomeUsuario
+     * Set the value of userName
      *
      * @return  self
      */ 
-    public function setNomeUsuario($nomeUsuario)
+    public function setUserName($userName)
     {
-        $this->nomeUsuario = $nomeUsuario;
+        $this->userName = $userName;
 
         return $this;
     }
 
     /**
-     * Get the value of senha
+     * Get the value of password
      */ 
-    public function getSenha()
+    public function getPassword()
     {
-        return $this->senha;
+        return $this->password;
     }
 
     /**
-     * Set the value of senha
+     * Set the value of password
      *
      * @return  self
      */ 
-    public function setSenha($senha)
+    public function setPassword($password)
     {
-        $this->senha = $senha;
+        $this->password = $password;
 
         return $this;
     }
 
     private static function getConnection(): \mysqli
     {
-        require_once "../../database/ConexaoDB.php";
-        
-        return ConexaoDB::conectar();
+        return Connection::connect();
     }
 
-    private static function unserialize(\stdClass $object): Perfil
+    private static function fromArray(array $data): Profile
     {
-        return (new Perfil())
-                    ->setId($object->id)
-                    ->setPessoaId($object->pessoa_id)
-                    ->setCpf($object->cpf)
-                    ->setEmail($object->email)
-                    ->setNomeUsuario($object->nome_usuario)
-                    ->setSenha($object->senha);
+        return (new Profile())
+                    ->setId($data['id'])
+                    ->setPersonId($data['person_id'])
+                    ->setEmail($data['email'])
+                    ->setCpf($data['cpf'])
+                    ->setUserName($data['user_name'])
+                    ->setPassword($data['password']);
     }
     
     private static function get($column, $data)
     {
-        $conn = Perfil::getConnection();
-        $query = "SELECT * FROM perfil WHERE {$column} = '{$data}'";
+        $conn = Profile::getConnection();
+        $query = "SELECT * FROM profile WHERE {$column} = '{$data}'";
 
         $result = $conn->query($query);
 
@@ -163,47 +162,47 @@ class Perfil extends BaseModel
             return null;
         }
 
-        $obj = $result->fetch_object();
+        $data = $result->fetch_assoc();
 
-        if ($obj === null) {
+        if ($data === null) {
             $conn -> close();
             return null;
         }
 
-        $profile = Perfil::unserialize($obj);
+        $profile = Profile::fromArray($data);
 
         $conn->close();
         return $profile;
     }
 
-    public static function getByPersonId($pessoaId)
+    public static function getByPersonId($personId)
     {
-        return Perfil::get("pessoa_id", $pessoaId);
+        return Profile::get("person_id", $personId);
     }
     
     public static function getByCpf($cpf)
     {
-        return Perfil::get("cpf", $cpf);
+        return Profile::get("cpf", $cpf);
     }
     
     public static function getByEmail($email)
     {
-        return Perfil::get("email", $email);
+        return Profile::get("email", $email);
     }
 
-    public function inserir(): bool
+    public function insert(): bool
     {
-        $conn = Perfil::getConnection();
+        $conn = Profile::getConnection();
 
         $query = "
-            INSERT INTO perfil 
-                (pessoa_id, cpf, email, nome_usuario, senha)
+            INSERT INTO profile 
+                (person_id, cpf, email, user_name, password)
             VALUES (
-                '{$this->getPessoaId()}',
-                '{$this->getCpf()}',
-                '{$this->getEmail()}',
-                '{$this->getNomeUsuario()}',
-                '{$this->getSenha()}'
+                '{$this->personId}',
+                '{$this->cpf}',
+                '{$this->email}',
+                '{$this->userName}',
+                '{$this->password}'
             )
         ";
 
@@ -218,15 +217,15 @@ class Perfil extends BaseModel
         return true;
     }
     
-    public static function verificarCredenciaisUsuario($cpf, $email, $password)
+    public static function verifyUserCredentials($cpf, $email, $password)
     {
-        $conn = Perfil::getConnection();
+        $conn = Profile::getConnection();
 
         $result = $conn->query("
-            SELECT * FROM perfil 
+            SELECT * FROM profile 
             WHERE 
                 (cpf = '{$cpf}' OR email = '{$email}') AND 
-                senha = '{$password}'
+                password = '{$password}'
         ");
 
         if (!$result) {
@@ -234,14 +233,14 @@ class Perfil extends BaseModel
             return false;
         }
 
-        $obj = $result->fetch_object();
+        $data = $result->fetch_assoc();
 
-        if ($obj === null) {
+        if ($data === null) {
             $conn -> close();
             return false;
         }
 
-        $profile = Perfil::unserialize($obj);
+        $profile = Profile::fromArray($data);
 
         $conn->close();
 
@@ -251,14 +250,14 @@ class Perfil extends BaseModel
 
     public static function hasDataAlreadyRegistered(string $cpf, string $email, string $username)
     {
-        $conn = Perfil::getConnection();
+        $conn = Profile::getConnection();
 
         $result = $conn->query("
-            SELECT * FROM perfil
+            SELECT * FROM profile
             WHERE 
                 cpf = '{$cpf}' OR
                 email = '{$email}' OR
-                nome_usuario = '{$username}' 
+                user_name = '{$username}' 
             ;
         ");
 

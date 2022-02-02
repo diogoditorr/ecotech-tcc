@@ -1,19 +1,19 @@
-<?php
+<?php declare(strict_types=1);
     require_once __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\PedidosController;
-use Php\Utils;
+    use App\Controllers\OrdersController;
+    use App\Php\Util;
 
-session_start();
+    session_start();
     
     if (!isset($_SESSION['user_id'])) {
         header('Location: sign-in.php');
         exit();
     }
 
-    $pedido = PedidosController::getDetailsById($_GET['pedido_id']);
+    $order = OrdersController::getDetailsById($_GET['orderId']);
 
-    if ($pedido->getCliente()->getId() != $_SESSION['user_id']) {
+    if ($order->getReceiver()->getId() != $_SESSION['user_id']) {
         header('Location: ./orders.php');
         exit();
     }
@@ -69,7 +69,7 @@ session_start();
             <header>
                 <span>
                     <p>Pedido</p>
-                    <small>#<?=$pedido->getId()?></small>
+                    <small>#<?=$order->getId()?></small>
                 </span>
 
                 <a class="back" href="./orders.php">
@@ -80,20 +80,20 @@ session_start();
             <div class="container">
                 <div class="wrapper">
                     <div class="image">
-                        <img src="../../storage/parts/<?=$pedido->getPecaEletronica()->getImagem()->name?>" alt="">
+                        <img src="../../storage/parts/<?=$order->getEletronicPart()->getImage()->name?>" alt="">
                     </div>
 
                     <div class="menu">
                         <div class="name">
-                            <?=$pedido->getPecaEletronica()->getNome()?>
+                            <?=$order->getEletronicPart()->getName()?>
                         </div>
                         
                         <div class="status">
                             <span>Status:</span>
                             <div 
-                                class="<?=Utils::parseStatus($pedido->getStatus())?>"
+                                class="<?=Util::parseStatus($order->getStatus())?>"
                             >
-                                <?=$pedido->getStatus()?>
+                                <?=$order->getStatus()?>
                             </div>
                         </div>
 
@@ -120,21 +120,22 @@ session_start();
                     <tbody>
                         <tr>
                             <td>Nome</td>
-                            <td><?=$pedido->getDoador()->getNome()?></td>
+                            <td><?=$order->getDonor()->getName()?></td>
                         </tr>
                         <tr>
                             <td>Endereço</td>
                             <td>
-                                NÃO IMPLEMENTADO!!, 
-                                <?=$pedido->getDoador()->getEndereco()->getCidade()?> - 
-                                <?=$pedido->getDoador()->getEndereco()->getEstado()?>
+                                <?=$order->getDonor()->getAddress()->getAddress().', '.
+                                   $order->getDonor()->getAddress()->getDistrict()?>, 
+                                <?=$order->getDonor()->getAddress()->getCity()?> - 
+                                <?=$order->getDonor()->getAddress()->getState()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Telefone</td>
                             <td>
-                                <?=$pedido->getDoador()->getNumTelefone1()?> <br>
-                                <?=$pedido->getDoador()->getNumTelefone2()?>
+                                <?=$order->getDonor()->getPhoneNumber1()?> <br>
+                                <?=$order->getDonor()->getPhoneNumber2()?>
                             </td>
                         </tr>
                     </tbody>
@@ -150,18 +151,18 @@ session_start();
                     <tbody>
                         <tr>
                             <td>Tipo</td>
-                            <td><?=$pedido->getPecaEletronica()->getTipo()?></td>
+                            <td><?=$order->getEletronicPart()->getType()?></td>
                         </tr>
                         <tr>
                             <td>Modelo</td>
                             <td>
-                                <?=$pedido->getPecaEletronica()->getModelo()?>
+                                <?=$order->getEletronicPart()->getModel()?>
                             </td>
                         </tr>
                         <tr>
                             <td>Sobre</td>
                             <td>
-                                <?=$pedido->getPecaEletronica()->getSobre()?>
+                                <?=$order->getEletronicPart()->getDescription()?>
                             </td>
                         </tr>
                     </tbody>

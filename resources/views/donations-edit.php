@@ -1,7 +1,7 @@
-<?php   
+<?php declare(strict_types=1);
     require_once __DIR__ . '/../../vendor/autoload.php';
 
-    use Controllers\PecasEletronicasController;
+    use App\Controllers\EletronicPartsController;
 
     session_start();
 
@@ -10,14 +10,16 @@
         exit();
     }
     
-    if (!isset($_GET['peca_id'])) {
+    if (!isset($_GET['eletronicPartId'])) {
         // header('Location: donations.php');
         http_response_code(400);
         exit();
     }
     
-    $pecaEletronica = PecasEletronicasController::getById($_GET['peca_id']);
-    if ($pecaEletronica == null) {
+    $eletronicPart = EletronicPartsController::getById(
+        (int) $_GET['eletronicPartId']
+    );
+    if ($eletronicPart == null) {
         // header('Location: donations.php');
         http_response_code(404);
         exit();
@@ -88,22 +90,22 @@
                 <fieldset>
                     <legend>Dados</legend>
 
-                    <input type="number" name="id" value="<?=$pecaEletronica->getId()?>" hidden>
+                    <input type="number" name="id" value="<?=$eletronicPart->getId()?>" hidden>
                     <div class="field">
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name" value="<?=$pecaEletronica->getNome()?>" required>
+                        <input type="text" name="name" id="name" value="<?=$eletronicPart->getName()?>" required>
                     </div>
                     <div class="field">
                         <label for="type">Tipo</label>
-                        <input type="text" name="type" id="type" value="<?=$pecaEletronica->getTipo()?>" required>
+                        <input type="text" name="type" id="type" value="<?=$eletronicPart->getType()?>" required>
                     </div>
                     <div class="field">
                         <label for="model">Modelo</label>
-                        <input type="text" name="model" id="model" value="<?=$pecaEletronica->getModelo()?>" required>
+                        <input type="text" name="model" id="model" value="<?=$eletronicPart->getModel()?>" required>
                     </div>
                     <div class="field">
-                        <label for="about">Sobre</label>
-                        <textarea name="about" id="about" cols="30" rows="10" required><?=$pecaEletronica->getSobre()?></textarea>
+                        <label for="description">Sobre</label>
+                        <textarea name="description" id="description" cols="30" rows="10" required><?=$eletronicPart->getDescription()?></textarea>
                     </div>
 
                     <div class="field">
@@ -113,7 +115,7 @@
                             <button class="subtract">
                                 <?php echo file_get_contents("../../public/assets/arrow-left-stock-menu.svg"); ?>
                             </button>
-                            <input type="number" name="stock" id="stock" value="<?=$pecaEletronica->getEstoque()?>" required>
+                            <input type="number" name="stock" id="stock" value="<?=$eletronicPart->getStock()?>" required>
                             <button class="add">
                                 <?php echo file_get_contents("../../public/assets/arrow-right-stock-menu.svg"); ?>
                             </button>
@@ -126,7 +128,7 @@
 
                     <div class="container-image">
                         <div class="image">
-                            <img src="../../storage/parts/<?=$pecaEletronica->getImagem()->name?>" alt="">
+                            <img src="../../storage/parts/<?=$eletronicPart->getImage()->name?>" alt="">
                         </div>
                     </div>
 
@@ -144,7 +146,7 @@
                         <span>Cancelar</span>
                     </a>
 
-                    <a class="delete" href="../../src/php/donations-delete.php?partId=<?=$pecaEletronica->getId()?>">
+                    <a class="delete" href="../../src/php/donations-delete.php?partId=<?=$eletronicPart->getId()?>">
                         <?php echo file_get_contents("../../public/assets/trash.svg"); ?>
                         <span>Excluir</span>
                     </a>

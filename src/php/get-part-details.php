@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 require __DIR__ . '/../../vendor/autoload.php';
 
@@ -23,32 +25,16 @@ $eletronicPart = EletronicPartsController::getById($_POST['eletronicPartId']);
 $person = PeopleController::getById($eletronicPart->getPersonId());
 
 echo json_encode([
-    // 'eletronicPart' => [
-    //     'id' => $eletronicPart->getId(),
-    //     'person' => [
-    //         'id' => $eletronicPart->getPessoaId(),
-    //         'name' => $person->getNome(),
-    //         'email' => $person->getEmail(),
-    //         'phoneNumber1' => $person->getNumTelefone1(),
-    //         'phoneNumber2' => $person->getNumTelefone2(),
-    //         'address' => [
-    //             'state' => $person->getEndereco()->getEstado(),
-    //             'city' => $person->getEndereco()->getCidade(),
-    //             'neighborhood' => $person->getEndereco()->getBairro(),
-    //             'cep' => $person->getEndereco()->getCep()
-    //         ]
-    //     ],
-    //     'name' => $eletronicPart->getNome(),
-    //     'type' => $eletronicPart->getTipo(),
-    //     'model' => $eletronicPart->getModelo(),
-    //     'description' => $eletronicPart->getSobre(),
-    //     'image' => $eletronicPart->getImagem()->name,
-    //     'stock' => $eletronicPart->getEstoque(),
-    //     'isFavorited' => InterestedController::iseletronicPartFavorited($eletronicPart->getId(), $_SESSION['user_id'])
-    // ]
-    'eletronicPart' => array_merge(
-        $eletronicPart->toArray(),
-        ['person' => $person->toArray()],
-        ['isFavorited' => InterestedController::iseletronicPartFavorited($eletronicPart->getId(), $_SESSION['user_id'])]
-    )
+    'eletronicPart' => [
+        ...$eletronicPart
+            ->makeHidden(['personId', 'personIdName'])
+            ->toArray(),
+        ...['person' => $person->toArray()],
+        ...['isFavorited' =>
+                InterestedController::isEletronicPartFavorited(
+                    $eletronicPart->getId(),
+                    $_SESSION['user_id']
+                )
+        ]
+    ]
 ]);

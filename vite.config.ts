@@ -1,6 +1,6 @@
-const { resolve, parse } = require("path");
-const { defineConfig} = require("vite");
-const fs = require("fs");
+import { resolve, parse } from "path";
+import { defineConfig } from "vite";
+import { readdirSync } from "fs";
 
 // Configuration for vite
 const config = {
@@ -12,10 +12,13 @@ const config = {
 };
 
 // Find all files with .js extension in a directory and return an array of file paths
-function getFiles(dir, extensions = [".js"], depth = 1) {
-    return fs
-        .readdirSync(dir, { withFileTypes: true })
-        .reduce((files, file) => {
+function getFiles(
+    dir: string,
+    extensions: Array<string> = [".js"],
+    depth: number = 1
+): string[] | [] {
+    return readdirSync(dir, { withFileTypes: true }).reduce(
+        (files: string[] | [], file) => {
             if (
                 !file.isDirectory() &&
                 !inArray(extensions, parse(file.name).ext)
@@ -28,20 +31,26 @@ function getFiles(dir, extensions = [".js"], depth = 1) {
                 return [...files, ...getFiles(name, extensions, depth - 1)];
             else if (!file.isDirectory()) return [...files, name];
             else return files;
-        }, []);
+        },
+        []
+    );
 }
 
-function inArray(array, element) {
+function inArray(array: Array<any>, element: any) {
     return array.indexOf(element) > -1;
 }
 
-const entryPoints = {};
-getFiles(config.path.name, config.extensions, config.path.depth).map((file) => {
-    const fileObject = parse(file);
-    entryPoints[fileObject.name] = resolve(__dirname, file);
-});
+const entryPoints: {
+    [key: string]: string;
+} = {};
+getFiles(config.path.name, config.extensions, config.path.depth).map(
+    (filePath: string) => {
+        const file = parse(filePath);
+        entryPoints[file.name] = resolve(__dirname, filePath);
+    }
+);
 
-module.exports = defineConfig({
+export default defineConfig({
     publicDir: false,
     build: {
         rollupOptions: {

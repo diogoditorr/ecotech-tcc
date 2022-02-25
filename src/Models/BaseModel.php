@@ -4,18 +4,30 @@ namespace App\Models;
 
 class BaseModel
 {
+    protected array $hidden = [];
+
     private static function getObjectVarsRecursive($obj) {
         $arr = is_object($obj) ? get_object_vars($obj) : $obj;
+        $newArray = [];
         foreach ($arr as $key => $val) {
+            if (\in_array($key, ['hidden']))
+                continue;
+
             if (is_object($val) && \method_exists($val, 'toArray')) {
-                $arr[$key] = $val->toArray();
+                $newArray[$key] = $val->toArray();
             } elseif (is_array($val)) {
-                $arr[$key] = self::getObjectVarsRecursive($val);
-            } else {
-                $arr[$key] = $val;
+                $newArray[$key] = self::getObjectVarsRecursive($val);
+            } elseif(!\in_array($key, $obj->hidden)) {
+                $newArray[$key] = $val;
             }
         }
-        return $arr;
+        return $newArray;
+    }
+
+    public function makeHidden(array $attributes)
+    {
+        $this->hidden = array_merge($this->hidden, $attributes);
+        return $this;
     }
 
     public function toArray(): array

@@ -16,6 +16,10 @@ class Person extends BaseModel
     protected string $phoneNumber2;
     protected Address $address;
 
+    protected array $hidden = [
+        'cpf'
+    ];
+
     /**
      * Get the value of id
      */ 
@@ -178,7 +182,7 @@ class Person extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(array $data): Person
@@ -229,20 +233,17 @@ class Person extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return null;
         }
 
         $data = $result->fetch_assoc();
 
         if ($data === null) {
-            $conn->close();
             return null;
         }
 
         $person = Person::fromArray($data);
 
-        $conn->close();
         return $person;
     }
 
@@ -274,18 +275,15 @@ class Person extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return null;
         }
 
         $data = $result->fetch_assoc();
 
         if ($data === null) {
-            $conn->close();
             return null;
         }
 
-        $conn->close();
         return $data['id'];
     }
 

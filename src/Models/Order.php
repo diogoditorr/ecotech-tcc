@@ -140,7 +140,7 @@ class Order extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(
@@ -229,8 +229,6 @@ class Order extends BaseModel
                 E_USER_ERROR
             );
 
-        $connection->close();
-
         return true;
     }
 
@@ -271,7 +269,6 @@ class Order extends BaseModel
                 \array_push($orders, Order::fromArray($data, setEletronicPart: true));
         }
 
-        $conn->close();
         return $orders;
     }
 
@@ -312,7 +309,6 @@ class Order extends BaseModel
                 \array_push($orders, Order::fromArray($data, setEletronicPart: true));
         }
 
-        $conn->close();
         return $orders;
     }
 
@@ -373,14 +369,12 @@ class Order extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return null;
         }
 
         $data = $result->fetch_assoc();
 
         if ($data === null) {
-            $conn->close();
             return null;
         }
 
@@ -391,7 +385,6 @@ class Order extends BaseModel
             setReceiver: true
         );
 
-        $conn->close();
         return $order;
     }
 
@@ -408,11 +401,9 @@ class Order extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return false;
         }
 
-        $conn->close();
         return true;
     }
 
@@ -428,11 +419,9 @@ class Order extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return false;
         }
 
-        $conn->close();
         return true;
     }
 }

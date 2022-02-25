@@ -63,12 +63,12 @@ class PeopleController
         );
     }
 
-    public static function loadProfile($personId, $cpf, $email)
+    public static function loadProfile($personId = null, $cpf = null, $email = null)
     {
         $profile = null;
 
         if ($personId) {
-            $profile = Profile::getBypersonId($personId);
+            $profile = Profile::getByPersonId($personId);
 
         } else if ($cpf) {
             $profile = Profile::getByCpf($cpf);
@@ -80,7 +80,7 @@ class PeopleController
         return $profile;
     }
 
-    public static function verifyUserCredentials($cpf, $email, $password) 
+    public static function verifyUserCredentials($cpf = null, $email = null, $password = null) 
     {
         return Profile::verifyUserCredentials($cpf, $email, $password);
     }

@@ -16,7 +16,7 @@ if (!$result['success']) {
     exit();
 } 
 
-$profile = PeopleController::loadProfile(null, null, $_POST['email']);
+$profile = PeopleController::loadProfile(email: $_POST['email']);
 
 session_start();
 $_SESSION['user_id'] = $profile->getPersonId();

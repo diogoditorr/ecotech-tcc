@@ -1,6 +1,7 @@
 vendor
 node_modules
 
+out
 /storage/parts/*
 
 .env

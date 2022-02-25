@@ -24,7 +24,7 @@ class Util
         };
     }
 
-    public static function getRequiredVariablesEnvironment()
+    public static function getRequiredEnvironmentVariables()
     {
         return ['DB_ADAPTER', 'DB_NAME', 'DB_HOST', 'DB_USER', 'DB_PASSWORD', 'DB_PORT'];
     }

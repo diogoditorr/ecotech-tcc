@@ -15,6 +15,11 @@ class Address extends BaseModel
     protected string $district;
     protected string $zipCode;
 
+    protected array $hidden = [
+        'id',
+        'personId',
+    ];
+
     /**
      * Get the value of id
      */ 
@@ -157,7 +162,7 @@ class Address extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(array $data)

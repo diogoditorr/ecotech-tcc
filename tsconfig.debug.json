@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "out",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "target": "es5",
+    },
+    "exclude": [
+        "out",
+        "public",
+        "node_modules",
+    ]
+}

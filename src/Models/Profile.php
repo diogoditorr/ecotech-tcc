@@ -27,7 +27,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -47,7 +47,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setPersonId($personId)
+    public function setPersonId(int $personId)
     {
         $this->personId = $personId;
 
@@ -67,7 +67,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -87,7 +87,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setCpf($cpf)
+    public function setCpf(string $cpf)
     {
         $this->cpf = $cpf;
 
@@ -107,7 +107,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         $this->userName = $userName;
 
@@ -127,7 +127,7 @@ class Profile extends BaseModel
      *
      * @return  self
      */ 
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -136,14 +136,14 @@ class Profile extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(array $data): Profile
     {
         return (new Profile())
-                    ->setId($data['id'])
-                    ->setPersonId($data['person_id'])
+                    ->setId((int) $data['id'])
+                    ->setPersonId((int) $data['person_id'])
                     ->setEmail($data['email'])
                     ->setCpf($data['cpf'])
                     ->setUserName($data['user_name'])
@@ -158,7 +158,6 @@ class Profile extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return null;
         }
 
@@ -171,7 +170,6 @@ class Profile extends BaseModel
 
         $profile = Profile::fromArray($data);
 
-        $conn->close();
         return $profile;
     }
 
@@ -212,8 +210,6 @@ class Profile extends BaseModel
                 E_USER_ERROR
             );
 
-        $conn->close();
-
         return true;
     }
     
@@ -229,20 +225,16 @@ class Profile extends BaseModel
         ");
 
         if (!$result) {
-            $conn->close();
             return false;
         }
 
         $data = $result->fetch_assoc();
 
         if ($data === null) {
-            $conn -> close();
             return false;
         }
 
         $profile = Profile::fromArray($data);
-
-        $conn->close();
 
         return $profile;
     }
@@ -262,11 +254,9 @@ class Profile extends BaseModel
         ");
 
         if ($result->num_rows > 0) {
-            $conn->close();
             return true;
         }
         
-        $conn->close();
         return false;
     }
 }

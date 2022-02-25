@@ -73,7 +73,7 @@ class Interested extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(array $data): Interested
@@ -100,8 +100,6 @@ class Interested extends BaseModel
 
         $result = $connection->query($query);
 
-        $connection->close();
-
         if ($result->num_rows > 0) {
             return true;
         }
@@ -119,8 +117,6 @@ class Interested extends BaseModel
         ";
 
         $result = $connection->query($query);
-
-        $connection->close();
 
         if ($result === false) {
             return false;
@@ -142,7 +138,7 @@ class Interested extends BaseModel
 
         $result = $connection->query($query);
 
-        $connection->close();
+        
 
         if ($result === false) {
             return false;
@@ -173,7 +169,7 @@ class Interested extends BaseModel
                 $interested[] = Interested::fromArray($data);
         }
 
-        $connection->close();
+        
         return $interested;
     }
 }

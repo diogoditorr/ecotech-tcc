@@ -200,7 +200,7 @@ class EletronicPart extends BaseModel
 
     private static function getConnection(): \mysqli
     {
-        return Connection::connect();
+        return Connection::getInstance();
     }
 
     private static function fromArray(array $data): EletronicPart
@@ -256,8 +256,6 @@ class EletronicPart extends BaseModel
                 E_USER_ERROR
             );
 
-        $connection->close();
-
         return true;
     }
 
@@ -269,20 +267,17 @@ class EletronicPart extends BaseModel
         $result = $conn->query($query);
 
         if (!$result) {
-            $conn->close();
             return null;
         }
 
         $data = $result->fetch_assoc();
 
         if ($data === null) {
-            $conn->close();
             return null;
         }
 
         $eletronicPart = EletronicPart::fromArray($data);
 
-        $conn->close();
         return $eletronicPart;
     }
 
@@ -318,7 +313,6 @@ class EletronicPart extends BaseModel
                 $eletronicParts[] = EletronicPart::fromArray($data);
         }
 
-        $conn->close();
         return $eletronicParts;
     }
 
@@ -336,9 +330,9 @@ class EletronicPart extends BaseModel
                 eletronic_part.description, 
                 eletronic_part.image_identifier, 
                 eletronic_part.stock,
-                pessoa.name AS person_id_name
+                person.name AS person_id_name
             FROM eletronic_part
-            INNER JOIN pessoa
+            INNER JOIN person
                 ON eletronic_part.person_id = person.id
             WHERE eletronic_part.name LIKE '%{$name}%'
         ";
@@ -355,7 +349,6 @@ class EletronicPart extends BaseModel
                 $eletronicParts[] = EletronicPart::fromArray($data);
         }
 
-        $conn->close();
         return $eletronicParts;
     }
 
@@ -445,7 +438,6 @@ class EletronicPart extends BaseModel
                 E_USER_ERROR
             );
 
-        $connection->close();
         return true;
     }
 
@@ -466,7 +458,6 @@ class EletronicPart extends BaseModel
                 E_USER_ERROR
             );
 
-        $connection->close();
         return true;
     }
 
@@ -485,7 +476,6 @@ class EletronicPart extends BaseModel
                 E_USER_ERROR
             );
 
-        $connection->close();
         return true;
     }
 }

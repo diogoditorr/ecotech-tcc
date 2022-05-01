@@ -54,7 +54,6 @@
 
         <section class="content">
             <form action="../../src/php/donations-new.php" method="post" enctype="multipart/form-data">
-
                 <div class="header">
                     <?php echo file_get_contents("../../public/assets/gear.svg"); ?>
 

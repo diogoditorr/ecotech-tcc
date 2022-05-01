@@ -4,29 +4,31 @@ namespace App\Models;
 
 class BaseModel
 {
+    private static array $defaultAttributes = ['hidden'];
     protected array $hidden = [];
 
-    private static function getObjectVarsRecursive($obj) {
+    private static function getObjectVarsRecursive(object|array $obj) {
         $arr = is_object($obj) ? get_object_vars($obj) : $obj;
         $newArray = [];
         foreach ($arr as $key => $val) {
-            if (\in_array($key, ['hidden']))
+            if (\in_array($key, self::$defaultAttributes))
                 continue;
 
-            if (is_object($val) && \method_exists($val, 'toArray')) {
+            if (is_object($val) && \method_exists($val, 'toArray'))
                 $newArray[$key] = $val->toArray();
-            } elseif (is_array($val)) {
+                
+            elseif (is_array($val))
                 $newArray[$key] = self::getObjectVarsRecursive($val);
-            } elseif(!\in_array($key, $obj->hidden)) {
+
+            elseif(!\in_array($key, $obj->hidden))
                 $newArray[$key] = $val;
-            }
         }
         return $newArray;
     }
 
     public function makeHidden(array $attributes)
     {
-        $this->hidden = array_merge($this->hidden, $attributes);
+        $this->hidden = [...$this->hidden, ...$attributes];
         return $this;
     }
 

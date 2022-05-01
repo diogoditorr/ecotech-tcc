@@ -14,6 +14,10 @@ class Profile extends BaseModel
     protected string $userName;
     protected string $password;
 
+    protected array $hidden = [
+        'password',
+    ];
+
     /**
      * Get the value of id
      */ 

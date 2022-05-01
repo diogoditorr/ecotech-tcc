@@ -6,6 +6,13 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use App\Controllers\PeopleController;
 
+if (
+    isset($_SERVER['CONTENT_TYPE']) &&
+    preg_match('/^application\/json.*$/', $_SERVER['CONTENT_TYPE'])
+) {
+    $_POST = json_decode(file_get_contents("php://input"), true);
+}
+
 if (!isset($_POST["emailCpf"]) || !isset($_POST["password"])) {
     header("Location: ../../resources/views/sign-in.php?error='Email/cpf ou senha não preenchidos!'");
     exit();
@@ -20,7 +27,7 @@ if (filter_var($_POST["emailCpf"], FILTER_VALIDATE_EMAIL)) {
         $profile = PeopleController::loadProfile(email: $_POST["emailCpf"]);
 } else {
     if (PeopleController::verifyUserCredentials(
-        cpf: $_POST["emailCpf"], 
+        cpf: $_POST["emailCpf"],
         password: $_POST["password"]
     ))
         $profile = PeopleController::loadProfile(cpf: $_POST["emailCpf"]);

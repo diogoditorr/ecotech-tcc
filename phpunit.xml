@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit 
+    bootstrap="tests/bootstrap.php"
+    colors="true"  
+    >
+    <testsuites>
+        <testsuite name="main">
+            <file>tests/Unit/DeleteTest.php</file>
+            <file>tests/Unit/RegisterTest.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>

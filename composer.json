@@ -3,25 +3,11 @@
     "type": "project",
     "license": "Apache License 2.0",
     "scripts": {
-        "test": [
-            "@test-rollback --quiet", 
-            "@test-migrate --quiet", 
-            "@test-exec", 
-            "@test-rollback --quiet"
-        ],
-        "test-dox": [
-            "@test-rollback --quiet", 
-            "@test-migrate --quiet", 
-            "@test-exec --testdox", 
-            "@test-rollback --quiet"
-        ],
-        "test-dox-v": [
-            "@test-rollback", 
-            "@test-migrate", 
-            "@test-exec --testdox", 
-            "@test-rollback"
-        ],
-        "test-exec": "phpunit -v --test-suffix .php --bootstrap tests/bootstrap.php tests",
+        "test": "@test-exec",
+        "test-v": "@test-exec -v",
+        "test-dox": "@test-exec --testdox",
+        "test-dox-v": "@test-exec --testdox -v",
+        "test-exec": "phpunit --testsuite main",
         "test-migrate": "phinx migrate -e testing",
         "test-rollback": "phinx rollback -e testing -t 0"
     },
@@ -45,6 +31,7 @@
         "robmorgan/phinx": "^0.12.10"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^9",
+        "guzzlehttp/guzzle": "^7.4"
     }
 }

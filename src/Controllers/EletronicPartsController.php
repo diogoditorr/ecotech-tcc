@@ -15,7 +15,7 @@ class EletronicPartsController
 
         try {
             (new EletronicPart())
-                ->setPersonId($_SESSION['user_id'])
+                ->setPersonId($data['userId'])
                 ->setName($data['name'])
                 ->setType($data['type'])
                 ->setModel($data['model'])

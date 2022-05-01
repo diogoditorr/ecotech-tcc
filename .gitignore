@@ -5,3 +5,4 @@ out
 /storage/parts/*
 
 .env
+.phpunit.result.cache

@@ -9,7 +9,7 @@ class Connection
 {
     private static \mysqli|null $instance = null;
 
-    private function __construct(string $mode)
+    private function __construct()
     {
         $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
         $dotenv->load();
@@ -21,7 +21,7 @@ class Connection
             $_ENV['DB_HOST'],
             $_ENV['DB_USER'],
             $_ENV['DB_PASSWORD'],
-            self::getDatabaseName($mode),
+            self::getDatabaseName(),
             (int) $_ENV['DB_PORT']
         );
 
@@ -30,9 +30,9 @@ class Connection
         }
     }
 
-    private static function getDatabaseName(string $mode)
+    private static function getDatabaseName()
     {
-        switch ($mode) {
+        switch (getenv('APP_ENV')) {
             case 'production':
                 $databaseName = $_ENV['DB_NAME'];
                 break;
@@ -43,16 +43,16 @@ class Connection
                 $databaseName = 'testing_' . $_ENV['DB_NAME'];
                 break;
             default:
-                throw new \Exception('Invalid mode');
+                $databaseName = $_ENV['DB_NAME'];
         }
 
         return $databaseName;
     }
 
-    public static function getInstance(string $mode = "production"): \mysqli
+    public static function getInstance(): \mysqli
     {
         if (self::$instance === null) {
-            new Connection($mode);
+            new Connection();
         }
 
         return self::$instance;

@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "allowJs": true,
+        "types": ["cypress"],
         "esModuleInterop": true,
         "lib": ["ESNext", "DOM"],
         "module": "ESNext",
@@ -14,6 +16,6 @@
         "target": "ESNext",
         "useDefineForClassFields": true,
     },
-    "include": ["public/scripts"],
+    "include": ["public/scripts", "cypress/integration"],
     "references": [{ "path": "tsconfig.node.json" }]
 }

@@ -16,7 +16,17 @@ if (empty($_FILES['image']['name'])) {
     $imageInfo = $_FILES['image'];
 }
 
-$result = EletronicPartsController::edit($_POST + ['image' => $imageInfo]);
+$image = EletronicPartsController::formatImage($imageInfo);
+if (EletronicPartsController::storeImage($image) === false) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Error while storing image'
+    ]);
+    exit;
+}
+
+$result = EletronicPartsController::edit($_POST + ['image' => $image]);
 
 if ($result['success']) {
     header("Location: ../../resources/views/donations.php");

@@ -1,4 +1,6 @@
-<?php declare (strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -10,17 +12,17 @@ class EletronicPart extends BaseModel
 {
     protected int $id;
     protected int $personId;
-    protected string|null $personIdName;
-    protected string|null $name;
-    protected string|null $type;
-    protected string|null $model;
-    protected string|null $description;
-    protected Image|null $image;
+    protected ?string $personIdName;
+    protected ?string $name;
+    protected ?string $type;
+    protected ?string $model;
+    protected ?string $description;
+    protected ?Image $image;
     protected int $stock;
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -30,8 +32,8 @@ class EletronicPart extends BaseModel
      * Set the value of id
      *
      * @return  self
-     */ 
-    public function setId($id)
+     */
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -40,7 +42,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of personId
-     */ 
+     */
     public function getPersonId()
     {
         return $this->personId;
@@ -50,7 +52,7 @@ class EletronicPart extends BaseModel
      * Set the value of personId
      *
      * @return  self
-     */ 
+     */
     public function setPersonId(int $personId)
     {
         $this->personId = $personId;
@@ -60,7 +62,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of personIdName
-     */ 
+     */
     public function getPersonIdName()
     {
         return $this->personIdName;
@@ -70,8 +72,8 @@ class EletronicPart extends BaseModel
      * Set the value of personIdName
      *
      * @return  self
-     */ 
-    public function setPersonIdName($personIdName)
+     */
+    public function setPersonIdName(?string $personIdName)
     {
         $this->personIdName = $personIdName;
 
@@ -80,7 +82,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of name
-     */ 
+     */
     public function getName()
     {
         return $this->name;
@@ -90,8 +92,8 @@ class EletronicPart extends BaseModel
      * Set the value of name
      *
      * @return  self
-     */ 
-    public function setName($name)
+     */
+    public function setName(?string $name)
     {
         $this->name = $name;
 
@@ -100,7 +102,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of type
-     */ 
+     */
     public function getType()
     {
         return $this->type;
@@ -110,8 +112,8 @@ class EletronicPart extends BaseModel
      * Set the value of type
      *
      * @return  self
-     */ 
-    public function setType($type)
+     */
+    public function setType(?string $type)
     {
         $this->type = $type;
 
@@ -120,7 +122,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of model
-     */ 
+     */
     public function getModel()
     {
         return $this->model;
@@ -130,8 +132,8 @@ class EletronicPart extends BaseModel
      * Set the value of model
      *
      * @return  self
-     */ 
-    public function setModel($model)
+     */
+    public function setModel(?string $model)
     {
         $this->model = $model;
 
@@ -140,7 +142,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of description
-     */ 
+     */
     public function getDescription()
     {
         return $this->description;
@@ -150,8 +152,8 @@ class EletronicPart extends BaseModel
      * Set the value of description
      *
      * @return  self
-     */ 
-    public function setDescription($description)
+     */
+    public function setDescription(?string $description)
     {
         $this->description = $description;
 
@@ -160,7 +162,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of image
-     */ 
+     */
     public function getImage()
     {
         return $this->image;
@@ -170,8 +172,8 @@ class EletronicPart extends BaseModel
      * Set the value of image
      *
      * @return  self
-     */ 
-    public function setImage($image)
+     */
+    public function setImage(?Image $image)
     {
         $this->image = $image;
 
@@ -180,7 +182,7 @@ class EletronicPart extends BaseModel
 
     /**
      * Get the value of stock
-     */ 
+     */
     public function getStock()
     {
         return $this->stock;
@@ -190,8 +192,8 @@ class EletronicPart extends BaseModel
      * Set the value of stock
      *
      * @return  self
-     */ 
-    public function setStock($stock)
+     */
+    public function setStock(int $stock)
     {
         $this->stock = $stock;
 
@@ -210,7 +212,7 @@ class EletronicPart extends BaseModel
             ->setPersonId((int) $data['person_id'])
             ->setPersonIdName(
                 isset($data['person_id_name'])
-                    ? $data['person_id_name'] 
+                    ? $data['person_id_name']
                     : null
             )
             ->setName($data['name'])
@@ -221,26 +223,25 @@ class EletronicPart extends BaseModel
             ->setStock((int) $data['stock']);
     }
 
-    private function storeImage()
+    public function storeImage()
     {
         $directory = __DIR__ . "/../../storage/parts/";
 
-        if (!move_uploaded_file($this->image->tmpNamePath, $directory.$this->image->nameFormatted)) {
+        if (!move_uploaded_file($this->image->tmpNamePath, $directory . $this->image->nameFormatted)) {
             throw new \Exception("Failed to upload image");
         }
+
+        return true;
     }
 
     public function insert()
     {
-        $this->image->setNameFormatted();
-        $this->storeImage();
-
         $connection = EletronicPart::getConnection();
         $query = "
             INSERT INTO eletronic_part 
                 (person_id, name, type, model, description, image_identifier, stock)
             VALUES (
-                {$this->personId}, 
+                {$this->personId},
                 '{$this->name}', 
                 '{$this->type}', 
                 '{$this->model}', 
@@ -284,7 +285,7 @@ class EletronicPart extends BaseModel
     public static function getAll()
     {
         $conn = EletronicPart::getConnection();
-        
+
         $query = "
             SELECT 
                 eletronic_part.id, 
@@ -319,7 +320,7 @@ class EletronicPart extends BaseModel
     public static function getAllByName(string $name)
     {
         $conn = EletronicPart::getConnection();
-        
+
         $query = "
             SELECT 
                 eletronic_part.id, 
@@ -400,10 +401,7 @@ class EletronicPart extends BaseModel
     {
         $connection = EletronicPart::getConnection();
 
-        if ($this->image != null) {
-            $this->image->setNameFormatted();
-            $this->storeImage();
-
+        if ($this->image !== null) {
             $query = "
                 UPDATE eletronic_part 
                 SET
@@ -416,7 +414,7 @@ class EletronicPart extends BaseModel
                     stock = {$this->stock}
                 WHERE 
                     id = {$this->id}
-            ";   
+            ";
         } else {
             $query = "
                 UPDATE eletronic_part 
@@ -433,7 +431,8 @@ class EletronicPart extends BaseModel
         }
 
         $connection->query($query) or
-            trigger_error("
+            trigger_error(
+                "
                 Query Failed! SQL: $query - Error: " . mysqli_error($connection),
                 E_USER_ERROR
             );
@@ -453,7 +452,8 @@ class EletronicPart extends BaseModel
         ";
 
         $connection->query($query) or
-            trigger_error("
+            trigger_error(
+                "
                 Query Failed! SQL: $query - Error: " . mysqli_error($connection),
                 E_USER_ERROR
             );
@@ -471,7 +471,8 @@ class EletronicPart extends BaseModel
         ";
 
         $connection->query($query) or
-            trigger_error("
+            trigger_error(
+                "
                 Query Failed! SQL: $query - Error: " . mysqli_error($connection),
                 E_USER_ERROR
             );

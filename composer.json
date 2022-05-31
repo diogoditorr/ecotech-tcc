@@ -9,7 +9,8 @@
         "test-dox-v": "@test-exec --testdox -v",
         "test-exec": "phpunit --testsuite main",
         "test-migrate": "phinx migrate -e testing",
-        "test-rollback": "phinx rollback -e testing -t 0"
+        "test-rollback": "phinx rollback -e testing -t 0",
+        "test-server": "APP_ENV=\"testing\" php -S localhost:3000"
     },
     "autoload": {
         "psr-4": {

@@ -33,7 +33,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -53,7 +53,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setCpf($cpf)
+    public function setCpf(string $cpf)
     {
         $this->cpf = $cpf;
 
@@ -73,7 +73,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -93,7 +93,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -113,7 +113,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setSchool($school)
+    public function setSchool(string $school)
     {
         $this->school = $school;
 
@@ -133,7 +133,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setPhoneNumber1($phoneNumber1)
+    public function setPhoneNumber1(string $phoneNumber1)
     {
         $this->phoneNumber1 = $phoneNumber1;
 
@@ -153,7 +153,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setPhoneNumber2($phoneNumber2)
+    public function setPhoneNumber2(string $phoneNumber2)
     {
         $this->phoneNumber2 = $phoneNumber2;
 
@@ -173,7 +173,7 @@ class Person extends BaseModel
      *
      * @return  self
      */ 
-    public function setAddress($address)
+    public function setAddress(Address $address)
     {
         $this->address = $address;
 

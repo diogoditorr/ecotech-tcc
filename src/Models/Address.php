@@ -33,7 +33,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -73,7 +73,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setAddress($address)
+    public function setAddress(string $address)
     {
         $this->address = $address;
 
@@ -93,7 +93,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setCity($city)
+    public function setCity(string $city)
     {
         $this->city = $city;
 
@@ -113,7 +113,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setState($state)
+    public function setState(string $state)
     {
         $this->state = $state;
 
@@ -133,7 +133,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setDistrict($district)
+    public function setDistrict(string$district)
     {
         $this->district = $district;
 
@@ -153,7 +153,7 @@ class Address extends BaseModel
      *
      * @return  self
      */ 
-    public function setZipCode($zipCode)
+    public function setZipCode(string $zipCode)
     {
         $this->zipCode = $zipCode;
 

@@ -24,7 +24,7 @@ class Interested extends BaseModel
      *
      * @return  self
      */ 
-    public function setId($id)
+    public function setId(int $id)
     {
         $this->id = $id;
 
@@ -44,7 +44,7 @@ class Interested extends BaseModel
      *
      * @return  self
      */ 
-    public function setPersonId($personId)
+    public function setPersonId(int $personId)
     {
         $this->personId = $personId;
 
@@ -64,7 +64,7 @@ class Interested extends BaseModel
      *
      * @return  self
      */ 
-    public function setEletronicPartId($eletronicPartId)
+    public function setEletronicPartId(int $eletronicPartId)
     {
         $this->eletronicPartId = $eletronicPartId;
 
@@ -86,7 +86,7 @@ class Interested extends BaseModel
         return $interested;
     }
 
-    public static function isEletronicPartFavorited($eletronicPartId, $userId): bool
+    public static function isEletronicPartFavorited(int $eletronicPartId, int $userId): bool
     {
         $connection = self::getConnection();
 
@@ -107,7 +107,7 @@ class Interested extends BaseModel
         return false;
     }
 
-    public static function favoriteEletronicPart($eletronicPartId, $userId)
+    public static function favoriteEletronicPart(int $eletronicPartId, int $userId)
     {
         $connection = self::getConnection();
 
@@ -125,7 +125,7 @@ class Interested extends BaseModel
         return true;
     }
 
-    public static function unfavoriteEletronicPart($eletronicPartId, $userId)
+    public static function unfavoriteEletronicPart(int $eletronicPartId, int $userId)
     {
         $connection = self::getConnection();
 

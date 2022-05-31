@@ -8,6 +8,7 @@ use App\Controllers\EletronicPartsController;
 session_start();
 if (!isset($_SESSION['user_id'])) {
     header("location: ../../resources/views/index.php");
+    http_response_code(401);
     exit;
 }
 
@@ -21,9 +22,19 @@ if (empty($_FILES['image']['name'])) {
     exit;
 }
 
+$image = EletronicPartsController::formatImage($_FILES['image']);
+if (EletronicPartsController::storeImage($image) === false) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Error while storing image'
+    ]);
+    exit;
+}
+
 $result = EletronicPartsController::register([
     ...$_POST,
-    ...$_FILES,
+    ...['image' => $image],
     ...['userId' => $_SESSION['user_id']]
 ]);
 

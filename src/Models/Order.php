@@ -51,7 +51,7 @@ class Order extends BaseModel
      *
      * @return  self
      */
-    public function setEletronicPart($eletronicPart)
+    public function setEletronicPart(EletronicPart $eletronicPart)
     {
         $this->eletronicPart = $eletronicPart;
 
@@ -71,7 +71,7 @@ class Order extends BaseModel
      *
      * @return  self
      */
-    public function setDonor($donor)
+    public function setDonor(Person $donor)
     {
         $this->donor = $donor;
 
@@ -91,7 +91,7 @@ class Order extends BaseModel
      *
      * @return  self
      */
-    public function setReceiver($receiver)
+    public function setReceiver(Person $receiver)
     {
         $this->receiver = $receiver;
 
@@ -111,7 +111,7 @@ class Order extends BaseModel
      *
      * @return  self
      */
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
 
@@ -131,7 +131,7 @@ class Order extends BaseModel
      *
      * @return  self
      */
-    public function setCreatedAt($created_at)
+    public function setCreatedAt(string $created_at)
     {
         $this->created_at = $created_at;
 

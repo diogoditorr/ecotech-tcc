@@ -1,28 +1,52 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
 use App\Models\Image;
 use App\Models\EletronicPart;
 
-class EletronicPartsController 
+class EletronicPartsController
 {
+    public static function formatImage(array $image): Image
+    {
+        $imageObject = new Image($image);
+        $imageObject->setNameFormatted();
+
+        return $imageObject;
+    }
+
+    public static function storeImage(Image $image): bool
+    {
+        $newEletronicPart = (new EletronicPart())
+            ->setImage($image);
+
+        return $newEletronicPart->storeImage();
+    }
+
     public static function register(array $data)
     {
-        // Validate specific data
-        $data['image'] = new Image($data['image']);
-        EletronicPartsController::validateImageExtension($data['image']);
+        if (!($data['image'] instanceof Image))
+            return ['success' => false, 'error' => 'Image instance is required'];    
+
+        if (!self::validateImageExtension($data['image']))
+            return [
+                'success' => false,
+                'error' => 'Invalid image extension'
+            ];
 
         try {
-            (new EletronicPart())
+            $newEletronicPart = (new EletronicPart())
                 ->setPersonId($data['userId'])
                 ->setName($data['name'])
                 ->setType($data['type'])
                 ->setModel($data['model'])
                 ->setDescription($data['description'])
                 ->setStock((int) $data['stock'])
-                ->setImage($data['image'])
-                ->insert();
+                ->setImage($data['image']);
+
+            $newEletronicPart->insert();
         } catch (\Exception $e) {
             return [
                 'success' => false,
@@ -56,20 +80,26 @@ class EletronicPartsController
         return EletronicPart::getAllByIds($ids);
     }
 
-    public static function getById($eletronicPartId)
+    public static function getById(int $eletronicPartId)
     {
         return EletronicPart::getById($eletronicPartId);
     }
 
     public static function edit(array $data)
     {
-        if ($data['image'] !== null)
-            $data['image'] = new Image($data['image']);
-        
+        if ($data['image'] !== null && !($data['image'] instanceof Image))
+            return ['success' => false, 'error' => 'Image instance is required'];    
+            
+        if (!self::validateImageExtension($data['image']))
+            return [
+                'success' => false,
+                'error' => 'Invalid image extension'
+            ];
+
         try {
             (new EletronicPart)
                 ->setId((int) $data['id'])
-                ->setPersonId($_SESSION['user_id'])
+                ->setPersonId($data['userId'])
                 ->setName($data['name'])
                 ->setType($data['type'])
                 ->setModel($data['model'])
@@ -90,7 +120,8 @@ class EletronicPartsController
         ];
     }
 
-    public static function updateStock($eletronicPartId,int $quantity) {
+    public static function updateStock(int $eletronicPartId, int $quantity)
+    {
         return EletronicPart::updateStock($eletronicPartId, $quantity);
     }
 
@@ -99,13 +130,16 @@ class EletronicPartsController
         return EletronicPart::delete($eletronicPartId);
     }
 
-    private static function validateImageExtension(Image $image) {
+    private static function validateImageExtension(Image $image)
+    {
         $extensions = ['png', 'jpeg', 'jpg'];
         if (!in_array($image->extension, $extensions)) {
             throw new \Exception(
-                "Invalid extension file. It must be ".\implode(' - ', $extensions).
-                "; \"$image->extension\" given."
+                "Invalid extension file. It must be " . \implode(' - ', $extensions) .
+                    "; \"$image->extension\" given."
             );
         }
+
+        return true;
     }
 }

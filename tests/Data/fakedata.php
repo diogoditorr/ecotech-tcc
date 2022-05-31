@@ -1,8 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 return [
     'people' => [
-        '1' => [
+        [
+            'id' => 1,
             'userName' => 'user1',
             'email' => 'test@hotmail.com',
             'cpf' => '123456789',
@@ -17,7 +20,8 @@ return [
             'district' => 'Centro',
             'zipCode' => '48830-000'
         ],
-        '2' => [
+        [
+            'id' => 2,
             'userName' => 'user2',
             'email' => 'test2@hotmail.com',
             'cpf' => '987654321',
@@ -34,21 +38,75 @@ return [
         ]
     ],
     'eletronicParts' => [
-        '1' => [
+        [
+            'id' => 1,
+            'personId' => 1,
             'name' => 'Semicondutor',
             'type' => 'Eletrônico',
             'model' => 'Hanashi',
             'description' => 'Aqui vai uma descrição do produto',
             'stock' => '15',
-            'image_path' => __DIR__ .'/parts/image_1.png'
+            'image' => [
+                'name' => 'image_1.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_1.png',
+            ]
         ],
-        '2' => [
+        [
+            'id' => 2,
+            'personId' => 1,
             'name' => 'Computador',
             'type' => 'Notebook',
             'model' => 'Asus VivoBook',
             'description' => 'Notebook 4GB RAM, Intel Core i5-1035G1, 15.6" HD, 1TB SSD, Windows 10',
             'stock' => '1',
-            'image_path' => __DIR__ .'/parts/image_2.png'
+            'image' => [
+                'name' => 'image_2.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_2.png',
+            ]
+        ],
+        [
+            'id' => 3,
+            'personId' => 1,
+            'name' => 'Semicondutor Metálico',
+            'type' => 'Eletrônico',
+            'model' => 'Hanashi',
+            'description' => 'Aqui vai uma descrição do produto',
+            'stock' => '15',
+            'image' => [
+                'name' => 'image_3.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_3.png',
+            ]
+        ],
+        [
+            'id' => 4,
+            'personId' => 1,
+            'name' => 'Computador Gamer',
+            'type' => 'Notebook',
+            'model' => 'Asus VivoBook',
+            'description' => 'Notebook 4GB RAM, Intel Core i5-1035G1, 15.6" HD, 1TB SSD, Windows 10',
+            'stock' => '1',
+            'image' => [
+                'name' => 'image_4.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_4.png',
+            ]
+        ],
+        [
+            'id' => 5,
+            'personId' => 2,
+            'name' => 'Computador Gamer Pro',
+            'type' => 'Notebook',
+            'model' => 'Asus VivoBook',
+            'description' => 'Notebook 8GB RAM, Intel Core i5-1137G7, 15.6" HD, 2TB SSD, Windows 11',
+            'stock' => '1',
+            'image' => [
+                'name' => 'image_4.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_4.png',
+            ]
         ]
     ]
 ];

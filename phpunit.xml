@@ -23,6 +23,7 @@
             <file>tests/Unit/PeopleTest.php</file>
             <file>tests/Unit/EletronicPartTest.php</file>
             <file>tests/Unit/InterestedTest.php</file>
+            <file>tests/Unit/OrderTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

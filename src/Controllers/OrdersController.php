@@ -37,7 +37,6 @@ class OrdersController
             ->setReceiver(
                 (new Person())->setId($_SESSION['user_id'])
             )
-            // ->setCreatedAt(date('d-m-Y H:i:s'))
             ->insert();
 
         if (!$result) {

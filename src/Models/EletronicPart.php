@@ -260,6 +260,26 @@ class EletronicPart extends BaseModel
         return true;
     }
 
+    public static function getFirst()
+    {
+        $connection = EletronicPart::getConnection();
+        $query = "
+            SELECT *
+            FROM eletronic_part
+            LIMIT 1
+        ";
+
+        $result = $connection->query($query) or
+            trigger_error(
+                "Query Failed! SQL: $query - Error: " . mysqli_error($connection),
+                E_USER_ERROR
+            );
+
+        $data = $result->fetch_assoc();
+
+        return EletronicPart::fromArray($data);
+    }
+
     public static function getById(int $eletronicPartId)
     {
         $conn = EletronicPart::getConnection();
@@ -277,9 +297,7 @@ class EletronicPart extends BaseModel
             return null;
         }
 
-        $eletronicPart = EletronicPart::fromArray($data);
-
-        return $eletronicPart;
+        return EletronicPart::fromArray($data);
     }
 
     public static function getAll()

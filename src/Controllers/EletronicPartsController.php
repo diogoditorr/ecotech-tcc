@@ -28,9 +28,12 @@ class EletronicPartsController
     public static function register(array $data)
     {
         if (!($data['image'] instanceof Image))
-            return ['success' => false, 'error' => 'Image instance is required'];    
+            return [
+                'success' => false,
+                'error' => 'Image instance is required'
+            ];
 
-        if (!self::validateImageExtension($data['image']))
+        if (!self::isAValidImageExtension($data['image']))
             return [
                 'success' => false,
                 'error' => 'Invalid image extension'
@@ -60,6 +63,16 @@ class EletronicPartsController
         ];
     }
 
+    public static function getFirst()
+    {
+        return EletronicPart::getFirst();
+    }
+
+    public static function getById(int $eletronicPartId)
+    {
+        return EletronicPart::getById($eletronicPartId);
+    }
+
     public static function getAll()
     {
         return EletronicPart::getAll();
@@ -80,17 +93,15 @@ class EletronicPartsController
         return EletronicPart::getAllByIds($ids);
     }
 
-    public static function getById(int $eletronicPartId)
-    {
-        return EletronicPart::getById($eletronicPartId);
-    }
-
     public static function edit(array $data)
     {
         if ($data['image'] !== null && !($data['image'] instanceof Image))
-            return ['success' => false, 'error' => 'Image instance is required'];    
-            
-        if (!self::validateImageExtension($data['image']))
+            return [
+                'success' => false,
+                'error' => 'Image instance is required'
+            ];
+
+        if ($data['image'] !== null && !self::isAValidImageExtension($data['image']))
             return [
                 'success' => false,
                 'error' => 'Invalid image extension'
@@ -130,14 +141,11 @@ class EletronicPartsController
         return EletronicPart::delete($eletronicPartId);
     }
 
-    private static function validateImageExtension(Image $image)
+    private static function isAValidImageExtension(Image $image)
     {
         $extensions = ['png', 'jpeg', 'jpg'];
         if (!in_array($image->extension, $extensions)) {
-            throw new \Exception(
-                "Invalid extension file. It must be " . \implode(' - ', $extensions) .
-                    "; \"$image->extension\" given."
-            );
+            return false;
         }
 
         return true;

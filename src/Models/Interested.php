@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -13,7 +15,7 @@ class Interested extends BaseModel
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId()
     {
         return $this->id;
@@ -23,7 +25,7 @@ class Interested extends BaseModel
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId(int $id)
     {
         $this->id = $id;
@@ -33,7 +35,7 @@ class Interested extends BaseModel
 
     /**
      * Get the value of personId
-     */ 
+     */
     public function getPersonId()
     {
         return $this->personId;
@@ -43,7 +45,7 @@ class Interested extends BaseModel
      * Set the value of personId
      *
      * @return  self
-     */ 
+     */
     public function setPersonId(int $personId)
     {
         $this->personId = $personId;
@@ -53,7 +55,7 @@ class Interested extends BaseModel
 
     /**
      * Get the value of eletronicPartId
-     */ 
+     */
     public function getEletronicPartId()
     {
         return $this->eletronicPartId;
@@ -63,7 +65,7 @@ class Interested extends BaseModel
      * Set the value of eletronicPartId
      *
      * @return  self
-     */ 
+     */
     public function setEletronicPartId(int $eletronicPartId)
     {
         $this->eletronicPartId = $eletronicPartId;
@@ -79,9 +81,9 @@ class Interested extends BaseModel
     private static function fromArray(array $data): Interested
     {
         $interested = (new Interested())
-                            ->setId((int) $data["id"])
-                            ->setPersonId((int) $data["person_id"])
-                            ->setEletronicPartId((int) $data["eletronic_part_id"]);
+            ->setId((int) $data["id"])
+            ->setPersonId((int) $data["person_id"])
+            ->setEletronicPartId((int) $data["eletronic_part_id"]);
 
         return $interested;
     }
@@ -121,7 +123,7 @@ class Interested extends BaseModel
         if ($result === false) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -138,12 +140,10 @@ class Interested extends BaseModel
 
         $result = $connection->query($query);
 
-        
-
         if ($result === false) {
             return false;
         }
-        
+
         return true;
     }
 
@@ -169,7 +169,7 @@ class Interested extends BaseModel
                 $interested[] = Interested::fromArray($data);
         }
 
-        
+
         return $interested;
     }
 }

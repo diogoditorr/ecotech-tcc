@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -8,18 +10,18 @@ use App\Models\Order;
 
 class OrdersController
 {
-    public static function requestOrder(array $data)
-    {
+    public static function requestOrder(
+        int $eletronicPartId,
+        int $donorId,
+        int $receiverId
+    ) {
         date_default_timezone_set('America/Sao_Paulo');
 
         // Create random id with characters and numbers (8 characters) without 
         // spaces and special characters
         $id = substr(md5(uniqid((string) rand(), true)), 0, 8);
-        $data['eletronicPartId'] = (int) $data['eletronicPartId'];
-        $data['donorId'] = (int) $data['donorId'];
-        $data['receiverId'] = (int) $data['receiverId'];
 
-        $eletronicPart = EletronicPartsController::getById($data['eletronicPartId']);
+        $eletronicPart = EletronicPartsController::getById($eletronicPartId);
 
         if ($eletronicPart->getStock() <= 0)
             return [
@@ -30,13 +32,13 @@ class OrdersController
         $result = (new Order())
             ->setId($id)
             ->setEletronicPart(
-                (new EletronicPart())->setId($data['eletronicPartId'])
+                (new EletronicPart())->setId($eletronicPartId)
             )
             ->setDonor(
-                (new Person())->setId($data['donorId'])
+                (new Person())->setId($donorId)
             )
             ->setReceiver(
-                (new Person())->setId($data['receiverId'])
+                (new Person())->setId($receiverId)
             )
             ->insert();
 

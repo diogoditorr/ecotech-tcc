@@ -16,6 +16,7 @@ final class OrderTest extends TestCase
     private static Profile $firstUser;
     private static Profile $secondUser;
     private static array $secondUserEletronicParts;
+    private static ?array $ordersOnDatabase;
 
     public static function setUpBeforeClass(): void
     {
@@ -31,11 +32,11 @@ final class OrderTest extends TestCase
     {
         /** @var EletronicPart $eletronicPart */
         foreach (self::$secondUserEletronicParts as $eletronicPart) {
-            $result = OrdersController::requestOrder([
-                'eletronicPartId' => $eletronicPart->getId(),
-                'donorId' => self::$secondUser->getPersonId(),
-                'receiverId' => self::$firstUser->getPersonId(),
-            ]);
+            $result = OrdersController::requestOrder(
+                eletronicPartId: $eletronicPart->getId(),
+                donorId: self::$secondUser->getPersonId(),
+                receiverId: self::$firstUser->getPersonId(),
+            );
 
             $this->assertTrue($result['success'], (string) $result['error']);
         }
@@ -61,12 +62,14 @@ final class OrderTest extends TestCase
     {
         $eletronicParts = OrdersController::getAllByDonorId(self::$secondUser->getPersonId());
 
+        self::$ordersOnDatabase = $eletronicParts;
+
         $this->assertCount(count(self::$secondUserEletronicParts), $eletronicParts);
     }
 
     public function testGetDetailsById()
     {
-        $orderId = OrdersController::getAllByDonorId(self::$secondUser->getPersonId())[0]->getId();
+        $orderId = self::$ordersOnDatabase[0]->getId();
 
         $order = OrdersController::getDetailsById($orderId);
 
@@ -75,7 +78,7 @@ final class OrderTest extends TestCase
 
     public function testChangeStatus()
     {
-        $orderId = OrdersController::getAllByDonorId(self::$secondUser->getPersonId())[0]->getId();
+        $orderId = self::$ordersOnDatabase[0]->getId();
 
         $result = OrdersController::changeStatus($orderId, 'entregue');
 
@@ -84,7 +87,7 @@ final class OrderTest extends TestCase
 
     public function testDelete()
     {
-        $orderId = OrdersController::getAllByDonorId(self::$secondUser->getPersonId())[0]->getId();
+        $orderId = self::$ordersOnDatabase[0]->getId();
 
         $result = OrdersController::delete($orderId);
 

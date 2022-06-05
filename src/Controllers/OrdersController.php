@@ -17,6 +17,7 @@ class OrdersController
         $id = substr(md5(uniqid((string) rand(), true)), 0, 8);
         $data['eletronicPartId'] = (int) $data['eletronicPartId'];
         $data['donorId'] = (int) $data['donorId'];
+        $data['receiverId'] = (int) $data['receiverId'];
 
         $eletronicPart = EletronicPartsController::getById($data['eletronicPartId']);
 
@@ -35,7 +36,7 @@ class OrdersController
                 (new Person())->setId($data['donorId'])
             )
             ->setReceiver(
-                (new Person())->setId($_SESSION['user_id'])
+                (new Person())->setId($data['receiverId'])
             )
             ->insert();
 

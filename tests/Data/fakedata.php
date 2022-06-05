@@ -45,7 +45,7 @@ return [
             'type' => 'Eletrônico',
             'model' => 'Hanashi',
             'description' => 'Aqui vai uma descrição do produto',
-            'stock' => '15',
+            'stock' => 15,
             'image' => [
                 'name' => 'image_1.png',
                 'type' => 'image/png',
@@ -59,7 +59,7 @@ return [
             'type' => 'Notebook',
             'model' => 'Asus VivoBook',
             'description' => 'Notebook 4GB RAM, Intel Core i5-1035G1, 15.6" HD, 1TB SSD, Windows 10',
-            'stock' => '1',
+            'stock' => 2,
             'image' => [
                 'name' => 'image_2.png',
                 'type' => 'image/png',
@@ -73,7 +73,7 @@ return [
             'type' => 'Eletrônico',
             'model' => 'Hanashi',
             'description' => 'Aqui vai uma descrição do produto',
-            'stock' => '15',
+            'stock' => 15,
             'image' => [
                 'name' => 'image_3.png',
                 'type' => 'image/png',
@@ -82,12 +82,12 @@ return [
         ],
         [
             'id' => 4,
-            'personId' => 1,
+            'personId' => 2,
             'name' => 'Computador Gamer',
             'type' => 'Notebook',
             'model' => 'Asus VivoBook',
             'description' => 'Notebook 4GB RAM, Intel Core i5-1035G1, 15.6" HD, 1TB SSD, Windows 10',
-            'stock' => '1',
+            'stock' => 13,
             'image' => [
                 'name' => 'image_4.png',
                 'type' => 'image/png',
@@ -101,7 +101,21 @@ return [
             'type' => 'Notebook',
             'model' => 'Asus VivoBook',
             'description' => 'Notebook 8GB RAM, Intel Core i5-1137G7, 15.6" HD, 2TB SSD, Windows 11',
-            'stock' => '1',
+            'stock' => 1,
+            'image' => [
+                'name' => 'image_4.png',
+                'type' => 'image/png',
+                'tmp_name' => __DIR__ . '/parts/image_4.png',
+            ]
+        ],
+        [
+            'id' => 6,
+            'personId' => 2,
+            'name' => 'Notebook Gamer Pro2',
+            'type' => 'Notebook',
+            'model' => 'Asus VivoBook',
+            'description' => 'Notebook 16GB RAM, Intel Core i9-12900K, 15.6" HD, 2TB SSD, Windows 11',
+            'stock' => 3,
             'image' => [
                 'name' => 'image_4.png',
                 'type' => 'image/png',

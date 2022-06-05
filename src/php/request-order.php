@@ -6,7 +6,7 @@ use App\Controllers\OrdersController;
 
 session_start();
 
-$result = OrdersController::requestOrder($_POST);
+$result = OrdersController::requestOrder([...$_POST, 'receiverId' => $_SESSION['userId']]);
 
 if (!$result['success'])
     header('Location: ../../resources/views/explore.php?error="' . $result['error']). '"';

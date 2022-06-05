@@ -29,12 +29,11 @@ echo json_encode([
         ...$eletronicPart
             ->makeHidden(['personId', 'personIdName'])
             ->toArray(),
-        ...['person' => $person->toArray()],
-        ...['isFavorited' =>
-                InterestedController::isEletronicPartFavorited(
-                    $eletronicPart->getId(),
-                    $_SESSION['user_id']
-                )
-        ]
+        'person' => $person->toArray(),
+        'isFavorited' => 
+            InterestedController::isEletronicPartFavorited(
+                $eletronicPart->getId(),
+                $_SESSION['user_id']
+            )
     ]
 ]);

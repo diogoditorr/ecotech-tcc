@@ -36,7 +36,7 @@ final class EletronicPartTest extends TestCase
     {
         $eletronicPart = EletronicPartsController::getFirst();
 
-        $this->assertTrue($eletronicPart instanceof EletronicPart);
+        $this->assertInstanceOf(EletronicPart::class, $eletronicPart);
     }
 
     public function testGetAll()

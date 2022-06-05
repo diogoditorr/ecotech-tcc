@@ -23,7 +23,7 @@ final class InterestedTest extends TestCase
         self::$profile = PeopleController::loadProfile(cpf: self::$fakeData['people'][0]['cpf']);
         self::$eletronicPart = EletronicPartsController::getFirst();
     }
-
+ 
     public function testIsEletronicPartFavorited()
     {
         $result = InterestedController::isEletronicPartFavorited(
@@ -68,5 +68,21 @@ final class InterestedTest extends TestCase
                 self::$profile->getPersonId()
             )
         );
+    }
+
+    public function testGetAllByUserId()
+    {
+        $eletronicParts = EletronicPartsController::getAllByUserId(self::$profile->getPersonId());
+        /** @var EletronicPart $eletronicPart */
+        foreach ($eletronicParts as $eletronicPart) {
+            InterestedController::favoriteEletronicPart(
+                $eletronicPart->getId(),
+                self::$profile->getPersonId()
+            );
+        }
+
+        $favoritedEletronicParts = InterestedController::getAllByUserId(self::$profile->getPersonId());
+
+        $this->assertCount(count($eletronicParts), $favoritedEletronicParts);
     }
 }

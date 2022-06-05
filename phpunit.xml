@@ -3,11 +3,26 @@
     bootstrap="tests/bootstrap.php"
     colors="true"  
     >
+    <!-- <coverage
+        cacheDirectory="tests/coverage"
+        includeUncoveredFiles="true"
+        pathCoverage="false"
+        ignoreDeprecatedCodeUnits="true"
+        disableCodeCoverageIgnore="true"
+    >
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <report>
+            <text outputFile="coverage.txt" showUncoveredFiles="false"/>
+        </report>
+    </coverage> -->
     <testsuites>
         <testsuite name="main">
             <file>tests/Unit/DeleteTest.php</file>
             <file>tests/Unit/PeopleTest.php</file>
             <file>tests/Unit/EletronicPartTest.php</file>
+            <file>tests/Unit/InterestedTest.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

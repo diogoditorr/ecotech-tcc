@@ -9,3 +9,4 @@ out
 .phpunit.result.cache
 
 tests/coverage
+dist

@@ -1,17 +1,23 @@
-import { resolve, parse } from "path";
+import { parse } from "path";
 import { defineConfig } from "vite";
 import { readdirSync } from "fs";
 
 // Configuration for vite
 const config = {
-    path: {
-        name: "./public/scripts",
-        depth: 1,
-    },
-    extensions: [".ts"],
+    directories: [
+        {
+            name: "./resources/scripts",
+            depth: 1,
+            extensions: [".ts"],
+        },
+        {
+            name: "./resources/sass",
+            depth: 3,
+            extensions: [".scss"],
+        },
+    ],
 };
 
-// Find all files with .js extension in a directory and return an array of file paths
 function getFiles(
     dir: string,
     extensions: Array<string> = [".js"],
@@ -40,15 +46,19 @@ function inArray(array: Array<any>, element: any) {
     return array.indexOf(element) > -1;
 }
 
-const entryPoints: {
-    [key: string]: string;
-} = {};
-getFiles(config.path.name, config.extensions, config.path.depth).map(
-    (filePath: string) => {
-        const file = parse(filePath);
-        entryPoints[file.name] = resolve(__dirname, filePath);
-    }
-);
+const entryPoints: string[] = [];
+config.directories.forEach((directory) => {
+    const files = getFiles(
+        directory.name,
+        directory.extensions,
+        directory.depth
+    );
+    files.forEach((filePath) => {
+        entryPoints.push(filePath);
+    });
+});
+
+console.log(entryPoints);
 
 export default defineConfig({
     publicDir: false,
@@ -57,6 +67,7 @@ export default defineConfig({
             input: entryPoints,
             output: {
                 entryFileNames: "assets/[name].js",
+                assetFileNames: "assets/[name][extname]",
                 sourcemap: true,
                 compact: true,
             },

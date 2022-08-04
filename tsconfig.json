@@ -16,6 +16,6 @@
         "target": "ESNext",
         "useDefineForClassFields": true,
     },
-    "include": ["public/scripts", "cypress/integration"],
+    "include": ["resources/scripts", "cypress/integration"],
     "references": [{ "path": "tsconfig.node.json" }]
 }

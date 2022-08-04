@@ -1,1 +1,0 @@
-{"version":3,"file":"chat.js","sources":["../../public/scripts/chat.ts"],"sourcesContent":["const form = document.querySelector(\".typing-area\") as HTMLFormElement;\n\nform.onsubmit = (event) => {\n    event.preventDefault();\n}\n"],"names":[],"mappings":"AAAA,KAAM,GAAO,SAAS,cAAc,gBAEpC,EAAK,SAAW,AAAC,GAAU,GACjB"}

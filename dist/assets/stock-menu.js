@@ -1,2 +1,0 @@
-const u=document.querySelector("form .field .stock-menu .add"),o=document.querySelector("form .field .stock-menu .subtract"),e=document.querySelector("form .field .stock-menu input");console.log(e);u.addEventListener("click",t=>{t.preventDefault(),e.value=(Number(e.value)+1).toString()});o.addEventListener("click",t=>{t.preventDefault(),Number(e.value)>0&&(e.value=(Number(e.value)-1).toString())});
-//# sourceMappingURL=stock-menu.js.map

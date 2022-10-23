@@ -13,10 +13,11 @@
 
     $title = 'Ecotech | Pedidos';
     $css['paths'] = [
-        '../../public/styles/page-orders.css',
-        '../../public/styles/navigation-bar.css',
-        '../../public/styles/navigation-profile.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-orders.css',
+        '../../dist/assets/navigation-bar.css',
+        '../../dist/assets/navigation-profile.css',
+        '../../dist/assets/content-section.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -25,7 +26,7 @@
 <div id="page-orders">
     <nav>
         <div class="left">
-            <img class="logo" src="../../public/assets/logo.svg" alt="">
+            <img class="logo" src="../../public/svg/logo.svg" alt="">
 
             <div class="tabs">
                 <a href="./explore.php">Explore</a>
@@ -35,9 +36,9 @@
 
         <div class="right">
             <div class="profile">
-                <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
+                <img class="user-icon" src="../../public/svg/user-icon.svg" alt="User Icon">
                 <div class="name"><?= $_SESSION['user_username'] ?></div>
-                <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
+                <img class="dropdown" src="../../public/svg/dropdown.svg" alt="dropdown">
             </div>
         </div>
     </nav>
@@ -45,15 +46,15 @@
     <main>
         <section class="navigation-profile">
             <a href="./interested.php">
-                <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/heart.svg"); ?>
                 <span>Interessados</span>
             </a>
             <a href="./orders.php" class="active">
-                <?php echo file_get_contents("../../public/assets/order.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/order.svg"); ?>
                 <span>Pedidos</span>
             </a>
             <a href="./donations.php">
-                <?php echo file_get_contents("../../public/assets/donation.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/donation.svg"); ?>
                 <span>Doações</span>
             </a>
         </section>
@@ -91,7 +92,7 @@
                                     <td class=\"status {$status}\">{$order->getStatus()}</td>
                                     <td class=\"see-details\">
                                         <a href=\"./orders-details.php?orderId={$order->getId()}\">
-                                            <img src=\"../../public/assets/info.svg\" alt=\"\">
+                                            <img src=\"../../public/svg/info.svg\" alt=\"\">
                                             <span>Detalhes</span>
                                         </a>
                                     </td>

@@ -1,0 +1,43 @@
+#page-donations {
+    min-height: 100vh;
+    padding: 2.4rem 3.6rem;
+    background-color: var(--background);
+
+    >div {
+        border-radius: 8px;
+
+        /* border: 1px solid black; */
+        box-shadow: 0px 8px 30px -4px rgba(0, 0, 0, 0.25);
+
+        &:not(:last-child) {
+            margin-bottom: 3.6rem;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.2rem 3rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 24px;
+        }
+    }
+
+    .registers header a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: transform 0.2s ease-in;
+
+        span {
+            margin-left: 1.6rem;
+            font-size: 20px;
+            color: #7403FF;
+            font-weight: 700;
+        }
+
+        &:hover {
+            transform: translateY(-6px);
+        }
+    }
+}

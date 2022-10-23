@@ -15,7 +15,7 @@ if (
 
 if (!isset($_POST["emailCpf"]) || !isset($_POST["password"])) {
     header("Location: ../../resources/views/sign-in.php?error='Email/cpf ou senha não preenchidos!'");
-    http_response_code(400);
+    // http_response_code(400);
     exit();
 }
 
@@ -35,8 +35,8 @@ if (filter_var($_POST["emailCpf"], FILTER_VALIDATE_EMAIL)) {
 }
 
 if ($profile === null) {
+    // http_response_code(400);
     header("Location: ../../resources/views/sign-in.php?error='Email/cpf ou senha invalida'");
-    http_response_code(400);
     exit();
 }
 

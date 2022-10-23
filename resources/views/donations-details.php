@@ -15,10 +15,11 @@
     
     $title = 'Ecotech | Detalhes da doação';
     $css['paths'] = [
-        '../../public/styles/page-donations-details.css',
-        '../../public/styles/navigation-bar.css',
-        '../../public/styles/navigation-profile.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-donations-details.css',
+        '../../dist/assets/navigation-bar.css',
+        '../../dist/assets/navigation-profile.css',
+        '../../dist/assets/content-section.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -27,7 +28,7 @@
 <div id="page-donations-details">
     <nav>
         <div class="left">
-            <img class="logo" src="../../public/assets/logo.svg" alt="">
+            <img class="logo" src="../../public/svg/logo.svg" alt="">
 
             <div class="tabs">
                 <a href="./explore.php">Explore</a>
@@ -37,9 +38,9 @@
 
         <div class="right">
             <div class="profile">
-                <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
+                <img class="user-icon" src="../../public/svg/user-icon.svg" alt="User Icon">
                 <div class="name"><?= $_SESSION['user_username'] ?></div>
-                <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
+                <img class="dropdown" src="../../public/svg/dropdown.svg" alt="dropdown">
             </div>
         </div>
     </nav>
@@ -47,15 +48,15 @@
     <main>
         <section class="navigation-profile">
             <a href="./interested.php">
-                <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/heart.svg"); ?>
                 <span>Interessados</span>
             </a>
             <a href="./orders.php">
-                <?php echo file_get_contents("../../public/assets/order.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/order.svg"); ?>
                 <span>Pedidos</span>
             </a>
             <a href="./donations.php" class="active">
-                <?php echo file_get_contents("../../public/assets/donation.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/donation.svg"); ?>
                 <span>Doações</span>
             </a>
         </section>
@@ -68,7 +69,7 @@
                 </span>
 
                 <a class="back" href="./donations.php">
-                    <?php echo file_get_contents("../../public/assets/arrow-left-small.svg"); ?>
+                    <?php echo file_get_contents("../../public/svg/arrow-left-small.svg"); ?>
                 </a>
             </header>
 
@@ -108,21 +109,21 @@
                         <div class="buttons">
                             <div class="field">
                                 <button class="save">
-                                    <?php echo file_get_contents("../../public/assets/disk.svg"); ?>
+                                    <?php echo file_get_contents("../../public/svg/disk.svg"); ?>
                                     <span>Salvar</span>
                                 </button>
                                 <button class="cancel-order">
-                                    <?php echo file_get_contents("../../public/assets/trash.svg"); ?>
+                                    <?php echo file_get_contents("../../public/svg/trash.svg"); ?>
                                     <span>Cancelar Pedido</span>
                                 </button>
                             </div>
                             <div class="field">
                                 <a class="chat" target="_blank" href="./chat.php">
-                                    <?php echo file_get_contents("../../public/assets/chat.svg"); ?>
+                                    <?php echo file_get_contents("../../public/svg/chat.svg"); ?>
                                     <span>Bate Papo</span>
                                 </a>
                                 <a class="whatsapp" target="_blank" href="#">
-                                    <?php echo file_get_contents("../../public/assets/whatsapp.svg"); ?>
+                                    <?php echo file_get_contents("../../public/svg/whatsapp.svg"); ?>
                                     <span>Entrar em Contato</span>
                                 </a>
                             </div>

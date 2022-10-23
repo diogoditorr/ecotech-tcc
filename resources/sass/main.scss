@@ -1,0 +1,59 @@
+:root {
+    /* Colors */
+    --primary: #6755A8;
+    --primary-2: #0E003F;
+    --primary-3: #221160;
+    --primary-4: #412E85;
+    --primary-5: #6755A8;
+    --primary-6: #9081C7;
+    --primary-7: #C3B9E8;
+    --primary-8: #E6E0FE;
+    --primary-mono-a: #0EC5DE;
+    --primary-mono-b: #321852;
+    --primary-mono-c: #190038;
+    --primary-mono-d: #522885;
+    --primary-mono-e: #5E00D1;
+    --secondary: #370031;
+    --terciary: #832232;
+    --terciary-2: #893947;
+    --forth: #CE8964;
+    --fifth: #EAF27C;
+    --fifth-2: #EAF458;
+    --fifth-3: #E7F429;
+    --fifth-4: #EEFF00;
+
+    /* Texts */
+    --black-text: #2E2C2C;
+    --light-text: #8F8F8F;
+    --title: #432740;
+    --text: #877185;
+    --logo-text: #E7EB46;
+
+    /* Shapes */
+    --border: #C3C3C3;
+    --border-purple: #B5B0C9;
+    --border-field: #5A5A5A;
+    --background: #F0F0F0;
+    --details-button: #5E26A1;
+
+    /* Status */
+    --pending: #ffa800;
+    --delivered: #4aba41;
+    --cancelled: #ff3b3b;
+
+    font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+input,
+button,
+textarea {
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+}

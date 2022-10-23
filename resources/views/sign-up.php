@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
     $title = 'Ecotech | Cadastro de Usuário';
     $css['paths'] = [
-        '../../public/styles/page-sign-up.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-sign-up.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -11,9 +11,9 @@
 <div id="page-sign-up">
     <header>
         <a href="./index.php">
-            <img src="../../public/assets/arrow-left-large.svg" alt="Voltar">
+            <img src="../../public/svg/arrow-left-large.svg" alt="Voltar">
         </a>
-        <img src="../../public/assets/logo-yellow.svg" alt="">
+        <img src="../../public/svg/logo-yellow.svg" alt="">
     </header>
 
     <main>
@@ -123,13 +123,13 @@
 
             <div class="footer">
                 <div class="warning">
-                    <img src="../../public/assets/warning.svg" alt="Warning Icon">
+                    <img src="../../public/svg/warning.svg" alt="Warning Icon">
                     <span>Preencha todos os dados!</span>
                 </div>
 
                 <button type="submit">
                     <span>Sign Up</span>
-                    <?php echo file_get_contents("../../public/assets/sign-up.svg"); ?>
+                    <?php echo file_get_contents("../../public/svg/sign-up.svg"); ?>
                 </button>
             </div>
         </form>

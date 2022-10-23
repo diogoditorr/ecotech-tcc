@@ -3,7 +3,7 @@ const label = document.querySelector('.image-selector label') as HTMLLabelElemen
 const originalLabelInnerHTML = label.innerHTML;
 const previewImg = document.querySelector('.image-selector .preview img') as HTMLImageElement;
 const previewWrapper = document.querySelector('.image-selector .preview') as HTMLDivElement;
-const deleteButton = document.querySelector('.image-selector button') as HTMLButtonElement;
+const removeButton = document.querySelector('.image-selector button') as HTMLButtonElement;
 
 input.addEventListener('change', (event: Event) => {
     const inputTarget = event.target as HTMLInputElement;
@@ -15,14 +15,17 @@ input.addEventListener('change', (event: Event) => {
         reader.addEventListener('load', () => {
             previewImg.src = reader.result as string;
             previewWrapper.classList.remove('hidden');
+            removeButton.classList.remove('hidden');
         });
         label.innerHTML = file.name;
     }
 });
 
-deleteButton.addEventListener('click', () => {
+removeButton.addEventListener('click', () => {
     input.value = '';
     previewImg.src = '';
-    previewWrapper.classList.remove('hidden')
     label.innerHTML = originalLabelInnerHTML;
+    
+    previewWrapper.classList.add('hidden')
+    removeButton.classList.add('hidden');
 })

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Logo -->
-    <link rel="shortcut icon" href="../../public/assets/logo-icon.svg" type="image/svg">
+    <link rel="shortcut icon" href="../../public/svg/logo-icon.svg" type="image/svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <!-- Css -->
-    <link rel="stylesheet" type="text/css" href="../../public/styles/main.css">
+    <link rel="stylesheet" type="text/css" href="../../dist/assets/main.css">
     <?php 
         /** @var array $css 
          *  @var string $path

@@ -32,10 +32,11 @@
 
     $title = 'Ecotech | Detalhes da peça';
     $css['paths'] = [
-        '../../public/styles/page-interested-details.css',
-        '../../public/styles/navigation-bar.css',
-        '../../public/styles/navigation-profile.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-interested-details.css',
+        '../../dist/assets/navigation-bar.css',
+        '../../dist/assets/navigation-profile.css',
+        '../../dist/assets/content-section.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -44,7 +45,7 @@
 <div id="page-interested-details">
     <nav>
         <div class="left">
-            <img class="logo" src="../../public/assets/logo.svg" alt="">
+            <img class="logo" src="../../public/svg/logo.svg" alt="">
 
             <div class="tabs">
                 <a href="./explore.php">Explore</a>
@@ -54,9 +55,9 @@
 
         <div class="right">
             <div class="profile">
-                <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
+                <img class="user-icon" src="../../public/svg/user-icon.svg" alt="User Icon">
                 <div class="name"><?= $_SESSION['user_username'] ?></div>
-                <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
+                <img class="dropdown" src="../../public/svg/dropdown.svg" alt="dropdown">
             </div>
         </div>
     </nav>
@@ -64,15 +65,15 @@
     <main>
         <section class="navigation-profile">
             <a href="./interested.php" class="active">
-                <?php echo file_get_contents("../../public/assets/heart.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/heart.svg"); ?>
                 <span>Interessados</span>
             </a>
             <a href="./orders.php">
-                <?php echo file_get_contents("../../public/assets/order.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/order.svg"); ?>
                 <span>Pedidos</span>
             </a>
             <a href="./donations.php">
-                <?php echo file_get_contents("../../public/assets/donation.svg"); ?>
+                <?php echo file_get_contents("../../public/svg/donation.svg"); ?>
                 <span>Doações</span>
             </a>
         </section>
@@ -82,7 +83,7 @@
                 <p>Interessados</p>
 
                 <a href="./interested.php">
-                    <?php echo file_get_contents("../../public/assets/arrow-left-small.svg"); ?>
+                    <?php echo file_get_contents("../../public/svg/arrow-left-small.svg"); ?>
                 </a>
             </header>
 
@@ -112,8 +113,8 @@
                                         data-is-favorited=\"".(in_array($eletronicPart->getId(), $eletronicParts) ? 'true' : 'false')."\"
                                     >
                                         ".
-                                        file_get_contents("../../public/assets/heart.svg").
-                                        file_get_contents("../../public/assets/heart-filled.svg")
+                                        file_get_contents("../../public/svg/heart.svg").
+                                        file_get_contents("../../public/svg/heart-filled.svg")
                                         ."
                                         <span></span>
                                     </button>

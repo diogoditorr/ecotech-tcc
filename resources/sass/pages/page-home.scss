@@ -1,0 +1,105 @@
+#page-home {
+    min-height: 100vh;
+    background-color: var(--background);
+
+    header {
+        display: flex;
+        align-items: center;
+        height: 15vh;
+        padding: 0 130px;
+        background-color: var(--primary-mono-b);
+
+        img {
+            height: 6.8rem;
+        }
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 85vh;
+        width: 100vw;
+        padding: 0 13rem;
+        background: url('../assets/home-background.svg') no-repeat;
+        background-position: 58vw center;
+    }
+
+    .quote {
+        /* margin-top: 150px; */
+        width: 39vw;
+        padding-bottom: 9rem;
+        animation-delay: 0.5s;
+
+        h1 {
+            padding-bottom: 1.6rem;
+            color: var(--title);
+            font-weight: bold;
+            font-size: 60px;
+        }
+
+        p {
+            width: 35rem;
+            color: var(--text);
+            font-size: 32px;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        animation-delay: 0.5s;
+
+        a {
+            height: 62px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+
+            span {
+                color: var(--title);
+                font-size: 24px;
+                font-weight: bold;
+            }
+        }
+
+        .sign-up {
+            margin-right: 32px;
+            padding: 1.6rem 6.4rem;
+            background-color: #E7EB46;
+
+            &:hover {
+                background-color: #D3D81A;
+            }
+        }
+
+        .sign-in {
+            display: flex;
+            align-items: center;
+            padding: 1.6rem 2rem;
+
+            span {
+                margin-right: 13px;
+                transition: color 0.2s;
+            }
+
+            svg {
+                height: 32px;
+
+                >path {
+                    transition: fill 0.2s;
+                }
+            }
+
+            &:hover {
+                span {
+                    color: var(--primary-mono-e);
+                }
+
+                svg>path {
+                    fill: var(--primary-mono-e);
+                }
+            }
+        }
+    }
+}

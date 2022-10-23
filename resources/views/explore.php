@@ -13,11 +13,11 @@
 
     $title = 'Ecotech | Explorar';
     $css['paths'] = [
-        '../../public/styles/page-explore.css',
-        '../../public/styles/navigation-bar.css',
-        '../../public/styles/modal.css',
-        '../../public/styles/skeleton.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-explore.css',
+        '../../dist/assets/navigation-bar.css',
+        '../../dist/assets/modal.css',
+        '../../dist/assets/skeleton.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -26,7 +26,7 @@
 <div id="page-explore">
     <nav>
         <div class="left">
-            <img class="logo" src="../../public/assets/logo.svg" alt="">
+            <img class="logo" src="../../public/svg/logo.svg" alt="">
 
             <div class="tabs">
                 <a class="active" href="#">Explore</a>
@@ -36,9 +36,9 @@
 
         <div class="right">
             <div class="profile">
-                <img class="user-icon" src="../../public/assets/user-icon.svg" alt="User Icon">
+                <img class="user-icon" src="../../public/svg/user-icon.svg" alt="User Icon">
                 <div class="name"><?= $_SESSION['user_username'] ?></div>
-                <img class="dropdown" src="../../public/assets/dropdown.svg" alt="dropdown">
+                <img class="dropdown" src="../../public/svg/dropdown.svg" alt="dropdown">
             </div>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             value="<?=isset($_GET['search']) ? $_GET['search'] : ''?>"
         >
         <button type="submit">
-            <img src="../../public/assets/search.svg" alt="">
+            <img src="../../public/svg/search.svg" alt="">
         </button>
     </form>
 
@@ -88,8 +88,8 @@
                                     data-is-favorited=\"".(in_array($eletronicPart->getId(), $favoritedEletronicParts) ? 'true' : 'false')."\"
                                 >
                                     ".
-                                    file_get_contents("../../public/assets/heart.svg").
-                                    file_get_contents("../../public/assets/heart-filled.svg").
+                                    file_get_contents("../../public/svg/heart.svg").
+                                    file_get_contents("../../public/svg/heart-filled.svg").
                                     "
                                 </button>
                             </div>
@@ -107,7 +107,7 @@
             <h1>
                 Detalhes da Peça
             </h1>
-            <img class="close" src="../../public/assets/close.svg" alt="">            
+            <img class="close" src="../../public/svg/close.svg" alt="">            
         </header>
 
         <div class="content"></div>

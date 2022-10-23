@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
     $title = 'Ecotech';
     $css['paths'] = [
-        '../../public/styles/page-home.css',
-        '../../public/styles/animations.css',
+        '../../dist/assets/page-home.css',
+        '../../dist/assets/animations.css',
     ];
 
     include('../layouts/header.php');
@@ -10,7 +10,7 @@
 
 <div id="page-home">
     <header>
-        <img class="animate-up-op" src="../../public/assets/logo-yellow.svg" alt="Echotech Logo">
+        <img class="animate-up-op" src="../../public/svg/logo-yellow.svg" alt="Echotech Logo">
     </header>
 
     <main>
@@ -26,8 +26,8 @@
     
             <a href="./sign-in.php" class="sign-in">
                 <span>Sign In</span>
-                <!-- <img src="../../public/assets/sign-in.svg" alt="Sign in Icon"> -->
-                <?php echo file_get_contents("../../public/assets/sign-in.svg"); ?>
+                <!-- <img src="../../public/svg/sign-in.svg" alt="Sign in Icon"> -->
+                <?php echo file_get_contents("../../public/svg/sign-in.svg"); ?>
             </a>
         </div>
     </main>

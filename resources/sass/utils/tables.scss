@@ -1,0 +1,268 @@
+/* Tables */
+
+table:is(.table-registers, .table-donations) {
+    thead,
+    tbody {
+        display: block;
+    }
+
+    width: 100%;
+    margin-bottom: 0.8rem;
+    border-spacing: 0;
+
+    thead {
+        width: 100%;
+        background-color: var(--primary-4);
+
+        th {
+            padding: 2rem 0;
+            font-size: 24px;
+            font-weight: 400;
+            color: white;
+            text-align: left;
+        }
+    }
+
+    tbody {
+        height: 424px;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        tr {
+            min-height: 121px;
+
+            td {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 0;
+                border-bottom: 1px solid #C6C6C6;
+                background-color: #FCFCFC;
+            }
+        }
+    }
+
+    thead tr,
+    tbody tr {
+        display: flex;
+        width: 100%;
+    }
+}
+
+/* Table table-Registers */
+
+.table-registers {
+
+    thead th:nth-child(1),
+    tbody td:nth-child(1) {
+        width: calc(78px + 3rem + 3.6rem);
+
+        /* image size + margin-left + margin-right */
+    }
+
+    thead th:nth-child(2),
+    tbody td:nth-child(2) {
+        flex: 1;
+    }
+
+    thead th:nth-child(3),
+    tbody td:nth-child(3) {
+        width: clamp(13rem, 15%, 16rem);
+        text-align: center;
+    }
+
+    thead th:nth-child(4) {
+        width: clamp(21rem, 25%, 25rem);
+        text-align: center;
+    }
+
+    tbody {
+        td:nth-child(4) {
+            width: clamp(21rem, 25%, 25rem);
+            text-align: center;
+        }
+
+        .image img {
+            width: 78px;
+            height: 78px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            object-fit: contain;
+        }
+
+        .name {
+            justify-content: flex-start;
+            padding-right: 3.2rem;
+            font-size: 22px;
+            word-break: break-word;
+        }
+
+        .stock {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .buttons {
+            justify-content: flex-end;
+            padding-right: 2.4rem;
+
+            .wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+            }
+
+            .edit {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50px;
+                padding: 0 1.2rem;
+                border-radius: 8px;
+                background-color: hsl(137deg, 69%, 54%);
+                text-decoration: none;
+                transition: background-color 0.2s ease-in-out;
+
+                &:hover {
+                    background-color: hsl(137deg, 90%, 58%);
+                }
+
+                span {
+                    margin-left: 1.3rem;
+                    font-size: 20px;
+                    color: white;
+                }
+            }
+
+            .delete {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50px;
+                margin-left: 1.6rem;
+                padding: 0 1.2rem;
+                border: none;
+                border-radius: 8px;
+                background-color: hsl(0, 100%, 43%);
+                cursor: pointer;
+                transition: background-color 0.2s ease-in-out;
+
+                &:hover {
+                    background-color: hsl(0, 100%, 60%);
+                }
+            }
+        }
+    }
+}
+
+/* Table table-donations */
+
+.table-donations {
+
+    thead th:nth-child(1),
+    tbody td:nth-child(1) {
+        width: calc(78px + 3rem + 3.6rem);
+
+        /* image size + margin-left + margin-right */
+    }
+
+    thead th:nth-child(2),
+    tbody td:nth-child(2) {
+        width: 14%;
+    }
+
+    thead th:nth-child(3),
+    tbody td:nth-child(3) {
+        flex: 1;
+    }
+
+    thead th:nth-child(4),
+    tbody td:nth-child(4) {
+        width: clamp(10rem, 15%, 15rem);
+    }
+
+    thead th:nth-child(5) {
+        width: clamp(16rem, 20%, 20rem);
+    }
+
+    tbody {
+        td {
+            &:nth-child(5) {
+                width: clamp(16rem, 20%, 20rem);
+            }
+
+            padding: 2rem 0;
+            border-bottom: 1px solid #C6C6C6;
+            background-color: #FCFCFC;
+        }
+
+        .image img {
+            width: 78px;
+            height: 78px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            object-fit: contain;
+        }
+
+        .order-id {
+            justify-content: flex-start;
+            text-transform: uppercase;
+            font-size: 16px;
+            color: #686868;
+        }
+
+        .name {
+            justify-content: flex-start;
+            padding-right: 3.2rem;
+            font-size: 22px;
+            word-break: break-word;
+        }
+
+        .status {
+            text-transform: capitalize;
+            justify-content: flex-start;
+            font-size: 22px;
+
+            &.pending {
+                color: var(--pending);
+            }
+
+            &.delivered {
+                color: var(--delivered);
+            }
+
+            &.cancelled {
+                color: var(--cancelled);
+            }
+        }
+
+        .see-details {
+            justify-content: flex-end;
+            padding-right: 2.4rem;
+
+            a {
+                display: flex;
+                align-items: center;
+                width: fit-content;
+                padding: 1.3rem 1.4rem;
+                border-radius: 8px;
+                background-color: var(--details-button);
+                text-decoration: none;
+
+                img {
+                    margin-right: 1.4rem;
+                    height: 29px;
+                }
+
+                span {
+                    font-size: 20px;
+                    color: white;
+                }
+            }
+        }
+    }
+}

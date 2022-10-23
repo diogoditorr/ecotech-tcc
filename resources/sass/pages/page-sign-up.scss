@@ -1,0 +1,166 @@
+#page-sign-up {
+    min-height: 100vh;
+    padding-bottom: 10rem;
+    background-color: var(--primary-mono-b);
+
+    header {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin: auto;
+        margin-bottom: 13rem;
+        padding-top: 10rem;
+
+        /* padding: 10rem 19rem 0 19rem; */
+
+        >img {
+            position: absolute;
+
+            /* 50% menos metade do tamanho da imagem (149px) */
+            left: calc(50% - 149px);
+        }
+    }
+
+    form {
+        width: 60%;
+        margin: auto;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0px 0px 100px 60px rgba(0, 0, 0, 0.25);
+        animation-delay: 0.2s;
+
+        .form-data {
+            padding: 6rem 6.4rem 9rem 6.4rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6rem;
+
+            h1 {
+                font-size: 48px;
+                color: var(--title);
+            }
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+            border: none;
+
+            &:not(:last-child) {
+                margin-bottom: 6.4rem;
+            }
+
+            legend {
+                width: 100%;
+                padding-bottom: 0.8rem;
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+                border-color: var(--border);
+                font-size: 24px;
+                font-weight: bold;
+                color: var(--title);
+            }
+
+            .field-group {
+                display: flex;
+                align-items: center;
+
+                .field:first-child {
+                    margin-right: 3rem;
+                }
+            }
+
+            .field,
+            .field-half {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                margin-top: 24px;
+            }
+
+            .field label,
+            .field-half label {
+                margin-bottom: 8px;
+                font-size: 14px;
+                color: var(--text);
+            }
+
+            .field {
+
+                input,
+                select {
+                    padding: 1.65rem;
+                    border: 1px solid var(--border-field);
+                    border-color: #838383;
+                    border-radius: 8px;
+                    font: 1.6rem "Archivo", "Inter";
+                    color: var(--black-text);
+                }
+            }
+
+            .field-half input {
+                padding: 1.65rem;
+                border: 1px solid var(--border-field);
+                border-color: #838383;
+                border-radius: 8px;
+                font: 1.6rem "Archivo", "Inter";
+                color: var(--black-text);
+                width: calc(50% - 1.5rem);
+            }
+        }
+
+        .footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 3.7rem 6.4rem;
+            border-color: #afafaf;
+            border-top-width: 1px;
+            border-top-style: solid;
+            border-radius: 0 0 8px 8px;
+            background-color: var(--background);
+
+            .warning {
+                display: flex;
+                align-items: center;
+
+                span {
+                    width: 20rem;
+                    margin-left: 2.2rem;
+                    color: var(--text);
+                    font-size: 18px;
+                }
+            }
+
+            button {
+                display: flex;
+                align-items: center;
+                padding: 3.6rem 11.6rem;
+                border: 1px black solid;
+                border-radius: 8px;
+                background-color: #0ec5de;
+                box-shadow: inset 0px -8px 0px rgba(0, 0, 0, 0.25);
+                cursor: pointer;
+                --delay: 0.2s;
+                transition: padding var(--delay) ease-in-out, margin var(--delay) ease-in-out, box-shadow var(--delay) ease-in-out;
+
+                &:hover {
+                    margin-top: 0.8rem;
+                    padding: 3.2rem 11.6rem;
+                    box-shadow: inset 0px -4px 0px rgba(0, 0, 0, 0.25);
+                }
+
+                span {
+                    margin-right: 1.3rem;
+                    font-size: 24px;
+                    font-weight: bold;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
